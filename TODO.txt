@@ -1,0 +1,5 @@
+*Control Script for weight-based acceleration
+*Electric trains
+*Train tiers
+*Electric train cars. No weight to simulate having enough power to move their base weight. Only works on electric trains, uses more power
+*Powered rails with automatic circuit connections
