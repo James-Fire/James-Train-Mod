@@ -22,24 +22,39 @@ data:extend(
 	order = "b-0",
   },
   {
+    type = "double-setting",
+    name = "weighty-trains-factor",
+    setting_type = "startup",
+	default_value = 5,
+	minimum_value = 1
+	order = "b-0",
+  },
+  {
+    type = "bool-setting",
+    name = "variable-weighty-trains",
+    setting_type = "startup",
+    default_value = false,
+	order = "b-2",
+  },
+  {
     type = "bool-setting",
     name = "powered-rails",
     setting_type = "startup",
     default_value = false,
-	order = "d-0",
+	order = "c-0",
   },
   {
     type = "bool-setting",
     name = "electric-trains",
     setting_type = "startup",
     default_value = false,
-	order = "d-1",
+	order = "c-1",
   },
   {
     type = "bool-setting",
     name = "electric-train-cars",
     setting_type = "startup",
     default_value = false,
-	order = "d-2",
+	order = "c-2",
   },
  })

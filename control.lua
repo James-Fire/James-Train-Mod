@@ -1,4 +1,4 @@
-if settings.startup["weighty-trains"].value then
+if settings.startup["variable-weighty-trains"].value then
 	require("scripts/train-weight")
 end
 if settings.startup["powered-rails"].value then
