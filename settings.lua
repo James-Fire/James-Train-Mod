@@ -26,7 +26,7 @@ data:extend(
     name = "weighty-trains-factor",
     setting_type = "startup",
 	default_value = 5,
-	minimum_value = 1
+	minimum_value = 1,
 	order = "b-0",
   },
   {
