@@ -51,28 +51,6 @@ end
 --When powered rails are built/removed
 
 --Collects all connected rails into a table
-local function get_connected_segments(rail, direction)
-    local res = {}
-
-    if not rail or not rail.valid then return res end
-
-    for traverse_name, traverse_dir in pairs(defines.rail_connection_direction) do
-        if traverse_name == "none" then goto continue end
-
-        local connection, dir, cdir = rail.get_connected_rail({
-            rail_direction = direction,
-            rail_connection_direction = traverse_dir
-        })
-
-        if connection and connection.valid then
-            table.insert(res, connection)
-        end
-
-        ::continue::
-    end
-
-    return res
-end
 local function GetConnectedRails(Rail)
 	local RailTable = {}
 	for i, direction in pairs(defines.rail_direction) do
@@ -98,14 +76,13 @@ end
 
 --Takes a rail, makes and connects sub-poles
 local function SetupCableConnections(entity)
-	local NeighbourPole = GetHiddenPole(entity.surface, entity.position)
-	if NeighbourPole and NeighbourPole.valid then
+	local HostPole = GetHiddenPole(entity.surface, entity.position)
+	if HostPole and HostPole.valid then
 		for i, neighbour in pairs(GetConnectedRails(entity)) do
-			local ConnectRed = { defines.wire_type.red, NeighbourPole }
-			local ConnectGreen = { defines.wire_type.green, NeighbourPole }
-			neighbour.connect_neighbour(NeighbourPole)
-			neighbour.connect_neighbour(ConnectRed)
-			neighbour.connect_neighbour(ConnectGreen)
+			local NeighbourPole = GetHiddenPole(neighbour.surface, neighbour.position)
+			for j, v in pairs(defines.wire_type) do
+				NeighbourPole.connect_neighbour({wire = v , target_entity = HostPole})
+			end
 		end
 	end
 end
@@ -116,8 +93,8 @@ local function MakeSignalPole(entity)
 		surface.create_entity({name = SignalPoleName, position = entity.position, raise_built = false})
 		local SignalPole = surface.find_entity(SignalPoleName, entity.position)
 		SignalPole.disconnect_neighbour()
-		for i, rails in pairs (entity.get_connected_rails()) do
-			local RailHiddenPole = surface.find_entity(HiddenPoleName, entity.position)
+		for i, rail in pairs (entity.get_connected_rails()) do
+			local RailHiddenPole = surface.find_entity(HiddenPoleName, rail.position)
 			RailHiddenPole.connect_neighbour(SignalPole)
 		end
 		entity.destroy()

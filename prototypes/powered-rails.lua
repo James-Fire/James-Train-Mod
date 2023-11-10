@@ -1,17 +1,27 @@
 --Hidden Accumulator and power pole
 local PowerPoleSignalEntity = table.deepcopy(data.raw["rail-signal"]["rail-signal"])
 	PowerPoleSignalEntity.name = "james-rail-signal"
+	PowerPoleSignalEntity.minable = {mining_time = 0.2, result = "james-rail-signal"}
 	
 local PowerPoleSignalItem = table.deepcopy(data.raw.item["rail-signal"])
 	PowerPoleSignalItem.name = "james-rail-signal"
+	PowerPoleSignalItem.place_result = "james-rail-signal"
 	
 local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric-pole"])
 	SignalPowerPole.name = "james-rail-pole"
-	SignalPowerPole.icon = "__core__/graphics/empty.png"
-    SignalPowerPole.icon_size = 1
+    SignalPowerPole.supply_area_distance = 1
+    SignalPowerPole.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
 	
 local PowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric-pole"])
 	PowerPole.name = "james-track-pole"
+	PowerPole.icon = "__core__/graphics/empty.png"
+    PowerPole.icon_size = 1
+    PowerPole.minable= nil
+	PowerPole.draw_circuit_wires=false
+	PowerPole.selectable_in_game=false
+    PowerPole.supply_area_distance = 0.5
+    PowerPole.maximum_wire_distance = 9
+    PowerPole.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
 	
 local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
 	Accumulator.name = "james-rail-accumulator"
@@ -54,7 +64,7 @@ Accumulator, StraightPoweredRailEntity, CurvedPoweredRailEntity, PoweredRailItem
 		enabled = false,
 		energy_required = 1,
 		ingredients = {
-			{"medium-power-pole", 1},
+			{"medium-electric-pole", 1},
 			{"copper-cable", 10}
 		},
 		results = {{"james-rail-signal",1}},
