@@ -64,7 +64,7 @@ data:extend(
     default_value = false,
 	order = "c-3",
   },
-  {
+  --[[{
     type = "bool-setting",
     name = "diesel-trains",
     setting_type = "startup",
@@ -84,5 +84,5 @@ data:extend(
     setting_type = "startup",
     default_value = false,
 	order = "f-0",
-  },
+  },]]
  })
