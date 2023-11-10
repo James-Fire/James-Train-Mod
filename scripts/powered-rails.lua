@@ -32,9 +32,9 @@ end
 
 --Arbiter function for if we should handle a train in the moment, is passed a locomotive
 local function LocomotiveIsElectricNow(Locomotive)
-	if locomotive.burner.currently_burning = "electric-burner-item" then --The train is handled if it's already burning our dummy item
+	if locomotive.burner.currently_burning == "electric-burner-item" then --The train is handled if it's already burning our dummy item
 		return true
-	elseif locomotive.burner.currently_burning = nil then --The train is handled if it's burning nothing
+	elseif locomotive.burner.currently_burning == nil then --The train is handled if it's burning nothing
 		return true
 	end
 	return false
@@ -165,7 +165,7 @@ local function PowerTrain(Train)
 		end
 	end
 	
-	if LocoPowerTransfer < 100 then --If the train didn't get a lot of power, make it get updated again soon
+	if LocoPowerTransfer < 1 then --If the train didn't get a lot of power, make it get updated again soon
 		table.insert(global.JETrainsUpdate, 1, train)
 	end
 end
@@ -177,7 +177,7 @@ local function RemakeTrainUpdateList()
 end
 
 local function UpdateTrains()
-	if global.JETrainsUpdate[1].valid and global.JETrainsUpdate[1] ~= nil then
+	if global.JETrainsUpdate[1] ~= nil and global.JETrainsUpdate[1].valid  then
 		PowerTrain(table.remove(global.JETrainsUpdate, 1))
 	else
 	

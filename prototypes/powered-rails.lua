@@ -14,34 +14,23 @@ local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
 --Rails
 local StraightPoweredRailEntity = table.deepcopy(data.raw["straight-rail"]["straight-rail"])
 	StraightPoweredRailEntity.name = "james-powered-rail"
-	StraightPoweredRailEntity.minable = {mining_time = 0.5, result = "james-powered-rail"},
+	StraightPoweredRailEntity.minable = {mining_time = 0.5, result = "james-powered-rail"}
 	
 local CurvedPoweredRailEntity = table.deepcopy(data.raw["curved-rail"]["curved-rail"])
 	CurvedPoweredRailEntity.name = "james-powered-rail-curved"
-	StraightPoweredRailEntity.minable = {mining_time = 0.5, result = "james-powered-rail", count = 4},
+	CurvedPoweredRailEntity.minable = {mining_time = 0.5, result = "james-powered-rail", count = 4}
+	CurvedPoweredRailEntity.placeable_by = {item = "james-powered-rail", count = 4}
 	
 local PoweredRailItem = table.deepcopy(data.raw["rail-planner"]["rail"])
 	PoweredRailItem.name = "james-powered-rail"
+    PoweredRailItem.localised_name = {"item-name.james-powered-rail"}
+	PoweredRailItem.place_result = "james-powered-rail"
     PoweredRailItem.straight_rail = "james-powered-rail"
     PoweredRailItem.curved_rail = "james-powered-rail-curved"
 
---Train(s)
-local ElectricTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
-	ElectricTrainEntity.burner.fuel_inventory_size = 0
-	ElectricTrainEntity.burner.smoke = nil
-	
-local ElectricTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locomotive"])
-
-if settings.startup["train-tiers"].value then
-	if settings.startup["electric-train-upgrade"].value then
-	
-	end
-end
 
 --Data extend everything, and make our hidden item
-data:extend({Accumulator,
-StraightPoweredRailEntity, CurvedPoweredRailEntity, PoweredRailItem,
-ElectricTrainEntity, ElectricTrainItem
+data:extend({Accumulator, StraightPoweredRailEntity, CurvedPoweredRailEntity, PoweredRailItem,
 	{
 		type = "recipe",
 		name = "james-powered-rail",
@@ -49,6 +38,28 @@ ElectricTrainEntity, ElectricTrainItem
 		energy_required = 1,
 		ingredients = { {"rail", 1}, {"copper-cable", 5} },
 		results = {{"james-powered-rail",1}},
+	},
+	{
+		type = "technology",
+		name = "electrified-tracks",
+		icon_size = 64,
+		icon = "__base__/graphics/icons/steam-turbine.png",
+		prerequisites = {"railway"},
+		effects = {
+			{
+				type = "unlock-recipe",
+				recipe = "james-powered-rail"
+			},
+		},
+		unit = {
+			count = 50,
+			ingredients = {
+				{"automation-science-pack", 1},
+				{"logistic-science-pack", 1},
+			},
+			time = 30,
+		},
+		order = "d-a",
 	},
 	{
     type = "item",
