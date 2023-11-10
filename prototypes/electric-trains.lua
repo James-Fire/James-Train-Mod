@@ -1,4 +1,3 @@
-
 --Train(s)
 local ElectricTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	ElectricTrainEntity.name = "james-electric-train"

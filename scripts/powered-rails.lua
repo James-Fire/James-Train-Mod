@@ -1,5 +1,6 @@
 local AccumName = "james-rail-accumulator"
-local HiddenPoleName = "james-rail-pole"
+local HiddenPoleName = "james-track-pole"
+local SignalPoleName = "james-rail-pole"
 
 local function CheckTableValue(Value,Table)
 	for i, v in pairs(Table) do
@@ -49,31 +50,94 @@ end
 
 --When powered rails are built/removed
 
+--Collects all connected rails into a table
+local function get_connected_segments(rail, direction)
+    local res = {}
+
+    if not rail or not rail.valid then return res end
+
+    for traverse_name, traverse_dir in pairs(defines.rail_connection_direction) do
+        if traverse_name == "none" then goto continue end
+
+        local connection, dir, cdir = rail.get_connected_rail({
+            rail_direction = direction,
+            rail_connection_direction = traverse_dir
+        })
+
+        if connection and connection.valid then
+            table.insert(res, connection)
+        end
+
+        ::continue::
+    end
+
+    return res
+end
+local function GetConnectedRails(Rail)
+	local RailTable = {}
+	for i, direction in pairs(defines.rail_direction) do
+		if direction then
+			for j, connection in pairs(defines.rail_connection_direction) do
+				if j == "none" then  
+				else
+					--log(tostring(connection))
+					local ConnectedRail, dir, cdir = Rail.get_connected_rail({ rail_direction = direction, rail_connection_direction = connection })
+					if ConnectedRail and ConnectedRail.valid then
+						table.insert(RailTable, ConnectedRail)
+					end
+				end
+			end
+		end
+	end
+	return RailTable
+end
+
+local function GetHiddenPole(surface, position)
+	return surface.find_entity(HiddenPoleName, position)
+end
+
 --Takes a rail, makes and connects sub-poles
 local function SetupCableConnections(entity)
-	
-	for i, neighbour in pairs() do
-		local NeighbourPole = GetHiddenPole(position)
-		local ConnectRed = { defines.wire_type.red, hiddenPole }
-		local ConnectGreen = { defines.wire_type.green, hiddenPole }
-		neighbour.connect_neighbour(hiddenPole)
-		neighbour.connect_neighbour(ConnectRed)
-		neighbour.connect_neighbour(ConnectGreen)
+	local NeighbourPole = GetHiddenPole(entity.surface, entity.position)
+	if NeighbourPole and NeighbourPole.valid then
+		for i, neighbour in pairs(GetConnectedRails(entity)) do
+			local ConnectRed = { defines.wire_type.red, NeighbourPole }
+			local ConnectGreen = { defines.wire_type.green, NeighbourPole }
+			neighbour.connect_neighbour(NeighbourPole)
+			neighbour.connect_neighbour(ConnectRed)
+			neighbour.connect_neighbour(ConnectGreen)
+		end
+	end
+end
+
+local function MakeSignalPole(entity)
+	local surface = entity.surface
+	if surface and surface.valid then
+		surface.create_entity({name = SignalPoleName, position = entity.position, raise_built = false})
+		local SignalPole = surface.find_entity(SignalPoleName, entity.position)
+		SignalPole.disconnect_neighbour()
+		for i, rails in pairs (entity.get_connected_rails()) do
+			local RailHiddenPole = surface.find_entity(HiddenPoleName, entity.position)
+			RailHiddenPole.connect_neighbour(SignalPole)
+		end
+		entity.destroy()
 	end
 end
 
 local function MakeHiddenPole(entity)
+	local surface = entity.surface
 	if surface and surface.valid then
-		surface.create_entity{name = HiddenPoleName, position = entity.position, raise_built = false}
+		surface.create_entity({name = HiddenPoleName, position = entity.position, raise_built = false})
 		local hiddenPole = surface.find_entity(HiddenPoleName, entity.position)
-		hiddenPole.disconnect_neighbour()
+		if hiddenPole then
+			hiddenPole.disconnect_neighbour()
+		end
 	end
 end
 
-
 local function MakeHiddenAccum(surface, position)
 	if surface and surface.valid then
-		create_entity{name = AccumName, position = position, raise_built = false}
+		surface.create_entity({name = AccumName, position = position, raise_built = false})
 	end
 end
 local function removeHiddenPowerEntities(surface, position)
@@ -101,6 +165,8 @@ local function on_new_entity(event)
 		table.insert(global.JamesElectricTrains, entity.train)
 	elseif WagonIsElectric and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
 		table.insert(global.JamesElectricTrains, entity.train)
+	elseif entity.name == "james-rail-signal" then
+		MakeSignalPole(entity)
 	end
 end
 local function on_remove_entity(event)

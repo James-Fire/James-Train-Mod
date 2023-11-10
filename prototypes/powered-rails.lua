@@ -1,8 +1,24 @@
 --Hidden Accumulator and power pole
+local PowerPoleSignalEntity = table.deepcopy(data.raw["rail-signal"]["rail-signal"])
+	PowerPoleSignalEntity.name = "james-rail-signal"
+	
+local PowerPoleSignalItem = table.deepcopy(data.raw.item["rail-signal"])
+	PowerPoleSignalItem.name = "james-rail-signal"
+	
+local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric-pole"])
+	SignalPowerPole.name = "james-rail-pole"
+	SignalPowerPole.icon = "__core__/graphics/empty.png"
+    SignalPowerPole.icon_size = 1
+	
+local PowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric-pole"])
+	PowerPole.name = "james-track-pole"
+	
 local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
 	Accumulator.name = "james-rail-accumulator"
 	Accumulator.collision_mask = {"not-colliding-with-itself"}
 	Accumulator.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
+	Accumulator.icon = "__core__/graphics/empty.png"
+    Accumulator.icon_size = 1
 	Accumulator.energy_source = {
       type = "electric",
       buffer_capacity = "10MJ",
@@ -30,13 +46,28 @@ local PoweredRailItem = table.deepcopy(data.raw["rail-planner"]["rail"])
 
 
 --Data extend everything, and make our hidden item
-data:extend({Accumulator, StraightPoweredRailEntity, CurvedPoweredRailEntity, PoweredRailItem,
+data:extend({PowerPoleSignalEntity, PowerPoleSignalItem, SignalPowerPole, PowerPole,
+Accumulator, StraightPoweredRailEntity, CurvedPoweredRailEntity, PoweredRailItem,
+	{
+		type = "recipe",
+		name = "james-rail-signal",
+		enabled = false,
+		energy_required = 1,
+		ingredients = {
+			{"medium-power-pole", 1},
+			{"copper-cable", 10}
+		},
+		results = {{"james-rail-signal",1}},
+	},
 	{
 		type = "recipe",
 		name = "james-powered-rail",
 		enabled = false,
 		energy_required = 1,
-		ingredients = { {"rail", 1}, {"copper-cable", 5} },
+		ingredients = {
+			{"rail", 1},
+			{"copper-cable", 5}
+		},
 		results = {{"james-powered-rail",1}},
 	},
 	{
@@ -49,6 +80,10 @@ data:extend({Accumulator, StraightPoweredRailEntity, CurvedPoweredRailEntity, Po
 			{
 				type = "unlock-recipe",
 				recipe = "james-powered-rail"
+			},
+			{
+				type = "unlock-recipe",
+				recipe = "james-rail-signal"
 			},
 		},
 		unit = {
