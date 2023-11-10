@@ -27,7 +27,7 @@ data:extend(
     setting_type = "startup",
 	default_value = 5,
 	minimum_value = 1,
-	order = "b-0",
+	order = "b-1",
   },
   {
     type = "bool-setting",
@@ -56,6 +56,13 @@ data:extend(
     setting_type = "startup",
     default_value = false,
 	order = "c-2",
+  },
+  {
+    type = "bool-setting",
+    name = "electric-train-upgrade",
+    setting_type = "startup",
+    default_value = false,
+	order = "c-3",
   },
   {
     type = "bool-setting",
