@@ -2,6 +2,8 @@ local FakeBurnerItem = "electric-burner-item"
 local AccumName = "james-rail-accumulator"
 local HiddenPoleName = "james-track-pole"
 local SignalPoleName = "james-rail-pole"
+local UpdateTime = 160 --Ticks, 16/s
+local WagonPowerUse = 1000000 --How much power each electric wagon uses in UpdateTime. J
 
 local function CheckTableValue(Value,Table)
 	for i, v in pairs(Table) do
@@ -15,6 +17,7 @@ end
 --Initialization Function
 local function OnInit()
 	global.JamesElectricTrains = { }
+	global.JamesElectricWagonTrains = { }
 	global.JETrainsUpdate = { }
 	global.JECounter = 0
 end
@@ -29,6 +32,16 @@ local function GetTrainLocomotives(Train)
 	end
 	return Locomotives
 end
+local function GetTrainWagons(Train)
+	local Wagons = { }
+	for i, wagon in pairs(Train.cargo_wagons) do
+		table.insert(Wagons, wagon)
+	end
+	for i, wagon in pairs(Train.fluid_wagons) do
+		table.insert(Wagons, wagon)
+	end
+	return Wagons
+end
 
 --Arbiter function for if we should *ever* handle a train, is passed a locomotive
 local function ValidLocomotive(Locomotive)
@@ -42,9 +55,25 @@ local function ValidLocomotive(Locomotive)
 	return false
 end
 
+local function WagonIsElectric(Wagon)
+	if Wagon.name:find("wagon-electric", 1, true) then
+		return true
+	end
+	return false
+end
+
 local function TrainHasValidLocomotive(Train)
 	for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
 		if ValidLocomotive(Locomotive) then
+			return true
+		end
+	end
+	return false
+end
+
+local function TrainHasElectricWagon(Train)
+	for i, Wagon in pairs(GetTrainWagons(Train)) do
+		if WagonIsElectric(Wagon) then
 			return true
 		end
 	end
@@ -60,13 +89,6 @@ local function LocomotiveIsElectricNow(Locomotive)
 	else
 		return false
 	end
-end
-
-local function WagonIsElectric(Wagon)
-	if Wagon.name:find("electric-cargo", 1, true) or Wagon.name:find("electric-fluid", 1, true) then
-		return true
-	end
-	return false
 end
 
 --When powered rails are built/removed
@@ -151,14 +173,12 @@ end
 
 local function on_new_train(event)
 	local NewTrain = event.train
-	if not entity then return end
-	local surface = entity.surface
-	local position = entity.position
-	local force = entity.force
+	if not NewTrain then return end
 	if TrainHasValidLocomotive(NewTrain) and CheckTableValue(NewTrain,global.JamesElectricTrains) == false then
 		table.insert(global.JamesElectricTrains, NewTrain)
-	--[[elseif WagonIsElectric and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
-		table.insert(global.JamesElectricTrains, entity.train)]]
+	end
+	if TrainHasElectricWagon(NewTrain) and CheckTableValue(NewTrain,global.JamesElectricWagonTrains) == false then
+		table.insert(global.JamesElectricWagonTrains, NewTrain)
 	end
 end
 local function on_new_entity(event)
@@ -233,13 +253,7 @@ local function PowerTrain(Train)
 	for i, Accumulator in pairs(Accumulators) do
 		Accumulator.energy = Accumulator.energy - AccumulatorDraw
 	end
-	for i, locomotive in pairs(Train.locomotives.front_movers) do
-		if LocomotiveIsElectricNow(locomotive) then
-			locomotive.burner.currently_burning = FakeBurnerItem
-			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel + LocoPowerTransfer
-		end
-	end
-	for i, locomotive in pairs(Train.locomotives.back_movers) do
+	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
 		if LocomotiveIsElectricNow(locomotive) then
 			locomotive.burner.currently_burning = FakeBurnerItem
 			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel + LocoPowerTransfer
@@ -249,16 +263,17 @@ local function PowerTrain(Train)
 	if PowerTransfer < 1 then --If the train didn't get a lot of power, make it get updated again soon
 		table.insert(global.JETrainsUpdate, 1, train)
 	end
-	--[[for i, wagon in pairs(Train.cargo_wagons) do
-		if WagonIsElectric then
-			PowerNeeded = PowerNeeded + (game.entity_prototype[wagon.name].weight)
+end
+
+local function WagonPower(Train)
+	local LocomotiveCount = #GetTrainLocomotives(Train)
+	local WagonCount = #GetTrainWagons(Train)
+	local WagonDrain = WagonCount * WagonPowerUse / LocomotiveCount
+	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
+		if LocomotiveIsElectricNow(locomotive) then
+			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel - WagonDrain
 		end
 	end
-	for i, wagon in pairs(Train.fluid_wagons) do
-		if WagonIsElectric then
-			PowerNeeded = PowerNeeded + (game.entity_prototype[wagon.name].weight)
-		end
-	end]]
 end
 
 local function PrintGlobalTrainList()
@@ -284,6 +299,11 @@ end
 
 local function UpdateTrains()
 	--PrintUpdateTrainList()
+	for i, train in pairs(global.JamesElectricWagonTrains) do
+		if train and train.valid and train.state == 0 then
+			WagonPower(train)
+		end
+	end
 	if global.JETrainsUpdate[1] ~= nil and global.JETrainsUpdate[1].valid  then
 		--game.print("Update train in update list")
 		PowerTrain(table.remove(global.JETrainsUpdate, 1))
@@ -300,7 +320,7 @@ end
 script.on_event(defines.events.on_tick, function(event)
 	--game.print("pre tick")
 	global.JECounter = global.JECounter + 1
-	if (global.JECounter == 60) then
+	if (global.JECounter == UpdateTime) then
 		UpdateTrains()
 		global.JECounter = 0
 		--game.print("tick")

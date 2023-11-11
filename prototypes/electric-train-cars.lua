@@ -1,30 +1,30 @@
 --Train(s)
 local ElectricCargoWagonEntity = table.deepcopy(data.raw["cargo-wagon"]["cargo-wagon"])
-	ElectricCargoWagonEntity.name = "james-electric-cargo-wagon"
-    ElectricCargoWagonEntity.minable = {mining_time = 0.5, result = "james-electric-cargo-wagon"}
-    ElectricCargoWagonEntity.weight = 0
+	ElectricCargoWagonEntity.name = "cargo-wagon-electric"
+    ElectricCargoWagonEntity.minable = {mining_time = 0.5, result = "cargo-wagon-electric"}
+    ElectricCargoWagonEntity.weight = 1
 	
 local ElectricCargoWagonItem = table.deepcopy(data.raw["item-with-entity-data"]["cargo-wagon"])
-	ElectricCargoWagonItem.name = "james-electric-cargo-wagon"
-	ElectricCargoWagonItem.place_result = "james-electric-cargo-wagon"
+	ElectricCargoWagonItem.name = "cargo-wagon-electric"
+	ElectricCargoWagonItem.place_result = "cargo-wagon-electric"
 	
 local ElectricFluidWagonEntity = table.deepcopy(data.raw["fluid-wagon"]["fluid-wagon"])
-	ElectricFluidWagonEntity.name = "james-electric-fluid-wagon"
-    ElectricFluidWagonEntity.minable = {mining_time = 0.5, result = "james-electric-fluid-wagon"}
-    ElectricFluidWagonEntity.weight = 0
+	ElectricFluidWagonEntity.name = "fluid-wagon-electric"
+    ElectricFluidWagonEntity.minable = {mining_time = 0.5, result = "fluid-wagon-electric"}
+    ElectricFluidWagonEntity.weight = 1
 	
 local ElectricFluidWagonItem = table.deepcopy(data.raw["item-with-entity-data"]["fluid-wagon"])
-	ElectricFluidWagonItem.name = "james-electric-fluid-wagon"
-	ElectricFluidWagonItem.place_result = "james-electric-fluid-wagon"
+	ElectricFluidWagonItem.name = "fluid-wagon-electric"
+	ElectricFluidWagonItem.place_result = "fluid-wagon-electric"
 	
 local ElectricArtilleryWagonEntity = table.deepcopy(data.raw["artillery-wagon"]["artillery-wagon"])
-	ElectricArtilleryWagonEntity.name = "james-electric-artillery-wagon"
-    ElectricArtilleryWagonEntity.minable = {mining_time = 0.5, result = "james-electric-artillery-wagon"}
-    ElectricArtilleryWagonEntity.weight = 0
+	ElectricArtilleryWagonEntity.name = "artillery-wagon-electric"
+    ElectricArtilleryWagonEntity.minable = {mining_time = 0.5, result = "artillery-wagon-electric"}
+    ElectricArtilleryWagonEntity.weight = 1
 	
 local ElectricArtilleryWagonItem = table.deepcopy(data.raw["item-with-entity-data"]["artillery-wagon"])
-	ElectricArtilleryWagonItem.name = "james-electric-artillery-wagon"
-	ElectricArtilleryWagonItem.place_result = "james-electric-artillery-wagon"
+	ElectricArtilleryWagonItem.name = "artillery-wagon-electric"
+	ElectricArtilleryWagonItem.place_result = "artillery-wagon-electric"
 
 if settings.startup["train-car-tiers"].value then
 
@@ -36,7 +36,7 @@ ElectricFluidWagonEntity, ElectricFluidWagonItem,
 ElectricArtilleryWagonEntity, ElectricArtilleryWagonItem,
 	{
 		type = "recipe",
-		name = "james-electric-cargo-wagon",
+		name = "cargo-wagon-electric",
 		enabled = false,
 		energy_required = 1,
 		ingredients = {
@@ -45,11 +45,11 @@ ElectricArtilleryWagonEntity, ElectricArtilleryWagonItem,
 			{"copper-cable", 30},
 			{"electronic-circuit", 10},
 		},
-		results = {{"james-electric-cargo-wagon",1}},
+		results = {{"cargo-wagon-electric",1}},
 	},
 	{
 		type = "recipe",
-		name = "james-electric-fluid-wagon",
+		name = "fluid-wagon-electric",
 		enabled = false,
 		energy_required = 1,
 		ingredients = {
@@ -58,7 +58,20 @@ ElectricArtilleryWagonEntity, ElectricArtilleryWagonItem,
 			{"copper-cable", 30},
 			{"electronic-circuit", 10},
 		},
-		results = {{"james-electric-fluid-wagon",1}},
+		results = {{"fluid-wagon-electric",1}},
+	},
+	{
+		type = "recipe",
+		name = "artillery-wagon-electric",
+		enabled = false,
+		energy_required = 1,
+		ingredients = {
+			{"artillery-wagon", 1},
+			{"electric-engine-unit", 8},
+			{"copper-cable", 30},
+			{"electronic-circuit", 10},
+		},
+		results = {{"artillery-wagon-electric",1}},
 	},
 	{
 		type = "technology",
@@ -69,11 +82,15 @@ ElectricArtilleryWagonEntity, ElectricArtilleryWagonItem,
 		effects = {
 			{
 				type = "unlock-recipe",
-				recipe = "james-electric-cargo-wagon"
+				recipe = "cargo-wagon-electric"
 			},
 			{
 				type = "unlock-recipe",
-				recipe = "james-electric-fluid-wagon"
+				recipe = "fluid-wagon-electric"
+			},
+			{
+				type = "unlock-recipe",
+				recipe = "artillery-wagon-electric"
 			},
 		},
 		unit = {
