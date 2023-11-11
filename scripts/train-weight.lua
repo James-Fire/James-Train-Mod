@@ -22,7 +22,7 @@ end
 local function UpdateTrainState(event)
 	local UpdateTrain = event.train
 	local PrevState = event.old_state
-	if PrevState == wait_station then --If the train was previously waiting at a station, it's weight likely changed
+	if PrevState == wait_station then --If the train was previously waiting at a station, it's variable weight likely changed
 		
 	end
 end

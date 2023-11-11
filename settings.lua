@@ -29,13 +29,13 @@ data:extend(
 	minimum_value = 1,
 	order = "b-1",
   },
-  {
+  --[[{
     type = "bool-setting",
     name = "variable-weighty-trains",
     setting_type = "startup",
     default_value = false,
 	order = "b-2",
-  },
+  },]]
   {
     type = "bool-setting",
     name = "powered-rails",
