@@ -1,3 +1,4 @@
+local FakeBurnerItem = "electric-burner-item"
 local AccumName = "james-rail-accumulator"
 local HiddenPoleName = "james-track-pole"
 local SignalPoleName = "james-rail-pole"
@@ -33,16 +34,17 @@ end
 
 --Arbiter function for if we should handle a train in the moment, is passed a locomotive
 local function LocomotiveIsElectricNow(Locomotive)
-	if locomotive.burner.currently_burning == "electric-burner-item" then --The train is handled if it's already burning our dummy item
+	if Locomotive.burner.currently_burning == nil then --The train is handled if it's burning nothing
 		return true
-	elseif locomotive.burner.currently_burning == nil then --The train is handled if it's burning nothing
+	elseif Locomotive.burner.currently_burning.name == FakeBurnerItem then --The train is handled if it's already burning our dummy item
 		return true
+	else
+		return false
 	end
-	return false
 end
 
 local function WagonIsElectric(Wagon)
-	if Wagon.name:find("electric-cargo", 1, true) or Wagon.name:find("electric-fluid", 1, true) then --The train is handled if it's already burning our dummy item
+	if Wagon.name:find("electric-cargo", 1, true) or Wagon.name:find("electric-fluid", 1, true) then
 		return true
 	end
 	return false
@@ -90,7 +92,7 @@ end
 local function MakeSignalPole(entity)
 	local surface = entity.surface
 	if surface and surface.valid then
-		surface.create_entity({name = SignalPoleName, position = entity.position, raise_built = false})
+		surface.create_entity({name = SignalPoleName, position = entity.position, force = entity.force, raise_built = false})
 		local SignalPole = surface.find_entity(SignalPoleName, entity.position)
 		SignalPole.disconnect_neighbour()
 		for i, rail in pairs (entity.get_connected_rails()) do
@@ -104,7 +106,7 @@ end
 local function MakeHiddenPole(entity)
 	local surface = entity.surface
 	if surface and surface.valid then
-		surface.create_entity({name = HiddenPoleName, position = entity.position, raise_built = false})
+		surface.create_entity({name = HiddenPoleName, position = entity.position, force = entity.force, raise_built = false})
 		local hiddenPole = surface.find_entity(HiddenPoleName, entity.position)
 		if hiddenPole then
 			hiddenPole.disconnect_neighbour()
@@ -140,8 +142,8 @@ local function on_new_entity(event)
 		SetupCableConnections(entity)
 	elseif ValidLocomotive(entity) and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
 		table.insert(global.JamesElectricTrains, entity.train)
-	elseif WagonIsElectric and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
-		table.insert(global.JamesElectricTrains, entity.train)
+	--[[elseif WagonIsElectric and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
+		table.insert(global.JamesElectricTrains, entity.train)]]
 	elseif entity.name == "james-rail-signal" then
 		MakeSignalPole(entity)
 	end
@@ -159,18 +161,77 @@ end
 
 --Every so often go through our train list to power them
 local function PowerTrain(Train)
-	local PowerNeeded = 0 --Single Value of power required by the train
+	local PowerNeeded = 0 --Single Value of power required by the whole train
 	local Accumulators = { } --Array of all accumulators available to this train
 	local AvailablePower = 0
-	local LocoPowerNeeded = 0
 	local LocomotiveCount = 0
 	
-	for i, locomotive in pairs(Train.locomotives) do
+	for i, locomotive in pairs(Train.locomotives.front_movers) do
 		if LocomotiveIsElectricNow(locomotive) then
-			PowerNeeded = PowerNeeded + (game.entity_prototype[wagon.name].weight)
-			LocoPowerNeeded = LocoPowerNeeded + locomotive.burner.currently_burning.fuel_value - locomotive.burner.remaining_burning_fuel
+			if locomotive.burner.currently_burning then
+				--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name))
+				PowerNeeded = PowerNeeded + locomotive.burner.currently_burning.fuel_value - locomotive.burner.remaining_burning_fuel
+			else
+				--game.print("Loco is not burning, using default transfer value")
+				PowerNeeded = PowerNeeded + 100000000
+			end
 			LocomotiveCount = LocomotiveCount + 1
+		else
+			--game.print("Loco is not electric, not handling")
+			--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name))
 		end
+	end
+	for i, locomotive in pairs(Train.locomotives.back_movers) do
+		if LocomotiveIsElectricNow(locomotive) then
+			if locomotive.burner.currently_burning then
+				--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name))
+				PowerNeeded = PowerNeeded + locomotive.burner.currently_burning.fuel_value - locomotive.burner.remaining_burning_fuel
+			else
+				--game.print("Loco is not burning, using default transfer value")
+				PowerNeeded = PowerNeeded + 100000000
+			end
+			LocomotiveCount = LocomotiveCount + 1
+		else
+			--game.print("Loco is not electric, not handling")
+			--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name))
+		end
+	end
+	--game.print("Desired Power: "..tostring(PowerNeeded))
+	for i, rail in pairs(Train.get_rails()) do
+		local surface = rail.surface
+		local Accumulator = surface.find_entity(AccumName, rail.position)
+		AvailablePower = AvailablePower + Accumulator.energy
+		table.insert(Accumulators, Accumulator)
+	end
+	--game.print("Available Power: "..tostring(AvailablePower))
+	--game.print("Available Accumulators: "..tostring(#Accumulators))
+	local PowerTransfer = 0
+	if PowerNeeded > AvailablePower then
+		PowerTransfer = AvailablePower
+	else
+		PowerTransfer = PowerNeeded
+	end
+	--game.print("Power Transfer: "..tostring(PowerTransfer))
+	local AccumulatorDraw = PowerTransfer/#Accumulators
+	local LocoPowerTransfer = PowerTransfer/(#Train.locomotives.front_movers+#Train.locomotives.back_movers)
+	for i, Accumulator in pairs(Accumulators) do
+		Accumulator.energy = Accumulator.energy - AccumulatorDraw
+	end
+	for i, locomotive in pairs(Train.locomotives.front_movers) do
+		if LocomotiveIsElectricNow(locomotive) then
+			locomotive.burner.currently_burning = FakeBurnerItem
+			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel + LocoPowerTransfer
+		end
+	end
+	for i, locomotive in pairs(Train.locomotives.back_movers) do
+		if LocomotiveIsElectricNow(locomotive) then
+			locomotive.burner.currently_burning = FakeBurnerItem
+			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel + LocoPowerTransfer
+		end
+	end
+	
+	if PowerTransfer < 1 then --If the train didn't get a lot of power, make it get updated again soon
+		table.insert(global.JETrainsUpdate, 1, train)
 	end
 	--[[for i, wagon in pairs(Train.cargo_wagons) do
 		if WagonIsElectric then
@@ -182,48 +243,41 @@ local function PowerTrain(Train)
 			PowerNeeded = PowerNeeded + (game.entity_prototype[wagon.name].weight)
 		end
 	end]]
-	for i, rail in pairs(Train.get_rails) do
-		local Accumulator = surface.find_entity(AccumName, entity.position)
-		AvailablePower = AvailablePower + Accumulator.energy
-		table.insert(Accumulators, Accumulator)
+end
+
+local function PrintGlobalTrainList()
+	game.print("Printing out current list of electric trains")
+	for i, entry in pairs(global.JamesElectricTrains) do
+		game.print("Train "..tostring(i)..": "..serpent.block(entry))
 	end
-	local PowerTransfer = 0
-	local LocoPowerTransfer = LocoPowerNeeded
-	if PowerNeeded > AvailablePower then
-		PowerTransfer = PowerNeeded
-		PowerTransfer = PowerTransfer - AvailablePower
-		LocoPowerTransfer = LocoPowerTransfer - PowerTransfer
-		PowerTransfer = AvailablePower
-	else
-		PowerTransfer = PowerNeeded
-	end
-	local AccumulatorDraw = PowerTransfer/#Accumulators
-	for i, Accumulator in pairs(Accumulators) do
-		Accumulator.energy = Accumulator.enery - AccumulatorDraw
-	end
-	for i, locomotive in pairs(Train.locomotives) do
-		if LocomotiveIsElectricNow(locomotive) then
-			locomotive.burner.currently_burning = "electric-burner-item"
-			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel + LocoPowerTransfer
-		end
-	end
-	
-	if LocoPowerTransfer < 1 then --If the train didn't get a lot of power, make it get updated again soon
-		table.insert(global.JETrainsUpdate, 1, train)
+end
+local function PrintUpdateTrainList()
+	game.print("Printing out queued update list of electric trains")
+	for i, entry in pairs(global.JETrainsUpdate) do
+		game.print("Train "..tostring(i)..": "..serpent.block(entry))
 	end
 end
 
 local function RemakeTrainUpdateList()
+	--PrintGlobalTrainList()
+	--game.print("Make Train Update List")
 	for i, train in pairs(global.JamesElectricTrains) do
 		table.insert(global.JETrainsUpdate, train)
 	end
 end
 
 local function UpdateTrains()
+	--PrintUpdateTrainList()
 	if global.JETrainsUpdate[1] ~= nil and global.JETrainsUpdate[1].valid  then
+		--game.print("Update train in update list")
 		PowerTrain(table.remove(global.JETrainsUpdate, 1))
 	else
-	
+		table.remove(global.JETrainsUpdate, 1)
+		--game.print("First entry isn't valid")
+	end
+	if #global.JETrainsUpdate == 0 then
+		--game.print("Update list is empty, remaking")
+		RemakeTrainUpdateList()
 	end
 end
 

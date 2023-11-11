@@ -11,6 +11,7 @@ local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric
 	SignalPowerPole.name = "james-rail-pole"
     SignalPowerPole.supply_area_distance = 1
     SignalPowerPole.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
+	SignalPowerPole.minable = {mining_time = 0.2, result = "james-rail-signal"}
 	
 local PowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric-pole"])
 	PowerPole.name = "james-track-pole"
