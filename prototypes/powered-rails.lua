@@ -12,13 +12,71 @@ local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric
     SignalPowerPole.supply_area_distance = 1
     SignalPowerPole.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
 	SignalPowerPole.minable = {mining_time = 0.2, result = "james-rail-signal"}
+	SignalPowerPole.connection_points = {
+      {
+        shadow =
+        {
+           copper = nil,
+          green = nil,
+          red = nil
+        },
+        wire =
+        {
+          copper = {0, -1.9},
+          green = {0, -1.9},
+          red = {0, -1.9}
+        }
+      },
+      {
+        shadow =
+        {
+           copper = nil,
+          green = nil,
+          red = nil
+        },
+        wire =
+        {
+          copper = {0, -1.9},
+          green = {0, -1.9},
+          red = {0, -1.9}
+        }
+      },
+      {
+        shadow =
+        {
+           copper = nil,
+          green = nil,
+          red = nil
+        },
+        wire =
+        {
+          copper = {0, -1.9},
+          green = {0, -1.9},
+          red = {0, -1.9}
+        }
+      },
+      {
+        shadow =
+        {
+           copper = nil,
+          green = nil,
+          red = nil
+        },
+        wire =
+        {
+          copper = {0, -1.9},
+          green = {0, -1.9},
+          red = {0, -1.9}
+        }
+      }
+    }
 	
-local PowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric-pole"])
+local PowerPole = table.deepcopy(SignalPowerPole)
 	PowerPole.name = "james-track-pole"
 	PowerPole.icon = "__core__/graphics/empty.png"
     PowerPole.icon_size = 1
     PowerPole.minable= nil
-	PowerPole.draw_circuit_wires=false
+	--PowerPole.draw_circuit_wires=false
 	PowerPole.selectable_in_game=false
     PowerPole.supply_area_distance = 0.5
     PowerPole.maximum_wire_distance = 9

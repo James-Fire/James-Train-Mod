@@ -124,7 +124,7 @@ local function SetupCableConnections(entity)
 		for i, neighbour in pairs(GetConnectedRails(entity)) do
 			local NeighbourPole = GetHiddenPole(neighbour.surface, neighbour.position)
 			for j, v in pairs(defines.wire_type) do
-				NeighbourPole.connect_neighbour({wire = v , target_entity = HostPole})
+				HostPole.connect_neighbour({wire = v , target_entity = NeighbourPole})
 			end
 		end
 	end
@@ -138,7 +138,9 @@ local function MakeSignalPole(entity)
 		SignalPole.disconnect_neighbour()
 		for i, rail in pairs (entity.get_connected_rails()) do
 			local RailHiddenPole = surface.find_entity(HiddenPoleName, rail.position)
-			RailHiddenPole.connect_neighbour(SignalPole)
+			for j, v in pairs(defines.wire_type) do
+				SignalPole.connect_neighbour({wire = v , target_entity = RailHiddenPole})
+			end
 		end
 		entity.destroy()
 	end
