@@ -3,7 +3,7 @@ local ElectricTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	ElectricTrainEntity.name = "james-electric-train"
 	ElectricTrainEntity.burner.fuel_inventory_size = 0
 	ElectricTrainEntity.burner.smoke = nil
-    minable = {mining_time = 0.5, result = "james-electric-train"},
+    ElectricTrainEntity.minable = {mining_time = 0.5, result = "james-electric-train"}
 	
 local ElectricTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locomotive"])
 	ElectricTrainItem.name = "james-electric-train"

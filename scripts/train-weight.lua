@@ -29,15 +29,8 @@ end
 
 local function on_new_train(event)
 	local NewTrain = event.train
-	if not entity then return end
-	local surface = entity.surface
-	local position = entity.position
-	local force = entity.force
-	if TrainHasValidLocomotive(NewTrain) and CheckTableValue(NewTrain,global.JamesElectricTrains) == false then
-		table.insert(global.JamesElectricTrains, NewTrain)
-	--[[elseif WagonIsElectric and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
-		table.insert(global.JamesElectricTrains, entity.train)]]
-	end
+	if not NewTrain then return end
+	table.insert(global.JamesWeightyTrains, NewTrain)
 end
 
 script.on_event(defines.events.on_tick, function(event)
