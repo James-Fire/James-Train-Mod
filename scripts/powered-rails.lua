@@ -19,6 +19,16 @@ local function OnInit()
 	global.JECounter = 0
 end
 
+local function GetTrainLocomotives(Train)
+	local Locomotives = { }
+	for i, locomotive in pairs(Train.locomotives.front_movers) do
+		table.insert(Locomotives, locomotive)
+	end
+	for i, locomotive in pairs(Train.locomotives.back_movers) do
+		table.insert(Locomotives, locomotive)
+	end
+	return Locomotives
+end
 
 --Arbiter function for if we should *ever* handle a train, is passed a locomotive
 local function ValidLocomotive(Locomotive)
@@ -28,6 +38,15 @@ local function ValidLocomotive(Locomotive)
 		return true
 	elseif Locomotive.name:find("electric", 1, true) then
 		return true
+	end
+	return false
+end
+
+local function TrainHasValidLocomotive(Train)
+	for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
+		if ValidLocomotive(Locomotive) then
+			return true
+		end
 	end
 	return false
 end
@@ -130,6 +149,18 @@ local function removeHiddenPowerEntities(surface, position)
 	end
 end
 
+local function on_new_train(event)
+	local NewTrain = event.train
+	if not entity then return end
+	local surface = entity.surface
+	local position = entity.position
+	local force = entity.force
+	if TrainHasValidLocomotive(NewTrain) and CheckTableValue(NewTrain,global.JamesElectricTrains) == false then
+		table.insert(global.JamesElectricTrains, NewTrain)
+	--[[elseif WagonIsElectric and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
+		table.insert(global.JamesElectricTrains, entity.train)]]
+	end
+end
 local function on_new_entity(event)
 	local entity = event.created_entity or event.entity --Handle multiple event types
 	if not entity then return end
@@ -166,22 +197,7 @@ local function PowerTrain(Train)
 	local AvailablePower = 0
 	local LocomotiveCount = 0
 	
-	for i, locomotive in pairs(Train.locomotives.front_movers) do
-		if LocomotiveIsElectricNow(locomotive) then
-			if locomotive.burner.currently_burning then
-				--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name))
-				PowerNeeded = PowerNeeded + locomotive.burner.currently_burning.fuel_value - locomotive.burner.remaining_burning_fuel
-			else
-				--game.print("Loco is not burning, using default transfer value")
-				PowerNeeded = PowerNeeded + 100000000
-			end
-			LocomotiveCount = LocomotiveCount + 1
-		else
-			--game.print("Loco is not electric, not handling")
-			--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name))
-		end
-	end
-	for i, locomotive in pairs(Train.locomotives.back_movers) do
+	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
 		if LocomotiveIsElectricNow(locomotive) then
 			if locomotive.burner.currently_burning then
 				--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name))
@@ -292,6 +308,7 @@ script.on_event(defines.events.on_tick, function(event)
 end)
 
 script.on_init(OnInit)
+script.on_event(defines.events.on_train_created, on_new_train)
 script.on_event(defines.events.on_entity_destroyed, on_remove_entity)
 script.on_event(defines.events.on_entity_died, on_remove_entity)
 script.on_event(defines.events.on_robot_mined_entity, on_remove_entity)
