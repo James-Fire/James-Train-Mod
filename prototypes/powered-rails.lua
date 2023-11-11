@@ -22,9 +22,9 @@ local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric
         },
         wire =
         {
-          copper = {0, -1.9},
-          green = {0, -1.9},
-          red = {0, -1.9}
+          copper = {0, -2},
+          green = {0, -2},
+          red = {0, -2}
         }
       },
       {
@@ -36,9 +36,9 @@ local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric
         },
         wire =
         {
-          copper = {0, -1.9},
-          green = {0, -1.9},
-          red = {0, -1.9}
+          copper = {0, -2},
+          green = {0, -2},
+          red = {0, -2}
         }
       },
       {
@@ -50,9 +50,9 @@ local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric
         },
         wire =
         {
-          copper = {0, -1.9},
-          green = {0, -1.9},
-          red = {0, -1.9}
+          copper = {0, -2},
+          green = {0, -2},
+          red = {0, -2}
         }
       },
       {
@@ -64,30 +64,138 @@ local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric
         },
         wire =
         {
-          copper = {0, -1.9},
-          green = {0, -1.9},
-          red = {0, -1.9}
+          copper = {0, -2},
+          green = {0, -2},
+          red = {0, -2}
         }
-      }
+      },
     }
 	
 local PowerPole = table.deepcopy(SignalPowerPole)
 	PowerPole.name = "james-track-pole"
+	PowerPole.selection_box = nil --{{-0.1, -0.1}, {0.1, 0.1}}
 	PowerPole.icon = "__core__/graphics/empty.png"
     PowerPole.icon_size = 1
     PowerPole.minable= nil
-	--PowerPole.draw_circuit_wires=false
+	PowerPole.draw_circuit_wires=false
 	PowerPole.selectable_in_game=false
     PowerPole.supply_area_distance = 0.5
     PowerPole.maximum_wire_distance = 9
+    PowerPole.pictures.layers = {
+        {
+			filename = "__core__/graphics/empty.png",
+			priority = "extra-high",
+			width = 1,
+			height = 1,
+			direction_count = 1,
+			shift = util.by_pixel(2, -42),
+			hr_version = {
+				filename = "__core__/graphics/empty.png",
+				priority = "extra-high",
+				width = 1,
+				height = 1,
+				direction_count = 1,
+				shift = util.by_pixel(2, -42),
+			}
+        },
+	}
+    PowerPole.water_reflection.layers = {
+        {
+			filename = "__core__/graphics/empty.png",
+			priority = "extra-high",
+			width = 1,
+			height = 1,
+			direction_count = 1,
+			shift = util.by_pixel(2, -42),
+			hr_version = {
+				filename = "__core__/graphics/empty.png",
+				priority = "extra-high",
+				width = 1,
+				height = 1,
+				direction_count = 1,
+				shift = util.by_pixel(2, -42),
+			}
+        },
+	}
+	PowerPole.connection_points = {
+      {
+        shadow =
+        {
+           copper = nil,
+          green = nil,
+          red = nil
+        },
+        wire =
+        {
+          copper = {0, 0},
+          green = {0, 0},
+          red = {0, 0}
+        }
+      },
+	}
     PowerPole.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
 	
 local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
 	Accumulator.name = "james-rail-accumulator"
+	Accumulator.selection_box = nil --{{-0.1, -0.1}, {0.1, 0.1}}
 	Accumulator.collision_mask = {"not-colliding-with-itself"}
 	Accumulator.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
-	Accumulator.icon = "__core__/graphics/empty.png"
-    Accumulator.icon_size = 1
+	Accumulator.icon = "__base__/graphics/icons/locomotive.png"
+    Accumulator.icon_size = 64
+    Accumulator.picture.layers = {
+        {
+			filename = "__core__/graphics/empty.png",
+			priority = "extra-high",
+			width = 1,
+			height = 1,
+			direction_count = 1,
+			shift = util.by_pixel(2, -42),
+			hr_version = {
+				filename = "__core__/graphics/empty.png",
+				priority = "extra-high",
+				width = 1,
+				height = 1,
+				direction_count = 1,
+				shift = util.by_pixel(2, -42),
+			}
+        },
+	}
+    Accumulator.charge_animation.layers = {
+        {
+			filename = "__core__/graphics/empty.png",
+			priority = "extra-high",
+			width = 1,
+			height = 1,
+			direction_count = 1,
+			shift = util.by_pixel(2, -42),
+			hr_version = {
+				filename = "__core__/graphics/empty.png",
+				priority = "extra-high",
+				width = 1,
+				height = 1,
+				direction_count = 1,
+				shift = util.by_pixel(2, -42),
+			}
+        },
+	}
+    Accumulator.water_reflection.layers = {
+        {
+			filename = "__core__/graphics/empty.png",
+			priority = "extra-high",
+			width = 1,
+			height = 1,
+			direction_count = 1,
+			shift = util.by_pixel(2, -42),
+			hr_version = {
+				filename = "__core__/graphics/empty.png",
+				priority = "extra-high",
+				width = 1,
+				height = 1,
+				direction_count = 1,
+				shift = util.by_pixel(2, -42),
+			}
+        },
+	}
 	Accumulator.energy_source = {
       type = "electric",
       buffer_capacity = "10MJ",
