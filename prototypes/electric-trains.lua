@@ -35,7 +35,7 @@ data:extend({ElectricTrainEntity, ElectricTrainItem,
 		name = "electric-trains",
 		icon_size = 64,
 		icon = "__base__/graphics/icons/steam-turbine.png",
-		prerequisites = {"electric-engine"},
+		prerequisites = {"railway", "electric-engine"},
 		effects = {
 			{
 				type = "unlock-recipe",
@@ -43,7 +43,7 @@ data:extend({ElectricTrainEntity, ElectricTrainItem,
 			},
 		},
 		unit = {
-			count = 50,
+			count = 100,
 			ingredients = {
 				{"automation-science-pack", 1},
 				{"logistic-science-pack", 1},

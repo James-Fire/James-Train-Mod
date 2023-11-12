@@ -3,8 +3,8 @@ local ElectricCargoWagonEntity = table.deepcopy(data.raw["cargo-wagon"]["cargo-w
 	ElectricCargoWagonEntity.name = "cargo-wagon-electric"
     ElectricCargoWagonEntity.minable = {mining_time = 0.5, result = "cargo-wagon-electric"}
     ElectricCargoWagonEntity.weight = 0.01
-    ElectricCargoWagonEntity.braking_force = nil
-    ElectricCargoWagonEntity.braking_power = "1J"
+    ElectricCargoWagonEntity.braking_force = 0.001
+    --ElectricCargoWagonEntity.braking_power = "1J"
 	
 local ElectricCargoWagonItem = table.deepcopy(data.raw["item-with-entity-data"]["cargo-wagon"])
 	ElectricCargoWagonItem.name = "cargo-wagon-electric"
@@ -14,8 +14,8 @@ local ElectricFluidWagonEntity = table.deepcopy(data.raw["fluid-wagon"]["fluid-w
 	ElectricFluidWagonEntity.name = "fluid-wagon-electric"
     ElectricFluidWagonEntity.minable = {mining_time = 0.5, result = "fluid-wagon-electric"}
     ElectricFluidWagonEntity.weight = 0.01
-    ElectricFluidWagonEntity.braking_force = nil
-    ElectricFluidWagonEntity.braking_power = "1J"
+    ElectricFluidWagonEntity.braking_force = 0.001
+    --ElectricFluidWagonEntity.braking_power = "1J"
 	
 local ElectricFluidWagonItem = table.deepcopy(data.raw["item-with-entity-data"]["fluid-wagon"])
 	ElectricFluidWagonItem.name = "fluid-wagon-electric"
@@ -25,8 +25,8 @@ local ElectricArtilleryWagonEntity = table.deepcopy(data.raw["artillery-wagon"][
 	ElectricArtilleryWagonEntity.name = "artillery-wagon-electric"
     ElectricArtilleryWagonEntity.minable = {mining_time = 0.5, result = "artillery-wagon-electric"}
     ElectricArtilleryWagonEntity.weight = 0.01
-    ElectricArtilleryWagonEntity.braking_force = nil
-    ElectricArtilleryWagonEntity.braking_power = "1J"
+    ElectricArtilleryWagonEntity.braking_force = 0.001
+    --ElectricArtilleryWagonEntity.braking_power = "1J"
 	
 local ElectricArtilleryWagonItem = table.deepcopy(data.raw["item-with-entity-data"]["artillery-wagon"])
 	ElectricArtilleryWagonItem.name = "artillery-wagon-electric"

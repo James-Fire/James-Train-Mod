@@ -270,7 +270,7 @@ Accumulator, StraightPoweredRailEntity, CurvedPoweredRailEntity, PoweredRailItem
 		name = "electrified-tracks",
 		icon_size = 64,
 		icon = "__base__/graphics/icons/steam-turbine.png",
-		prerequisites = {"railway"},
+		prerequisites = {"railway", "production-science-pack"},
 		effects = {
 			{
 				type = "unlock-recipe",
@@ -282,10 +282,11 @@ Accumulator, StraightPoweredRailEntity, CurvedPoweredRailEntity, PoweredRailItem
 			},
 		},
 		unit = {
-			count = 50,
+			count = 200,
 			ingredients = {
 				{"automation-science-pack", 1},
 				{"logistic-science-pack", 1},
+				{"chemical-science-pack", 1},
 			},
 			time = 30,
 		},
