@@ -226,11 +226,13 @@ local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
 local StraightPoweredRailEntity = table.deepcopy(data.raw["straight-rail"]["straight-rail"])
 	StraightPoweredRailEntity.name = "james-powered-rail"
 	StraightPoweredRailEntity.minable = {mining_time = 0.5, result = "james-powered-rail"}
+	StraightPoweredRailEntity.fast_replaceable_group = "land-rails"
 	
 local CurvedPoweredRailEntity = table.deepcopy(data.raw["curved-rail"]["curved-rail"])
 	CurvedPoweredRailEntity.name = "james-powered-rail-curved"
 	CurvedPoweredRailEntity.minable = {mining_time = 0.5, result = "james-powered-rail", count = 4}
 	CurvedPoweredRailEntity.placeable_by = {item = "james-powered-rail", count = 4}
+	CurvedPoweredRailEntity.fast_replaceable_group = "land-rails-curved"
 	
 local PoweredRailItem = table.deepcopy(data.raw["rail-planner"]["rail"])
 	PoweredRailItem.name = "james-powered-rail"
@@ -239,7 +241,8 @@ local PoweredRailItem = table.deepcopy(data.raw["rail-planner"]["rail"])
     PoweredRailItem.straight_rail = "james-powered-rail"
     PoweredRailItem.curved_rail = "james-powered-rail-curved"
 
-
+data.raw["straight-rail"]["straight-rail"].fast_replaceable_group = "land-rails"
+data.raw["curved-rail"]["curved-rail"].fast_replaceable_group = "land-rails-curved"
 --Data extend everything, and make our hidden item
 data:extend({PowerPoleSignalEntity, PowerPoleSignalItem, SignalPowerPole, PowerPole,
 Accumulator, StraightPoweredRailEntity, CurvedPoweredRailEntity, PoweredRailItem,

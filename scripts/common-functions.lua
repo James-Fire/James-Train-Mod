@@ -1,4 +1,4 @@
-local function CheckTableValue(Value,Table)
+function CheckTableValue(Value,Table)
 	for i, v in pairs(Table) do
 		if Value == v then
 			return true
@@ -7,7 +7,7 @@ local function CheckTableValue(Value,Table)
 	return false
 end
 
-local function GetTrainLocomotives(Train)
+function GetTrainLocomotives(Train)
 	local Locomotives = { }
 	for i, locomotive in pairs(Train.locomotives.front_movers) do
 		table.insert(Locomotives, locomotive)
@@ -17,7 +17,7 @@ local function GetTrainLocomotives(Train)
 	end
 	return Locomotives
 end
-local function GetTrainWagons(Train)
+function GetTrainWagons(Train)
 	local Wagons = { }
 	for i, wagon in pairs(Train.cargo_wagons) do
 		table.insert(Wagons, wagon)
@@ -29,7 +29,7 @@ local function GetTrainWagons(Train)
 end
 
 --Arbiter function for if we should *ever* handle a train, is passed a locomotive
-local function LocomotiveIsElectric(Locomotive)
+function LocomotiveIsElectric(Locomotive)
 	if Locomotive.name:find("ret", 1, true) then
 		return true
 	elseif Locomotive.name:find("hybrid", 1, true) then
@@ -40,14 +40,14 @@ local function LocomotiveIsElectric(Locomotive)
 	return false
 end
 
-local function WagonIsElectric(Wagon)
+function WagonIsElectric(Wagon)
 	if Wagon.name:find("wagon-electric", 1, true) then
 		return true
 	end
 	return false
 end
 
-local function TrainHasLocomotiveIsElectric(Train)
+function TrainHasLocomotiveIsElectric(Train)
 	for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
 		if LocomotiveIsElectric(Locomotive) then
 			return true
@@ -56,7 +56,7 @@ local function TrainHasLocomotiveIsElectric(Train)
 	return false
 end
 
-local function TrainHasElectricWagon(Train)
+function TrainHasElectricWagon(Train)
 	for i, Wagon in pairs(GetTrainWagons(Train)) do
 		if WagonIsElectric(Wagon) then
 			return true
@@ -66,7 +66,7 @@ local function TrainHasElectricWagon(Train)
 end
 
 --Collects all connected rails into a table
-local function GetConnectedRails(Rail)
+function GetConnectedRails(Rail)
 	local RailTable = {}
 	for i, direction in pairs(defines.rail_direction) do
 		if direction then

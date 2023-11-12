@@ -48,8 +48,10 @@ local function SetupCableConnections(entity)
 	if HostPole and HostPole.valid then
 		for i, neighbour in pairs(GetConnectedRails(entity)) do
 			local NeighbourPole = GetHiddenPole(neighbour.surface, neighbour.position)
-			for j, v in pairs(defines.wire_type) do
-				HostPole.connect_neighbour({wire = v , target_entity = NeighbourPole})
+			if NeighbourPole and NeighbourPole.valid then
+				for j, v in pairs(defines.wire_type) do
+					HostPole.connect_neighbour({wire = v , target_entity = NeighbourPole})
+				end
 			end
 		end
 	end

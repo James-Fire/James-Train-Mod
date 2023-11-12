@@ -64,6 +64,13 @@ data:extend(
     default_value = false,
 	order = "c-3",
   },
+  {
+    type = "bool-setting",
+    name = "hybrid-trains",
+    setting_type = "startup",
+    default_value = false,
+	order = "c-4",
+  },
   --[[{
     type = "bool-setting",
     name = "diesel-trains",
