@@ -178,6 +178,24 @@ local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
 			}
         },
 	}
+    Accumulator.discharge_animation.layers = {
+        {
+			filename = "__core__/graphics/empty.png",
+			priority = "extra-high",
+			width = 1,
+			height = 1,
+			direction_count = 1,
+			shift = util.by_pixel(2, -42),
+			hr_version = {
+				filename = "__core__/graphics/empty.png",
+				priority = "extra-high",
+				width = 1,
+				height = 1,
+				direction_count = 1,
+				shift = util.by_pixel(2, -42),
+			}
+        },
+	}
     Accumulator.water_reflection.layers = {
         {
 			filename = "__core__/graphics/empty.png",
@@ -279,7 +297,7 @@ Accumulator, StraightPoweredRailEntity, CurvedPoweredRailEntity, PoweredRailItem
     icon = "__core__/graphics/empty.png",
     icon_size = 1,
     subgroup = "raw-resource",
-	fuel_value = "100MJ",
+	fuel_value = "200MJ",
 	fuel_category = "chemical",
     order = "a-a",
     stack_size = 50,

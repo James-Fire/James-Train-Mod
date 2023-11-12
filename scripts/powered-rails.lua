@@ -2,8 +2,8 @@ local FakeBurnerItem = "electric-burner-item"
 local AccumName = "james-rail-accumulator"
 local HiddenPoleName = "james-track-pole"
 local SignalPoleName = "james-rail-pole"
-local UpdateTime = 160 --Ticks, 16/s
-local WagonPowerUse = 1000000 --How much power each electric wagon uses in UpdateTime. J
+local UpdateTime = 16 --Ticks, 16/s
+local WagonPowerUse = 500000 --How much power each electric wagon uses in UpdateTime. J
 
 local function CheckTableValue(Value,Table)
 	for i, v in pairs(Table) do
@@ -18,8 +18,13 @@ end
 local function OnInit()
 	global.JamesElectricTrains = { }
 	global.JamesElectricWagonTrains = { }
+	global.JamesRegenBrakingTrains = { }
 	global.JETrainsUpdate = { }
 	global.JECounter = 0
+end
+
+local function TrainIsBraking(Train)
+
 end
 
 local function GetTrainLocomotives(Train)
@@ -90,8 +95,6 @@ local function LocomotiveIsElectricNow(Locomotive)
 		return false
 	end
 end
-
---When powered rails are built/removed
 
 --Collects all connected rails into a table
 local function GetConnectedRails(Rail)
@@ -223,7 +226,7 @@ local function PowerTrain(Train)
 		if LocomotiveIsElectricNow(locomotive) then
 			if locomotive.burner.currently_burning then
 				--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name))
-				PowerNeeded = PowerNeeded + locomotive.burner.currently_burning.fuel_value - locomotive.burner.remaining_burning_fuel
+				PowerNeeded = PowerNeeded + locomotive.burner.currently_burning.fuel_value/2 - locomotive.burner.remaining_burning_fuel
 			else
 				--game.print("Loco is not burning, using default transfer value")
 				PowerNeeded = PowerNeeded + 100000000
@@ -267,12 +270,51 @@ local function PowerTrain(Train)
 	end
 end
 
+local function train_regenerative_braking(Train)
+	if Train and Train.valid and TrainIsBraking(Train) then
+		local LocomotiveCount = 0
+		local WagonCount = 0
+		for i, wagon in pairs(GetTrainWagons(Train)) do
+			if WagonIsElectric(Wagon) then
+				WagonCount = WagonCount + 1
+			end
+		end
+		local RegenTransfer = WagonCount * WagonPowerUse * 0.8
+		for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
+			if ValidLocomotive(Locomotive) then
+				LocomotiveCount = LocomotiveCount + (max_energy_usage * 0.8)
+			end
+		end
+		local RegenTransfer = RegenTransfer + LocomotiveCount
+		
+		for i, locomotive in pairs(GetTrainLocomotives(Train)) do
+			if LocomotiveIsElectricNow(locomotive) then
+				locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel + RegenTransfer
+			end
+		end
+	else
+		table.remove(global.JamesRegenBrakingTrains, Train)
+	end
+end
+
+local function train_state_handler(event)
+	local Train = event.train
+	if TrainIsBraking(Train) then
+		table.insert(global.JamesRegenBrakingTrains, Train)
+	end
+end
+
 local function WagonPower(Train)
 	local LocomotiveCount = #GetTrainLocomotives(Train)
-	local WagonCount = #GetTrainWagons(Train)
+	local WagonCount = 0
+	for i, wagon in pairs(GetTrainWagons(Train)) do
+		if wagon and wagon.valid and WagonIsElectric(wagon) then
+			WagonCount = WagonCount + 1
+		end
+	end
 	local WagonDrain = WagonCount * WagonPowerUse / LocomotiveCount
 	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
-		if LocomotiveIsElectricNow(locomotive) then
+		if locomotive and locomotive.valid and LocomotiveIsElectricNow(locomotive) then
 			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel - WagonDrain
 		end
 	end
@@ -301,6 +343,17 @@ end
 
 local function UpdateTrains()
 	--PrintUpdateTrainList()
+	local NilRegenBrakingTrains = { }
+	for i, train in pairs(global.JamesRegenBrakingTrains) do
+		if train and train.valid and TrainIsBraking(Train) then
+			train_regenerative_braking(train)
+		else
+			table.insert(NilRegenBrakingTrains, i)	
+		end
+	end
+	for i, entry in pairs(NilRegenBrakingTrains) do
+		table.remove(global.JamesRegenBrakingTrains, entry)
+	end
 	for i, train in pairs(global.JamesElectricWagonTrains) do
 		if train and train.valid and train.state == 0 then
 			WagonPower(train)
@@ -321,8 +374,9 @@ end
 
 script.on_event(defines.events.on_tick, function(event)
 	--game.print("pre tick")
+	--game.print(tostring(global.JECounter))
 	global.JECounter = global.JECounter + 1
-	if (global.JECounter == UpdateTime) then
+	if global.JECounter >= UpdateTime then
 		UpdateTrains()
 		global.JECounter = 0
 		--game.print("tick")
@@ -331,6 +385,7 @@ end)
 
 script.on_init(OnInit)
 script.on_event(defines.events.on_train_created, on_new_train)
+script.on_event(defines.events.on_train_changed_state, train_state_handler)
 script.on_event(defines.events.on_entity_destroyed, on_remove_entity)
 script.on_event(defines.events.on_entity_died, on_remove_entity)
 script.on_event(defines.events.on_robot_mined_entity, on_remove_entity)
