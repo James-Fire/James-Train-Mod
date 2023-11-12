@@ -1,18 +1,11 @@
+require("scripts/common-functions")
+
 local FakeBurnerItem = "electric-burner-item"
 local AccumName = "james-rail-accumulator"
 local HiddenPoleName = "james-track-pole"
 local SignalPoleName = "james-rail-pole"
 local UpdateTime = 16 --Ticks, 16/s
 local WagonPowerUse = 500000 --How much power each electric wagon uses in UpdateTime. J
-
-local function CheckTableValue(Value,Table)
-	for i, v in pairs(Table) do
-		if Value == v then
-			return true
-		end
-	end
-	return false
-end
 
 --Initialization Function
 local function OnInit()
@@ -24,66 +17,14 @@ local function OnInit()
 end
 
 local function TrainIsBraking(Train)
-
-end
-
-local function GetTrainLocomotives(Train)
-	local Locomotives = { }
-	for i, locomotive in pairs(Train.locomotives.front_movers) do
-		table.insert(Locomotives, locomotive)
-	end
-	for i, locomotive in pairs(Train.locomotives.back_movers) do
-		table.insert(Locomotives, locomotive)
-	end
-	return Locomotives
-end
-local function GetTrainWagons(Train)
-	local Wagons = { }
-	for i, wagon in pairs(Train.cargo_wagons) do
-		table.insert(Wagons, wagon)
-	end
-	for i, wagon in pairs(Train.fluid_wagons) do
-		table.insert(Wagons, wagon)
-	end
-	return Wagons
-end
-
---Arbiter function for if we should *ever* handle a train, is passed a locomotive
-local function ValidLocomotive(Locomotive)
-	if Locomotive.name:find("ret", 1, true) then
-		return true
-	elseif Locomotive.name:find("hybrid", 1, true) then
-		return true
-	elseif Locomotive.name:find("electric", 1, true) then
+	if train.state == 1 or train.state == 4 or train.state == 6 or train.state == 8 then
 		return true
 	end
 	return false
 end
 
-local function WagonIsElectric(Wagon)
-	if Wagon.name:find("wagon-electric", 1, true) then
-		return true
-	end
-	return false
-end
 
-local function TrainHasValidLocomotive(Train)
-	for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
-		if ValidLocomotive(Locomotive) then
-			return true
-		end
-	end
-	return false
-end
 
-local function TrainHasElectricWagon(Train)
-	for i, Wagon in pairs(GetTrainWagons(Train)) do
-		if WagonIsElectric(Wagon) then
-			return true
-		end
-	end
-	return false
-end
 
 --Arbiter function for if we should handle a train in the moment, is passed a locomotive
 local function LocomotiveIsElectricNow(Locomotive)
@@ -96,25 +37,6 @@ local function LocomotiveIsElectricNow(Locomotive)
 	end
 end
 
---Collects all connected rails into a table
-local function GetConnectedRails(Rail)
-	local RailTable = {}
-	for i, direction in pairs(defines.rail_direction) do
-		if direction then
-			for j, connection in pairs(defines.rail_connection_direction) do
-				if j == "none" then  
-				else
-					--log(tostring(connection))
-					local ConnectedRail, dir, cdir = Rail.get_connected_rail({ rail_direction = direction, rail_connection_direction = connection })
-					if ConnectedRail and ConnectedRail.valid then
-						table.insert(RailTable, ConnectedRail)
-					end
-				end
-			end
-		end
-	end
-	return RailTable
-end
 
 local function GetHiddenPole(surface, position)
 	return surface.find_entity(HiddenPoleName, position)
@@ -179,7 +101,7 @@ end
 local function on_new_train(event)
 	local NewTrain = event.train
 	if not NewTrain then return end
-	if TrainHasValidLocomotive(NewTrain) and CheckTableValue(NewTrain,global.JamesElectricTrains) == false then
+	if TrainHasLocomotiveIsElectric(NewTrain) and CheckTableValue(NewTrain,global.JamesElectricTrains) == false then
 		table.insert(global.JamesElectricTrains, NewTrain)
 	end
 	if TrainHasElectricWagon(NewTrain) and CheckTableValue(NewTrain,global.JamesElectricWagonTrains) == false then
@@ -196,7 +118,7 @@ local function on_new_entity(event)
 		MakeHiddenAccum(surface, position)
 		MakeHiddenPole(entity)
 		SetupCableConnections(entity)
-	elseif ValidLocomotive(entity) and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
+	elseif LocomotiveIsElectric(entity) and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
 		table.insert(global.JamesElectricTrains, entity.train)
 	--[[elseif WagonIsElectric and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
 		table.insert(global.JamesElectricTrains, entity.train)]]
@@ -281,7 +203,7 @@ local function train_regenerative_braking(Train)
 		end
 		local RegenTransfer = WagonCount * WagonPowerUse * 0.8
 		for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
-			if ValidLocomotive(Locomotive) then
+			if LocomotiveIsElectric(Locomotive) then
 				LocomotiveCount = LocomotiveCount + (max_energy_usage * 0.8)
 			end
 		end
