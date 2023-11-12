@@ -17,6 +17,7 @@ function GetTrainLocomotives(Train)
 	end
 	return Locomotives
 end
+
 function GetTrainWagons(Train)
 	local Wagons = { }
 	for i, wagon in pairs(Train.cargo_wagons) do
@@ -28,7 +29,6 @@ function GetTrainWagons(Train)
 	return Wagons
 end
 
---Arbiter function for if we should *ever* handle a train, is passed a locomotive
 function LocomotiveIsElectric(Locomotive)
 	if Locomotive.name:find("ret", 1, true) then
 		return true
@@ -65,7 +65,6 @@ function TrainHasElectricWagon(Train)
 	return false
 end
 
---Collects all connected rails into a table
 function GetConnectedRails(Rail)
 	local RailTable = {}
 	for i, direction in pairs(defines.rail_direction) do
@@ -73,7 +72,6 @@ function GetConnectedRails(Rail)
 			for j, connection in pairs(defines.rail_connection_direction) do
 				if j == "none" then  
 				else
-					--log(tostring(connection))
 					local ConnectedRail, dir, cdir = Rail.get_connected_rail({ rail_direction = direction, rail_connection_direction = connection })
 					if ConnectedRail and ConnectedRail.valid then
 						table.insert(RailTable, ConnectedRail)
