@@ -30,7 +30,7 @@ function GetTrainWagons(Train)
 end
 
 function LocomotiveIsElectric(Locomotive)
-	if Locomotive.name:find("ret", 1, true) then
+	if Locomotive.name:find("ret-", 1, true) then
 		return true
 	elseif Locomotive.name:find("hybrid", 1, true) then
 		return true

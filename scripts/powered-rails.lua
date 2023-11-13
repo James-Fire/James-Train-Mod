@@ -4,7 +4,7 @@ local FakeBurnerItem = "electric-burner-item"
 local AccumName = "james-rail-accumulator"
 local HiddenPoleName = "james-track-pole"
 local SignalPoleName = "james-rail-pole"
-local UpdateTime = 16 --Ticks, 16/s
+local UpdateTime = 60 --Ticks, 60/s
 local WagonPowerUse = 500000 --How much power each electric wagon uses in UpdateTime. J
 
 --Initialization Function

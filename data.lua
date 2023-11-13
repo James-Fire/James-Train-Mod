@@ -6,6 +6,9 @@ end
 if settings.startup["train-car-tiers"].value then
 	require("prototypes/train-car-tiers")
 end
+if settings.startup["hybrid-trains"].value then
+	require("prototypes/hybrid-trains")
+end
 if settings.startup["electric-trains"].value then
 	require("prototypes/electric-trains")
 end

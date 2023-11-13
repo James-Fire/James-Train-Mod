@@ -1,7 +1,10 @@
+local LocomotivePower = { "1MW", "2MW", "4MW" }
+
 --Train(s)
 local ElectricTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	ElectricTrainEntity.name = "james-electric-train"
 	ElectricTrainEntity.burner.fuel_inventory_size = 0
+	ElectricTrainEntity.max_power = LocomotivePower[1]
 	ElectricTrainEntity.burner.smoke = nil
     ElectricTrainEntity.minable = {mining_time = 0.5, result = "james-electric-train"}
 	ElectricTrainEntity.weight = 1500
@@ -10,12 +13,6 @@ local ElectricTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["loco
 	ElectricTrainItem.name = "james-electric-train"
 	ElectricTrainItem.place_result = "james-electric-train"
 
-if settings.startup["train-tiers"].value then
-	if settings.startup["electric-train-upgrade"].value then
-	
-	end
-end
-
 data:extend({ElectricTrainEntity, ElectricTrainItem,
 	{
 		type = "recipe",
@@ -23,13 +20,43 @@ data:extend({ElectricTrainEntity, ElectricTrainItem,
 		enabled = false,
 		energy_required = 1,
 		ingredients = {
-			{"locomotive", 1},
 			{"electric-engine-unit", 8},
 			{"copper-cable", 30},
 			{"electronic-circuit", 10},
 		},
-		results = {{"james-electric-train",1}},
+		result = "james-electric-train",
 	},
+})
+
+if settings.startup["train-tiers"].value then
+	for i, v in pairs({2,3}) do
+		local locomotive_entity = table.deepcopy(data.raw.locomotive["james-electric-train"])
+		locomotive_entity.name = "james-electric-train-"..tostring(v)
+		locomotive_entity.weight = data.raw.locomotive["james-electric-train"].weight + data.raw.locomotive["james-electric-train"].weight*v/2
+		locomotive_entity.max_speed = data.raw.locomotive["james-electric-train"].max_speed*v
+		locomotive_entity.braking_force = data.raw.locomotive["james-electric-train"].braking_force*v
+		locomotive_entity.max_power = LocomotivePower[v]
+		locomotive_entity.minable = {mining_time = 0.5, result = "james-electric-train-"..tostring(v)}
+		
+		local locomotive_item = table.deepcopy(data.raw["item-with-entity-data"]["james-electric-train"])
+		locomotive_item.name = "james-electric-train-"..tostring(v)
+		locomotive_item.place_result = "james-electric-train-"..tostring(v)
+
+		LSlib.recipe.duplicate("james-electric-train", "james-electric-train-"..tostring(v))
+		data:extend({locomotive_entity, locomotive_item})
+	end
+	LSlib.recipe.editResult("james-electric-train-2", "james-electric-train", "james-electric-train-2", 1)
+	LSlib.recipe.editResult("james-electric-train-3", "james-electric-train", "james-electric-train-3", 1)
+	if settings.startup["electric-train-upgrade"].value then
+		LSlib.recipe.addIngredient("james-electric-train-2", "locomotive-2", 1, "item")
+		LSlib.recipe.addIngredient("james-electric-train-3", "locomotive-3", 1, "item")
+	else
+		LSlib.recipe.addIngredient("james-electric-train-2", "james-electric-train", 1, "item")
+		LSlib.recipe.addIngredient("james-electric-train-3", "james-electric-train-2", 1, "item")
+	end
+end
+LSlib.recipe.addIngredient("james-electric-train", "locomotive-2", 1, "item")
+data:extend({
 	{
 		type = "technology",
 		name = "electric-trains",
@@ -54,3 +81,58 @@ data:extend({ElectricTrainEntity, ElectricTrainItem,
 		order = "d-a",
 	},
 })
+
+if settings.startup["hybrid-trains"].value then
+	LSlib.technology.movePrerequisite("electric-trains", "railway", "hybrid-trains")
+end
+if settings.startup["train-tiers"].value then
+	data:extend({
+		{
+			type = "technology",
+			name = "high-speed-electric-trains",
+			icon_size = 64,
+			icon = "__base__/graphics/icons/steam-turbine.png",
+			prerequisites = { "high-speed-trains", "electric-trains"},
+			effects = {
+				{
+					type = "unlock-recipe",
+					recipe = "james-electric-train-2"
+				},
+			},
+			unit = {
+				count = 100,
+				ingredients = {
+					{"automation-science-pack", 1},
+					{"logistic-science-pack", 1},
+					{"chemical-science-pack", 1},
+				},
+				time = 30,
+			},
+			order = "d-a",
+		},
+		{
+			type = "technology",
+			name = "high-speed-electric-trains-2",
+			icon_size = 64,
+			icon = "__base__/graphics/icons/steam-turbine.png",
+			prerequisites = { "high-speed-trains-2", "high-speed-electric-trains" },
+			effects = {
+				{
+					type = "unlock-recipe",
+					recipe = "james-electric-train-3"
+				},
+			},
+			unit = {
+				count = 100,
+				ingredients = {
+					{"automation-science-pack", 1},
+					{"logistic-science-pack", 1},
+					{"chemical-science-pack", 1},
+					{"production-science-pack", 1},
+				},
+				time = 30,
+			},
+			order = "d-a",
+		},
+	})
+end
