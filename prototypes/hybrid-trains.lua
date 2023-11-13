@@ -4,6 +4,7 @@ local HybridTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	HybridTrainEntity.name = "james-hybrid-train"
     HybridTrainEntity.minable = {mining_time = 0.5, result = "james-hybrid-train"}
 	HybridTrainEntity.weight = 2000
+	HybridTrainEntity.color = {r = 51, g = 153, b = 255, a = 1}
 	
 local HybridTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locomotive"])
 	HybridTrainItem.name = "james-hybrid-train"
@@ -25,6 +26,7 @@ if settings.startup["train-tiers"].value then
 		locomotive_entity.braking_force = data.raw.locomotive["james-hybrid-train"].braking_force*v
 		locomotive_entity.max_power = LocomotivePower[i]
 		locomotive_entity.minable = {mining_time = 0.5, result = "james-hybrid-train-"..tostring(v)}
+		locomotive_entity.color = {r = 51, g = 153, b = 255, a = 1}
 		
 		local locomotive_item = table.deepcopy(data.raw["item-with-entity-data"]["james-hybrid-train"])
 		locomotive_item.name = "james-hybrid-train-"..tostring(v)

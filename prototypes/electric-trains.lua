@@ -8,6 +8,7 @@ local ElectricTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	ElectricTrainEntity.burner.smoke = nil
     ElectricTrainEntity.minable = {mining_time = 0.5, result = "james-electric-train"}
 	ElectricTrainEntity.weight = 1500
+	ElectricTrainEntity.color = {r = 0, g = 0, b = 255, a = 1}
 
 local ElectricTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locomotive"])
 	ElectricTrainItem.name = "james-electric-train"
@@ -37,6 +38,7 @@ if settings.startup["train-tiers"].value then
 		locomotive_entity.braking_force = data.raw.locomotive["james-electric-train"].braking_force*v
 		locomotive_entity.max_power = LocomotivePower[v]
 		locomotive_entity.minable = {mining_time = 0.5, result = "james-electric-train-"..tostring(v)}
+		locomotive_entity.color = {r = 0, g = 0, b = 255, a = 1}
 		
 		local locomotive_item = table.deepcopy(data.raw["item-with-entity-data"]["james-electric-train"])
 		locomotive_item.name = "james-electric-train-"..tostring(v)

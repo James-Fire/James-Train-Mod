@@ -17,7 +17,7 @@ local function OnInit()
 end
 
 local function TrainIsBraking(Train)
-	if train.state == 1 or train.state == 4 or train.state == 6 or train.state == 8 then
+	if Train and Train.valid and Train.state == 1 or Train.state == 4 or Train.state == 6 or Train.state == 8 then
 		return true
 	end
 	return false
@@ -206,7 +206,7 @@ local function train_regenerative_braking(Train)
 		local RegenTransfer = WagonCount * WagonPowerUse * 0.8
 		for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
 			if LocomotiveIsElectric(Locomotive) then
-				LocomotiveCount = LocomotiveCount + (max_energy_usage * 0.8)
+				LocomotiveCount = LocomotiveCount + (game.entity_prototypes[Locomotive.name].max_energy_usage * 0.8)
 			end
 		end
 		local RegenTransfer = RegenTransfer + LocomotiveCount
@@ -269,7 +269,7 @@ local function UpdateTrains()
 	--PrintUpdateTrainList()
 	local NilRegenBrakingTrains = { }
 	for i, train in pairs(global.JamesRegenBrakingTrains) do
-		if train and train.valid and TrainIsBraking(Train) then
+		if train and train.valid and TrainIsBraking(train) then
 			train_regenerative_braking(train)
 		else
 			table.insert(NilRegenBrakingTrains, i)	
@@ -278,33 +278,33 @@ local function UpdateTrains()
 	for i, entry in pairs(NilRegenBrakingTrains) do
 		table.remove(global.JamesRegenBrakingTrains, entry)
 	end
-	for i, train in pairs(global.JamesElectricWagonTrains) do
-		if train and train.valid and train.state == 0 then
-			WagonPower(train)
+	global.JECounter = global.JECounter + 1
+	if global.JECounter >= UpdateTime then
+		global.JECounter = 0
+		--game.print("tick")
+		for i, train in pairs(global.JamesElectricWagonTrains) do
+			if train and train.valid and train.state == 0 then
+				WagonPower(train)
+			end
 		end
-	end
-	if global.JETrainsUpdate[1] ~= nil and global.JETrainsUpdate[1].valid  then
-		--game.print("Update train in update list")
-		PowerTrain(table.remove(global.JETrainsUpdate, 1))
-	else
-		table.remove(global.JETrainsUpdate, 1)
-		--game.print("First entry isn't valid")
-	end
-	if #global.JETrainsUpdate == 0 then
-		--game.print("Update list is empty, remaking")
-		RemakeTrainUpdateList()
+		if global.JETrainsUpdate[1] ~= nil and global.JETrainsUpdate[1].valid  then
+			--game.print("Update train in update list")
+			PowerTrain(table.remove(global.JETrainsUpdate, 1))
+		else
+			table.remove(global.JETrainsUpdate, 1)
+			--game.print("First entry isn't valid")
+		end
+		if #global.JETrainsUpdate == 0 then
+			--game.print("Update list is empty, remaking")
+			RemakeTrainUpdateList()
+		end
 	end
 end
 
 script.on_event(defines.events.on_tick, function(event)
 	--game.print("pre tick")
 	--game.print(tostring(global.JECounter))
-	global.JECounter = global.JECounter + 1
-	if global.JECounter >= UpdateTime then
-		UpdateTrains()
-		global.JECounter = 0
-		--game.print("tick")
-	end
+	UpdateTrains()
 end)
 
 script.on_init(OnInit)

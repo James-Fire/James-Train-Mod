@@ -23,7 +23,7 @@ end
 	LSlib.recipe.addIngredient("locomotive-3", "locomotive-2", 1, "item")
 	LSlib.recipe.editResult("locomotive-2", "locomotive", "locomotive-2", 1)
 	LSlib.recipe.editResult("locomotive-3", "locomotive", "locomotive-3", 1)
-	
+
 data:extend({
 	{
 		type = "technology",
