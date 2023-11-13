@@ -12,3 +12,11 @@ if settings.startup["weighty-trains"].value then
 		rollingstock.weight = rollingstock.weight*settings.startup["weighty-trains-factor"].value
 	end
 end
+
+for i, rollingstock in pairs(data.raw["item-with-entity-data"]) do
+	if rollingstock.place_result:find("locomotive", 1, true) or rollingstock.place_result:find("train", 1, true) then
+		rollingstock.subgroup = "locomotives"
+	elseif rollingstock.place_result:find("wagon", 1, true) then
+		rollingstock.subgroup = "wagons"
+	end
+end

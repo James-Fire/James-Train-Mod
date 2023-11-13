@@ -74,10 +74,10 @@ if settings.startup["train-tiers"].value then
 	data:extend({
 		{
 			type = "technology",
-			name = "high-speed-hybrid-trains",
+			name = "mid-speed-hybrid-trains",
 			icon_size = 64,
 			icon = "__base__/graphics/icons/steam-turbine.png",
-			prerequisites = { "high-speed-trains", "hybrid-trains"},
+			prerequisites = { "mid-speed-trains", "hybrid-trains"},
 			effects = {
 				{
 					type = "unlock-recipe",
@@ -97,10 +97,10 @@ if settings.startup["train-tiers"].value then
 		},
 		{
 			type = "technology",
-			name = "high-speed-hybrid-trains-2",
+			name = "high-speed-hybrid-trains",
 			icon_size = 64,
 			icon = "__base__/graphics/icons/steam-turbine.png",
-			prerequisites = { "high-speed-trains-2", "high-speed-hybrid-trains" },
+			prerequisites = { "high-speed-trains", "mid-speed-hybrid-trains" },
 			effects = {
 				{
 					type = "unlock-recipe",

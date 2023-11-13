@@ -27,7 +27,7 @@ end
 data:extend({
 	{
 		type = "technology",
-		name = "high-speed-trains",
+		name = "mid-speed-trains",
 		icon_size = 64,
 		icon = "__base__/graphics/icons/steam-turbine.png",
 		prerequisites = { "railway", "chemical-science-pack" },
@@ -50,10 +50,10 @@ data:extend({
 	},
 	{
 		type = "technology",
-		name = "high-speed-trains-2",
+		name = "high-speed-trains",
 		icon_size = 64,
 		icon = "__base__/graphics/icons/steam-turbine.png",
-		prerequisites = { "high-speed-trains", "production-science-pack" },
+		prerequisites = { "mid-speed-trains", "production-science-pack" },
 		effects = {
 			{
 				type = "unlock-recipe",

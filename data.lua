@@ -1,4 +1,5 @@
 require("__LSlib__/LSlib")
+require("prototypes/item-groups")
 
 if settings.startup["train-tiers"].value then
 	require("prototypes/train-tiers")
