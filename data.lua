@@ -1,6 +1,8 @@
 require("__LSlib__/LSlib")
 require("prototypes/item-groups")
 
+Modname = "__James-Train-Mod__"
+
 if settings.startup["train-tiers"].value then
 	require("prototypes/train-tiers")
 end

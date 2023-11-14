@@ -22,8 +22,10 @@ if settings.startup["train-car-tiers"].value then
 			LSlib.recipe.duplicate(wagon, wagon.."-electric-"..tostring(v))
 			data:extend({wagon_entity, wagon_item})
 		end
+		LSlib.recipe.addIngredient(wagon.."-electric-1", "electric-engine-unit", 8, "item")
 		LSlib.recipe.addIngredient(wagon.."-electric-2", wagon.."electric-1", 1, "item")
 		LSlib.recipe.addIngredient(wagon.."-electric-3", wagon.."-electric-2", 1, "item")
+		LSlib.recipe.editResult(wagon.."-electric-1", wagon, wagon.."-electric-1", 1)
 		LSlib.recipe.editResult(wagon.."-electric-2", wagon, wagon.."-electric-2", 1)
 		LSlib.recipe.editResult(wagon.."-electric-3", wagon, wagon.."-electric-3", 1)
 	end
@@ -58,15 +60,13 @@ local ElectricArtilleryWagonEntity = table.deepcopy(data.raw["artillery-wagon"][
 local ElectricArtilleryWagonItem = table.deepcopy(data.raw["item-with-entity-data"]["artillery-wagon"])
 	ElectricArtilleryWagonItem.name = "artillery-wagon-electric"
 	ElectricArtilleryWagonItem.place_result = "artillery-wagon-electric"
-end
-
---Data extend everything, and make our hidden item
+	
 data:extend({ElectricCargoWagonEntity, ElectricCargoWagonItem,
 ElectricFluidWagonEntity, ElectricFluidWagonItem,
 ElectricArtilleryWagonEntity, ElectricArtilleryWagonItem,
 	{
 		type = "recipe",
-		name = "cargo-wagon-electric",
+		name = "cargo-wagon-electric-1",
 		enabled = false,
 		energy_required = 1,
 		ingredients = {
@@ -75,11 +75,11 @@ ElectricArtilleryWagonEntity, ElectricArtilleryWagonItem,
 			{"copper-cable", 30},
 			{"electronic-circuit", 10},
 		},
-		results = {{"cargo-wagon-electric",1}},
+		results = {{"cargo-wagon-electric-1",1}},
 	},
 	{
 		type = "recipe",
-		name = "fluid-wagon-electric",
+		name = "fluid-wagon-electric-1",
 		enabled = false,
 		energy_required = 1,
 		ingredients = {
@@ -88,11 +88,11 @@ ElectricArtilleryWagonEntity, ElectricArtilleryWagonItem,
 			{"copper-cable", 30},
 			{"electronic-circuit", 10},
 		},
-		results = {{"fluid-wagon-electric",1}},
+		results = {{"fluid-wagon-electric-1",1}},
 	},
 	{
 		type = "recipe",
-		name = "artillery-wagon-electric",
+		name = "artillery-wagon-electric-1",
 		enabled = false,
 		energy_required = 1,
 		ingredients = {
@@ -101,22 +101,28 @@ ElectricArtilleryWagonEntity, ElectricArtilleryWagonItem,
 			{"copper-cable", 30},
 			{"electronic-circuit", 10},
 		},
-		results = {{"artillery-wagon-electric",1}},
+		results = {{"artillery-wagon-electric-1",1}},
 	},
+})
+	
+end
+
+--Data extend everything, and make our hidden item
+data:extend({
 	{
 		type = "technology",
 		name = "electric-wagons",
 		icon_size = 64,
 		icon = "__base__/graphics/icons/steam-turbine.png",
-		prerequisites = { "railway", "electric-engine"},
+		prerequisites = { "railway", "electric-engine" },
 		effects = {
 			{
 				type = "unlock-recipe",
-				recipe = "cargo-wagon-electric"
+				recipe = "cargo-wagon-electric-1"
 			},
 			{
 				type = "unlock-recipe",
-				recipe = "fluid-wagon-electric"
+				recipe = "fluid-wagon-electric-1"
 			},
 		},
 		unit = {
@@ -135,11 +141,11 @@ ElectricArtilleryWagonEntity, ElectricArtilleryWagonItem,
 		name = "electric-military-wagons",
 		icon_size = 64,
 		icon = "__base__/graphics/icons/steam-turbine.png",
-		prerequisites = { "railway", "electric-wagons"},
+		prerequisites = { "railway", "electric-wagons" },
 		effects = {
 			{
 				type = "unlock-recipe",
-				recipe = "artillery-wagon-electric"
+				recipe = "artillery-wagon-electric-1"
 			},
 		},
 		unit = {

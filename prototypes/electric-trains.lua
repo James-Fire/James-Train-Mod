@@ -3,6 +3,7 @@ local LocomotivePower = { "1MW", "2MW", "4MW" }
 --Train(s)
 local ElectricTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	ElectricTrainEntity.name = "james-electric-train"
+	ElectricTrainEntity.icon = Modname.."/graphics/electric-train.png"
 	ElectricTrainEntity.burner.fuel_inventory_size = 0
 	ElectricTrainEntity.max_power = LocomotivePower[1]
 	ElectricTrainEntity.burner.smoke = nil
@@ -12,6 +13,7 @@ local ElectricTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 
 local ElectricTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locomotive"])
 	ElectricTrainItem.name = "james-electric-train"
+	ElectricTrainItem.icon = Modname.."/graphics/electric-train.png"
 	ElectricTrainItem.place_result = "james-electric-train"
 
 data:extend({ElectricTrainEntity, ElectricTrainItem,
@@ -33,15 +35,17 @@ if settings.startup["train-tiers"].value then
 	for i, v in pairs({2,3}) do
 		local locomotive_entity = table.deepcopy(data.raw.locomotive["james-electric-train"])
 		locomotive_entity.name = "james-electric-train-"..tostring(v)
+		locomotive_entity.icon = Modname.."/graphics/electric-train.png"
 		locomotive_entity.weight = data.raw.locomotive["james-electric-train"].weight + data.raw.locomotive["james-electric-train"].weight*v/2
 		locomotive_entity.max_speed = data.raw.locomotive["james-electric-train"].max_speed*v
 		locomotive_entity.braking_force = data.raw.locomotive["james-electric-train"].braking_force*v
 		locomotive_entity.max_power = LocomotivePower[v]
 		locomotive_entity.minable = {mining_time = 0.5, result = "james-electric-train-"..tostring(v)}
-		locomotive_entity.color = {r = 0, g = 0, b = 255, a = 1}
+		locomotive_entity.color = {r = 0, g = 0, b = 255, a = 255}
 		
 		local locomotive_item = table.deepcopy(data.raw["item-with-entity-data"]["james-electric-train"])
 		locomotive_item.name = "james-electric-train-"..tostring(v)
+		locomotive_item.icon = Modname.."/graphics/electric-train.png"
 		locomotive_item.place_result = "james-electric-train-"..tostring(v)
 
 		LSlib.recipe.duplicate("james-electric-train", "james-electric-train-"..tostring(v))
