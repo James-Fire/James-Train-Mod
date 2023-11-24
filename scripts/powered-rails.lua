@@ -175,8 +175,10 @@ local function PowerTrain(Train)
 	for i, rail in pairs(Train.get_rails()) do
 		local surface = rail.surface
 		local Accumulator = surface.find_entity(AccumName, rail.position)
-		AvailablePower = AvailablePower + Accumulator.energy
-		table.insert(Accumulators, Accumulator)
+		if Accumulator and Accumulator.valid then
+			AvailablePower = AvailablePower + Accumulator.energy
+			table.insert(Accumulators, Accumulator)
+		end
 	end
 	--game.print("Available Power: "..tostring(AvailablePower))
 	--game.print("Available Accumulators: "..tostring(#Accumulators))
