@@ -1,10 +1,14 @@
-local LocomotivePower = { "1MW", "2MW" }
+local LocomotivePower = { "1MW", "2MW", "4MW" }
+
+data.raw["locomotive"]["locomotive"].burner.effectivity = 0.8
 
 local HybridTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	HybridTrainEntity.name = "james-hybrid-train"
 	HybridTrainEntity.icon = Modname.."/graphics/hybrid-train.png"
     HybridTrainEntity.minable = {mining_time = 0.5, result = "james-hybrid-train"}
-	HybridTrainEntity.weight = 2000
+	HybridTrainEntity.max_power = LocomotivePower[1]
+	HybridTrainEntity.burner.effectivity = 0.9
+	HybridTrainEntity.weight = 2500
 	HybridTrainEntity.color = {r = 51, g = 153, b = 255, a = 1}
 	
 local HybridTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locomotive"])
@@ -27,7 +31,7 @@ if settings.startup["train-tiers"].value then
 		locomotive_entity.weight = data.raw.locomotive["james-hybrid-train"].weight + data.raw.locomotive["james-hybrid-train"].weight*v/2
 		locomotive_entity.max_speed = data.raw.locomotive["james-hybrid-train"].max_speed*v
 		locomotive_entity.braking_force = data.raw.locomotive["james-hybrid-train"].braking_force*v
-		locomotive_entity.max_power = LocomotivePower[i]
+		locomotive_entity.max_power = LocomotivePower[v]
 		locomotive_entity.minable = {mining_time = 0.5, result = "james-hybrid-train-"..tostring(v)}
 		locomotive_entity.color = {r = 51, g = 153, b = 255, a = 255}
 		

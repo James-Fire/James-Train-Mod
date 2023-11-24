@@ -301,7 +301,7 @@ Accumulator, StraightPoweredRailEntity, CurvedPoweredRailEntity, PoweredRailItem
     icon = "__core__/graphics/empty.png",
     icon_size = 1,
     subgroup = "raw-resource",
-	fuel_value = "200MJ",
+	fuel_value = "100MJ",
 	fuel_category = "chemical",
     order = "a-a",
     stack_size = 50,

@@ -1,10 +1,13 @@
 local LocomotivePower = { "1MW", "2MW", "4MW" }
 
+data.raw["locomotive"]["locomotive"].burner.effectivity = 0.8
+
 --Train(s)
 local ElectricTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	ElectricTrainEntity.name = "james-electric-train"
 	ElectricTrainEntity.icon = Modname.."/graphics/electric-train.png"
 	ElectricTrainEntity.burner.fuel_inventory_size = 0
+	ElectricTrainEntity.burner.effectivity = 1
 	ElectricTrainEntity.max_power = LocomotivePower[1]
 	ElectricTrainEntity.burner.smoke = nil
     ElectricTrainEntity.minable = {mining_time = 0.5, result = "james-electric-train"}

@@ -27,8 +27,18 @@ end
 
 
 --Arbiter function for if we should handle a train in the moment, is passed a locomotive
+local function TrainIsElectricNow(Train)
+	for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
+		if Locomotive.burner and Locomotive.burner.currently_burning == nil then --The train is handled if it's burning nothing
+			return true
+		elseif Locomotive.burner.currently_burning.name == FakeBurnerItem then --The train is handled if it's already burning our dummy item
+			return true
+		end
+	end
+	return false
+end
 local function LocomotiveIsElectricNow(Locomotive)
-	if Locomotive.burner.currently_burning == nil then --The train is handled if it's burning nothing
+	if Locomotive.burner and Locomotive.burner.currently_burning == nil then --The train is handled if it's burning nothing
 		return true
 	elseif Locomotive.burner.currently_burning.name == FakeBurnerItem then --The train is handled if it's already burning our dummy item
 		return true
@@ -199,7 +209,7 @@ local function train_regenerative_braking(Train)
 		local LocomotiveCount = 0
 		local WagonCount = 0
 		for i, wagon in pairs(GetTrainWagons(Train)) do
-			if WagonIsElectric(Wagon) then
+			if WagonIsElectric(wagon) then
 				WagonCount = WagonCount + 1
 			end
 		end
@@ -223,7 +233,7 @@ end
 
 local function train_state_handler(event)
 	local Train = event.train
-	if TrainIsBraking(Train) then
+	if Train and Train.valid and TrainIsBraking(Train) and TrainIsElectricNow(Train) then
 		table.insert(global.JamesRegenBrakingTrains, Train)
 	end
 end
