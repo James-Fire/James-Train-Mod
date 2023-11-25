@@ -26,6 +26,7 @@ data:extend({ElectricTrainEntity, ElectricTrainItem,
 		enabled = false,
 		energy_required = 1,
 		ingredients = {
+			{"steel-plate", 30},
 			{"electric-engine-unit", 8},
 			{"copper-cable", 30},
 			{"electronic-circuit", 10},
