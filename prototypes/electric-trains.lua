@@ -64,7 +64,6 @@ if settings.startup["train-tiers"].value then
 		LSlib.recipe.addIngredient("james-electric-train-3", "james-electric-train-2", 1, "item")
 	end
 end
-LSlib.recipe.addIngredient("james-electric-train", "locomotive-2", 1, "item")
 data:extend({
 	{
 		type = "technology",
