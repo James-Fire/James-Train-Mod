@@ -170,6 +170,9 @@ local function PowerTrain(Train)
 			--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name))
 		end
 	end
+	if PowerNeeded < 0 then
+		return
+	end
 	--game.print("Desired Power: "..tostring(PowerNeeded))
 	for i, rail in pairs(Train.get_rails()) do
 		local surface = rail.surface
