@@ -71,6 +71,15 @@ data:extend(
     default_value = false,
 	order = "c-4",
   },
+  {
+    type = "int-setting",
+    name = "train-update-count",
+    setting_type = "runtime-global",
+    default_value = 20,
+    minimum_value = 1,
+	maximum_value = 500,
+	order = "c-5",
+  },
   --[[{
     type = "bool-setting",
     name = "diesel-trains",

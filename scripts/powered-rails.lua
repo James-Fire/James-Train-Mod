@@ -27,24 +27,23 @@ end
 
 
 --Arbiter function for if we should handle a train in the moment, is passed a locomotive
-local function TrainIsElectricNow(Train)
-	for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
-		if Locomotive.burner and Locomotive.burner.currently_burning == nil then --The train is handled if it's burning nothing
-			return true
-		elseif Locomotive.burner.currently_burning.name == FakeBurnerItem then --The train is handled if it's already burning our dummy item
-			return true
-		end
-	end
-	return false
-end
 local function LocomotiveIsElectricNow(Locomotive)
-	if Locomotive.burner and Locomotive.burner.currently_burning == nil then --The train is handled if it's burning nothing
+	local LocoBurner = Locomotive.burner or Locomotive.energy_source
+	if LocoBurner and LocoBurner.currently_burning == nil then --The train is handled if it's burning nothing
 		return true
-	elseif Locomotive.burner.currently_burning.name == FakeBurnerItem then --The train is handled if it's already burning our dummy item
+	elseif LocoBurner.currently_burning.name == FakeBurnerItem then --The train is handled if it's already burning our dummy item
 		return true
 	else
 		return false
 	end
+end
+local function TrainIsElectricNow(Train)
+	for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
+		if LocomotiveIsElectricNow(Locomotive) then
+			return true
+		end
+	end
+	return false
 end
 
 
@@ -163,7 +162,7 @@ local function PowerTrain(Train)
 				PowerNeeded = PowerNeeded + locomotive.burner.currently_burning.fuel_value/2 - locomotive.burner.remaining_burning_fuel
 			else
 				--game.print("Loco is not burning, using default transfer value")
-				PowerNeeded = PowerNeeded + 100000000
+				PowerNeeded = PowerNeeded + 50000000
 			end
 			LocomotiveCount = LocomotiveCount + 1
 		else
@@ -299,16 +298,22 @@ local function UpdateTrains()
 				WagonPower(train)
 			end
 		end
-		if global.JETrainsUpdate[1] ~= nil and global.JETrainsUpdate[1].valid  then
-			--game.print("Update train in update list")
-			PowerTrain(table.remove(global.JETrainsUpdate, 1))
-		else
-			table.remove(global.JETrainsUpdate, 1)
-			--game.print("First entry isn't valid")
-		end
-		if #global.JETrainsUpdate == 0 then
-			--game.print("Update list is empty, remaking")
-			RemakeTrainUpdateList()
+		
+		for i = 1,settings.global["train-update-count"].value,1 do
+			--if i == settings.global["train-update-count"].value then
+			--	break
+			--end
+			if global.JETrainsUpdate[1] ~= nil and global.JETrainsUpdate[1].valid then
+				--game.print("Update train in update list")
+				PowerTrain(table.remove(global.JETrainsUpdate, 1))
+			else
+				table.remove(global.JETrainsUpdate, 1)
+				--game.print("First entry isn't valid")
+			end
+			if #global.JETrainsUpdate == 0 then
+				--game.print("Update list is empty, remaking")
+				RemakeTrainUpdateList()
+			end
 		end
 	end
 end
