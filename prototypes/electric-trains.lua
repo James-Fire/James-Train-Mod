@@ -9,6 +9,7 @@ local ElectricTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	ElectricTrainEntity.burner.fuel_inventory_size = 0
 	ElectricTrainEntity.burner.effectivity = 1
 	ElectricTrainEntity.max_power = LocomotivePower[1]
+	ElectricTrainEntity.braking_force = ElectricTrainEntity.braking_force*2
 	ElectricTrainEntity.burner.smoke = nil
     ElectricTrainEntity.minable = {mining_time = 0.5, result = "james-electric-train"}
 	ElectricTrainEntity.weight = 1500
