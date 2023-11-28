@@ -71,7 +71,7 @@ data:extend({
 		name = "electric-trains",
 		icon_size = 64,
 		icon = "__base__/graphics/icons/steam-turbine.png",
-		prerequisites = {"railway", "electric-engine"},
+		prerequisites = {"railway", "electric-engine", "electric-energy-distribution-2"},
 		effects = {
 			{
 				type = "unlock-recipe",
