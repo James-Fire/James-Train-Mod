@@ -23,8 +23,11 @@ if settings.startup["train-car-tiers"].value then
 			data:extend({wagon_entity, wagon_item})
 		end
 		LSlib.recipe.addIngredient(wagon.."-electric-1", "electric-engine-unit", 8, "item")
+		LSlib.recipe.addIngredient(wagon.."-electric-1", "copper-cable", 40, "item")
 		LSlib.recipe.addIngredient(wagon.."-electric-2", wagon.."-electric-1", 1, "item")
+		LSlib.recipe.addIngredient(wagon.."-electric-2", "copper-cable", 40, "item")
 		LSlib.recipe.addIngredient(wagon.."-electric-3", wagon.."-electric-2", 1, "item")
+		LSlib.recipe.addIngredient(wagon.."-electric-3", "copper-cable", 40, "item")
 		LSlib.recipe.editResult(wagon.."-electric-1", wagon, wagon.."-electric-1", 1)
 		LSlib.recipe.editResult(wagon.."-electric-2", wagon, wagon.."-electric-2", 1)
 		LSlib.recipe.editResult(wagon.."-electric-3", wagon, wagon.."-electric-3", 1)
