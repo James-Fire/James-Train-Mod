@@ -247,7 +247,15 @@ local function WagonPower(Train)
 	local WagonCount = 0
 	for i, wagon in pairs(GetTrainWagons(Train)) do
 		if wagon and wagon.valid and WagonIsElectric(wagon) then
-			WagonCount = WagonCount + 1
+			if wagon.name:find("-1", 1, true) then
+				WagonCount = WagonCount + 1
+			end
+			if wagon.name:find("-2", 1, true) then
+				WagonCount = WagonCount + 2
+			end
+			if wagon.name:find("-3", 1, true) then
+				WagonCount = WagonCount + 3
+			end
 		end
 	end
 	local WagonDrain = WagonCount * WagonPowerUse / LocomotiveCount
