@@ -197,7 +197,7 @@ if settings.startup["train-car-tiers"].value then
 			name = "mid-speed-electric-military-wagons",
 			icon_size = 64,
 			icon = "__base__/graphics/icons/steam-turbine.png",
-			prerequisites = { "mid-speed-electric-wagons", "artillery-wagon" },
+			prerequisites = { "mid-speed-electric-wagons", "artillery" },
 			effects = {
 				{
 					type = "unlock-recipe",
@@ -249,7 +249,7 @@ if settings.startup["train-car-tiers"].value then
 			name = "high-speed-electric-military-wagons",
 			icon_size = 64,
 			icon = "__base__/graphics/icons/steam-turbine.png",
-			prerequisites = { "high-speed-electric-wagons", "mid-speed-artillery-wagons" },
+			prerequisites = { "high-speed-electric-wagons", "mid-speed-military-wagons" },
 			effects = {
 				{
 					type = "unlock-recipe",

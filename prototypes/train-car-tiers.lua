@@ -66,7 +66,7 @@ data:extend({
 		name = "mid-speed-military-wagons",
 		icon_size = 64,
 		icon = "__base__/graphics/icons/steam-turbine.png",
-		prerequisites = { "mid-speed-wagons", "artillery-wagon" },
+		prerequisites = { "mid-speed-wagons", "artillery" },
 		effects = {
 			{
 				type = "unlock-recipe",
@@ -118,7 +118,7 @@ data:extend({
 		name = "high-speed-military-wagons",
 		icon_size = 64,
 		icon = "__base__/graphics/icons/steam-turbine.png",
-		prerequisites = { "high-speed-wagons", "mid-speed-artillery-wagons" },
+		prerequisites = { "high-speed-wagons", "mid-speed-military-wagons" },
 		effects = {
 			{
 				type = "unlock-recipe",
