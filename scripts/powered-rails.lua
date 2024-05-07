@@ -159,10 +159,10 @@ local function PowerTrain(Train)
 		if LocomotiveIsElectricNow(locomotive) then
 			if locomotive.burner.currently_burning then
 				--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name))
-				PowerNeeded = PowerNeeded + locomotive.burner.currently_burning.fuel_value/2 - locomotive.burner.remaining_burning_fuel
+				PowerNeeded = PowerNeeded + locomotive.burner.currently_burning.fuel_value*0.6 - locomotive.burner.remaining_burning_fuel
 			else
 				--game.print("Loco is not burning, using default transfer value")
-				PowerNeeded = PowerNeeded + 50000000
+				PowerNeeded = PowerNeeded + 60000000
 			end
 			LocomotiveCount = LocomotiveCount + 1
 		else
