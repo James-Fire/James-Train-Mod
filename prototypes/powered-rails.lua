@@ -6,6 +6,20 @@ local PowerPoleSignalEntity = table.deepcopy(data.raw["rail-signal"]["rail-signa
 local PowerPoleSignalItem = table.deepcopy(data.raw.item["rail-signal"])
 	PowerPoleSignalItem.name = "james-rail-signal"
 	PowerPoleSignalItem.place_result = "james-rail-signal"
+    PowerPoleSignalItem.icons = {
+		{
+			icon = "__base__/graphics/icons/rail.png",
+			icon_size = 64,
+			icon_mipmaps = 4,
+		},
+		{
+			icon = "__base__/graphics/icons/medium-electric-pole.png",
+			icon_size = 64,
+			scale = 1 / 2,
+			shift = {0, 0},
+			icon_mipmaps = 4,
+		},
+	}
 	
 local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric-pole"])
 	SignalPowerPole.name = "james-rail-pole"
