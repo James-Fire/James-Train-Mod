@@ -46,16 +46,28 @@ data:extend({
 				icon = "__base__/graphics/icons/cargo-wagon.png",
 				icon_size = 64,
 				icon_mipmaps = 4,
-				shift = {-16, -16},
+				shift = {20, -28},
 			},
 			{
 				icon = "__base__/graphics/icons/fluid-wagon.png",
 				icon_size = 64,
 				icon_mipmaps = 4,
-				shift = {16, 16},
+				shift = {-24, 12},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {15, 48},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {48, 48},
 			},
 		},
-		prerequisites = { "railway", "chemical-science-pack" },
+		prerequisites = { "railway", "chemical-science-pack", "fluid-wagon" },
 		effects = {
 			{
 				type = "unlock-recipe",
@@ -82,10 +94,26 @@ data:extend({
 		name = "mid-speed-military-wagons",
 		icons = {
 			{
+				icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+				icon_size = 128,
+			},
+			{
 				icon = "__base__/graphics/icons/artillery-wagon.png",
 				icon_size = 64,
 				icon_mipmaps = 4,
 				shift = {0, 0},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {15, 48},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {48, 48},
 			},
 		},
 		prerequisites = { "mid-speed-wagons", "artillery" },
@@ -119,13 +147,31 @@ data:extend({
 				icon = "__base__/graphics/icons/cargo-wagon.png",
 				icon_size = 64,
 				icon_mipmaps = 4,
-				shift = {-16, -16},
+				shift = {20, -28},
 			},
 			{
 				icon = "__base__/graphics/icons/fluid-wagon.png",
 				icon_size = 64,
 				icon_mipmaps = 4,
-				shift = {16, 16},
+				shift = {-24, 12},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {32, 18},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {15, 48},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {48, 48},
 			},
 		},
 		prerequisites = { "mid-speed-wagons", "production-science-pack" },
@@ -156,10 +202,32 @@ data:extend({
 		name = "high-speed-military-wagons",
 		icons = {
 			{
+				icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+				icon_size = 128,
+			},
+			{
 				icon = "__base__/graphics/icons/artillery-wagon.png",
 				icon_size = 64,
 				icon_mipmaps = 4,
 				shift = {0, 0},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {32, 18},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {15, 48},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {48, 48},
 			},
 		},
 		prerequisites = { "high-speed-wagons", "mid-speed-military-wagons" },
@@ -185,4 +253,5 @@ data:extend({
 })
 if settings.startup["train-tiers"].value then
 	LSlib.technology.movePrerequisite("mid-speed-wagons", "railway", "mid-speed-trains")
+	LSlib.technology.addPrerequisite("high-speed-wagons", "high-speed-trains")
 end

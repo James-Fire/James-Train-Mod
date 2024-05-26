@@ -72,6 +72,10 @@ data:extend({
 		name = "electric-trains",
 		icons = {
 			{
+				icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+				icon_size = 128,
+			},
+			{
 				icon = "__base__/graphics/icons/locomotive.png",
 				icon_size = 64,
 				shift = {0, 0},
@@ -81,6 +85,12 @@ data:extend({
 				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 				icon_size = 32,
 				shift = {0, 0},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {48, 48},
 			},
 		},
 		prerequisites = {"railway", "electric-engine", "electric-energy-distribution-2"},
@@ -113,6 +123,10 @@ if settings.startup["train-tiers"].value then
 			name = "mid-speed-electric-trains",
 			icons = {
 				{
+					icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+					icon_size = 128,
+				},
+				{
 					icon = "__base__/graphics/icons/locomotive.png",
 					icon_size = 64,
 					shift = {0, 0},
@@ -123,6 +137,19 @@ if settings.startup["train-tiers"].value then
 					icon_size = 32,
 					shift = {0, 0},
 				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {15, 48},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {48, 48},
+				},
+
 			},
 			prerequisites = { "mid-speed-trains", "electric-trains"},
 			effects = {
@@ -147,6 +174,10 @@ if settings.startup["train-tiers"].value then
 			name = "high-speed-electric-trains",
 			icons = {
 				{
+					icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+					icon_size = 128,
+				},
+				{
 					icon = "__base__/graphics/icons/locomotive.png",
 					icon_size = 64,
 					shift = {0, 0},
@@ -156,6 +187,24 @@ if settings.startup["train-tiers"].value then
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 					icon_size = 32,
 					shift = {0, 0},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {32, 18},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {15, 48},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {48, 48},
 				},
 			},
 			prerequisites = { "high-speed-trains", "mid-speed-electric-trains" },

@@ -124,26 +124,32 @@ data:extend({
 				icon = "__base__/graphics/icons/cargo-wagon.png",
 				icon_size = 64,
 				icon_mipmaps = 4,
-				shift = {-16, -16},
+				shift = {20, -28},
 			},
 			{
 				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 				icon_size = 32,
-				shift = {-16, -16},
+				shift = {20, -28},
 			},
 			{
 				icon = "__base__/graphics/icons/fluid-wagon.png",
 				icon_size = 64,
 				icon_mipmaps = 4,
-				shift = {16, 16},
+				shift = {-24, 12},
 			},
 			{
 				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 				icon_size = 32,
-				shift = {16, 16},
+				shift = {-24, 12},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {48, 48},
 			},
 		},
-		prerequisites = { "railway", "electric-engine" },
+		prerequisites = { "railway", "electric-engine", "fluid-wagon" },
 		effects = {
 			{
 				type = "unlock-recipe",
@@ -163,12 +169,16 @@ data:extend({
 			},
 			time = 30,
 		},
-		order = "d-a",
+		order = "a-1",
 	},
 	{
 		type = "technology",
 		name = "electric-military-wagons",
 		icons = {
+			{
+				icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+				icon_size = 128,
+			},
 			{
 				icon = "__base__/graphics/icons/artillery-wagon.png",
 				icon_size = 64,
@@ -180,6 +190,12 @@ data:extend({
 				icon_size = 32,
 				scale = 1 / 2,
 					shift = {0, 0},
+			},
+			{
+				icon = "__James-Train-Mod__/graphics/speed.png",
+				icon_size = 64,
+				scale = 1/2,
+				shift = {48, 48},
 			},
 		},
 		prerequisites = { "railway", "electric-wagons" },
@@ -198,7 +214,7 @@ data:extend({
 			},
 			time = 30,
 		},
-		order = "d-a",
+		order = "a-2",
 	},
 })
 if settings.startup["train-car-tiers"].value then
@@ -215,23 +231,35 @@ if settings.startup["train-car-tiers"].value then
 					icon = "__base__/graphics/icons/cargo-wagon.png",
 					icon_size = 64,
 					icon_mipmaps = 4,
-					shift = {-16, -16},
+					shift = {20, -28},
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 					icon_size = 32,
-					shift = {-16, -16},
+					shift = {20, -28},
 				},
 				{
 					icon = "__base__/graphics/icons/fluid-wagon.png",
 					icon_size = 64,
 					icon_mipmaps = 4,
-					shift = {16, 16},
+					shift = {-24, 12},
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 					icon_size = 32,
-					shift = {16, 16},
+					shift = {-24, 12},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {15, 48},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {48, 48},
 				},
 			},
 			prerequisites = { "electric-wagons", "mid-speed-wagons" },
@@ -261,6 +289,10 @@ if settings.startup["train-car-tiers"].value then
 			name = "mid-speed-electric-military-wagons",
 			icons = {
 				{
+					icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+					icon_size = 128,
+				},
+				{
 					icon = "__base__/graphics/icons/artillery-wagon.png",
 					icon_size = 64,
 					icon_mipmaps = 4,
@@ -271,8 +303,20 @@ if settings.startup["train-car-tiers"].value then
 					icon_size = 32,
 					shift = {0, 0},
 				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {15, 48},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {48, 48},
+				},
 			},
-			prerequisites = { "mid-speed-electric-wagons", "mid-speed-military-wagons" },
+			prerequisites = { "mid-speed-electric-wagons", "mid-speed-military-wagons", "electric-military-wagons" },
 			effects = {
 				{
 					type = "unlock-recipe",
@@ -303,23 +347,41 @@ if settings.startup["train-car-tiers"].value then
 					icon = "__base__/graphics/icons/cargo-wagon.png",
 					icon_size = 64,
 					icon_mipmaps = 4,
-					shift = {-16, -16},
+					shift = {20, -28},
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 					icon_size = 32,
-					shift = {-16, -16},
+					shift = {20, -28},
 				},
 				{
 					icon = "__base__/graphics/icons/fluid-wagon.png",
 					icon_size = 64,
 					icon_mipmaps = 4,
-					shift = {16, 16},
+					shift = {-24, 12},
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 					icon_size = 32,
-					shift = {16, 16},
+					shift = {-24, 12},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {32, 18},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {15, 48},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {48, 48},
 				},
 			},
 			prerequisites = { "mid-speed-electric-wagons", "high-speed-wagons" },
@@ -343,12 +405,16 @@ if settings.startup["train-car-tiers"].value then
 				},
 				time = 30,
 			},
-			order = "d-a",
+			order = "a-3",
 		},
 		{
 			type = "technology",
 			name = "high-speed-electric-military-wagons",
 			icons = {
+				{
+					icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+					icon_size = 128,
+				},
 				{
 					icon = "__base__/graphics/icons/artillery-wagon.png",
 					icon_size = 64,
@@ -359,6 +425,24 @@ if settings.startup["train-car-tiers"].value then
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 					icon_size = 32,
 					shift = {0, 0},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {32, 18},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {15, 48},
+				},
+				{
+					icon = "__James-Train-Mod__/graphics/speed.png",
+					icon_size = 64,
+					scale = 1/2,
+					shift = {48, 48},
 				},
 			},
 
