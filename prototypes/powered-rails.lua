@@ -243,6 +243,19 @@ local PoweredRailItem = table.deepcopy(data.raw["rail-planner"]["rail"])
 	PoweredRailItem.place_result = "james-powered-rail"
     PoweredRailItem.straight_rail = "james-powered-rail"
     PoweredRailItem.curved_rail = "james-powered-rail-curved"
+    PoweredRailItem.icons = {
+		{
+			icon = "__base__/graphics/icons/rail.png",
+			icon_size = 64,
+			icon_mipmaps = 4,
+		},
+		{
+			icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+			icon_size = 32,
+			scale = 1 / 2,
+			shift = {0, 0},
+		},
+	}
 
 data.raw["straight-rail"]["straight-rail"].fast_replaceable_group = "land-rails"
 data.raw["curved-rail"]["curved-rail"].fast_replaceable_group = "land-rails-curved"
