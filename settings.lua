@@ -93,12 +93,12 @@ data:extend(
     setting_type = "startup",
     default_value = false,
 	order = "e-0",
-  },]]
+  },
   {
     type = "bool-setting",
     name = "tender-trains",
     setting_type = "startup",
     default_value = false,
 	order = "f-0",
-  },
+  },]]
  })

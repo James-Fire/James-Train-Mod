@@ -310,7 +310,7 @@ local function UpdateTrains()
 			end
 		end
 		
-		for i = 1,settings.global["train-update-count"].value,1 do
+		for i = 1,20,1 do
 			--if i == settings.global["train-update-count"].value then
 			--	break
 			--end
