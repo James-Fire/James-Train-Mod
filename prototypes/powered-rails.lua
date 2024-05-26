@@ -302,8 +302,18 @@ Accumulator, StraightPoweredRailEntity, CurvedPoweredRailEntity, PoweredRailItem
 	{
 		type = "technology",
 		name = "electrified-tracks",
-		icon_size = 64,
-		icon = "__base__/graphics/icons/steam-turbine.png",
+		icons = {
+			{
+				icon = "__base__/graphics/icons/rail.png",
+				icon_size = 64,
+				icon_mipmaps = 4,
+			},
+			{
+				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+				icon_size = 32,
+				shift = {0, 0},
+			},
+		},
 		prerequisites = {"railway", "production-science-pack"},
 		effects = {
 			{

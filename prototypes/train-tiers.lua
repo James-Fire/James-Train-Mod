@@ -28,8 +28,14 @@ data:extend({
 	{
 		type = "technology",
 		name = "mid-speed-trains",
-		icon_size = 64,
-		icon = "__base__/graphics/icons/steam-turbine.png",
+		icons = {
+			{
+				icon = "__base__/graphics/icons/locomotive.png",
+				icon_size = 64,
+				shift = {0, 0},
+				icon_mipmaps = 4,
+			},
+		},
 		prerequisites = { "railway", "chemical-science-pack" },
 		effects = {
 			{
@@ -51,8 +57,15 @@ data:extend({
 	{
 		type = "technology",
 		name = "high-speed-trains",
-		icon_size = 64,
-		icon = "__base__/graphics/icons/steam-turbine.png",
+		icons = {
+			{
+				icon = "__base__/graphics/icons/locomotive.png",
+				icon_size = 64,
+				shift = {0, 0},
+				icon_mipmaps = 4,
+			},
+		},
+
 		prerequisites = { "mid-speed-trains", "production-science-pack" },
 		effects = {
 			{

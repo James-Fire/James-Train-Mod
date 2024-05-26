@@ -37,8 +37,24 @@ data:extend({
 	{
 		type = "technology",
 		name = "mid-speed-wagons",
-		icon_size = 64,
-		icon = "__base__/graphics/icons/steam-turbine.png",
+		icons = {
+			{
+				icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+				icon_size = 128,
+			},
+			{
+				icon = "__base__/graphics/icons/cargo-wagon.png",
+				icon_size = 64,
+				icon_mipmaps = 4,
+				shift = {-16, -16},
+			},
+			{
+				icon = "__base__/graphics/icons/fluid-wagon.png",
+				icon_size = 64,
+				icon_mipmaps = 4,
+				shift = {16, 16},
+			},
+		},
 		prerequisites = { "railway", "chemical-science-pack" },
 		effects = {
 			{
@@ -64,8 +80,14 @@ data:extend({
 	{
 		type = "technology",
 		name = "mid-speed-military-wagons",
-		icon_size = 64,
-		icon = "__base__/graphics/icons/steam-turbine.png",
+		icons = {
+			{
+				icon = "__base__/graphics/icons/artillery-wagon.png",
+				icon_size = 64,
+				icon_mipmaps = 4,
+				shift = {0, 0},
+			},
+		},
 		prerequisites = { "mid-speed-wagons", "artillery" },
 		effects = {
 			{
@@ -88,8 +110,24 @@ data:extend({
 	{
 		type = "technology",
 		name = "high-speed-wagons",
-		icon_size = 64,
-		icon = "__base__/graphics/icons/steam-turbine.png",
+		icons = {
+			{
+				icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+				icon_size = 128,
+			},
+			{
+				icon = "__base__/graphics/icons/cargo-wagon.png",
+				icon_size = 64,
+				icon_mipmaps = 4,
+				shift = {-16, -16},
+			},
+			{
+				icon = "__base__/graphics/icons/fluid-wagon.png",
+				icon_size = 64,
+				icon_mipmaps = 4,
+				shift = {16, 16},
+			},
+		},
 		prerequisites = { "mid-speed-wagons", "production-science-pack" },
 		effects = {
 			{
@@ -116,8 +154,14 @@ data:extend({
 	{
 		type = "technology",
 		name = "high-speed-military-wagons",
-		icon_size = 64,
-		icon = "__base__/graphics/icons/steam-turbine.png",
+		icons = {
+			{
+				icon = "__base__/graphics/icons/artillery-wagon.png",
+				icon_size = 64,
+				icon_mipmaps = 4,
+				shift = {0, 0},
+			},
+		},
 		prerequisites = { "high-speed-wagons", "mid-speed-military-wagons" },
 		effects = {
 			{

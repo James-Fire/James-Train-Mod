@@ -115,8 +115,34 @@ data:extend({
 	{
 		type = "technology",
 		name = "electric-wagons",
-		icon_size = 64,
-		icon = "__base__/graphics/icons/steam-turbine.png",
+		icons = {
+			{
+				icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+				icon_size = 128,
+			},
+			{
+				icon = "__base__/graphics/icons/cargo-wagon.png",
+				icon_size = 64,
+				icon_mipmaps = 4,
+				shift = {-16, -16},
+			},
+			{
+				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+				icon_size = 32,
+				shift = {-16, -16},
+			},
+			{
+				icon = "__base__/graphics/icons/fluid-wagon.png",
+				icon_size = 64,
+				icon_mipmaps = 4,
+				shift = {16, 16},
+			},
+			{
+				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+				icon_size = 32,
+				shift = {16, 16},
+			},
+		},
 		prerequisites = { "railway", "electric-engine" },
 		effects = {
 			{
@@ -129,7 +155,7 @@ data:extend({
 			},
 		},
 		unit = {
-			count = 250,
+			count = 300,
 			ingredients = {
 				{"automation-science-pack", 1},
 				{"logistic-science-pack", 1},
@@ -142,8 +168,20 @@ data:extend({
 	{
 		type = "technology",
 		name = "electric-military-wagons",
-		icon_size = 64,
-		icon = "__base__/graphics/icons/steam-turbine.png",
+		icons = {
+			{
+				icon = "__base__/graphics/icons/artillery-wagon.png",
+				icon_size = 64,
+				icon_mipmaps = 4,
+					shift = {0, 0},
+			},
+			{
+				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+				icon_size = 32,
+				scale = 1 / 2,
+					shift = {0, 0},
+			},
+		},
 		prerequisites = { "railway", "electric-wagons" },
 		effects = {
 			{
@@ -152,7 +190,7 @@ data:extend({
 			},
 		},
 		unit = {
-			count = 250,
+			count = 300,
 			ingredients = {
 				{"automation-science-pack", 1},
 				{"logistic-science-pack", 1},
@@ -168,8 +206,34 @@ if settings.startup["train-car-tiers"].value then
 		{
 			type = "technology",
 			name = "mid-speed-electric-wagons",
-			icon_size = 64,
-			icon = "__base__/graphics/icons/steam-turbine.png",
+			icons = {
+				{
+					icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+					icon_size = 128,
+				},
+				{
+					icon = "__base__/graphics/icons/cargo-wagon.png",
+					icon_size = 64,
+					icon_mipmaps = 4,
+					shift = {-16, -16},
+				},
+				{
+					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+					icon_size = 32,
+					shift = {-16, -16},
+				},
+				{
+					icon = "__base__/graphics/icons/fluid-wagon.png",
+					icon_size = 64,
+					icon_mipmaps = 4,
+					shift = {16, 16},
+				},
+				{
+					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+					icon_size = 32,
+					shift = {16, 16},
+				},
+			},
 			prerequisites = { "electric-wagons", "mid-speed-wagons" },
 			effects = {
 				{
@@ -182,7 +246,7 @@ if settings.startup["train-car-tiers"].value then
 				},
 			},
 			unit = {
-				count = 100,
+				count = 200,
 				ingredients = {
 					{"automation-science-pack", 1},
 					{"logistic-science-pack", 1},
@@ -195,9 +259,20 @@ if settings.startup["train-car-tiers"].value then
 		{
 			type = "technology",
 			name = "mid-speed-electric-military-wagons",
-			icon_size = 64,
-			icon = "__base__/graphics/icons/steam-turbine.png",
-			prerequisites = { "mid-speed-electric-wagons", "artillery" },
+			icons = {
+				{
+					icon = "__base__/graphics/icons/artillery-wagon.png",
+					icon_size = 64,
+					icon_mipmaps = 4,
+					shift = {0, 0},
+				},
+				{
+					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+					icon_size = 32,
+					shift = {0, 0},
+				},
+			},
+			prerequisites = { "mid-speed-electric-wagons", "mid-speed-military-wagons" },
 			effects = {
 				{
 					type = "unlock-recipe",
@@ -205,7 +280,7 @@ if settings.startup["train-car-tiers"].value then
 				},
 			},
 			unit = {
-				count = 100,
+				count = 200,
 				ingredients = {
 					{"automation-science-pack", 1},
 					{"logistic-science-pack", 1},
@@ -219,8 +294,34 @@ if settings.startup["train-car-tiers"].value then
 		{
 			type = "technology",
 			name = "high-speed-electric-wagons",
-			icon_size = 64,
-			icon = "__base__/graphics/icons/steam-turbine.png",
+			icons = {
+				{
+					icon = "__James-Train-Mod__/graphics/Technology-Backing.png",
+					icon_size = 128,
+				},
+				{
+					icon = "__base__/graphics/icons/cargo-wagon.png",
+					icon_size = 64,
+					icon_mipmaps = 4,
+					shift = {-16, -16},
+				},
+				{
+					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+					icon_size = 32,
+					shift = {-16, -16},
+				},
+				{
+					icon = "__base__/graphics/icons/fluid-wagon.png",
+					icon_size = 64,
+					icon_mipmaps = 4,
+					shift = {16, 16},
+				},
+				{
+					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+					icon_size = 32,
+					shift = {16, 16},
+				},
+			},
 			prerequisites = { "mid-speed-electric-wagons", "high-speed-wagons" },
 			effects = {
 				{
@@ -233,7 +334,7 @@ if settings.startup["train-car-tiers"].value then
 				},
 			},
 			unit = {
-				count = 100,
+				count = 200,
 				ingredients = {
 					{"automation-science-pack", 1},
 					{"logistic-science-pack", 1},
@@ -247,9 +348,21 @@ if settings.startup["train-car-tiers"].value then
 		{
 			type = "technology",
 			name = "high-speed-electric-military-wagons",
-			icon_size = 64,
-			icon = "__base__/graphics/icons/steam-turbine.png",
-			prerequisites = { "high-speed-electric-wagons", "mid-speed-military-wagons" },
+			icons = {
+				{
+					icon = "__base__/graphics/icons/artillery-wagon.png",
+					icon_size = 64,
+					icon_mipmaps = 4,
+					shift = {0, 0},
+				},
+				{
+					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+					icon_size = 32,
+					shift = {0, 0},
+				},
+			},
+
+			prerequisites = { "high-speed-electric-wagons", "high-speed-military-wagons", "mid-speed-electric-military-wagons" },
 			effects = {
 				{
 					type = "unlock-recipe",
@@ -257,7 +370,7 @@ if settings.startup["train-car-tiers"].value then
 				},
 			},
 			unit = {
-				count = 100,
+				count = 200,
 				ingredients = {
 					{"automation-science-pack", 1},
 					{"logistic-science-pack", 1},
