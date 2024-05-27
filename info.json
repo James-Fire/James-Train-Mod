@@ -4,7 +4,7 @@
   "title": "James' Train Mod",
   "author": "James Fire",
   "homepage": "",
-  "description": "Includes unified train changes, including weight-based acceleration, electric trains, powered rails, and electric train cars.",
+  "description": "Includes unified train changes, including weightier rolling stock, electric trains, powered rails, and electric train cars. Each also has a setting, so you can pick and choose which ones you want.",
   "factorio_version": "1.1",
   "dependencies": [
 	"base >= 0.18.0",

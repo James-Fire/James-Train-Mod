@@ -294,7 +294,7 @@ local function UpdateTrains()
 		if train and train.valid and TrainIsBraking(train) then
 			train_regenerative_braking(train)
 		else
-			table.insert(NilRegenBrakingTrains, i)	
+			table.insert(NilRegenBrakingTrains, i)
 		end
 	end
 	for i, entry in pairs(NilRegenBrakingTrains) do
@@ -310,7 +310,7 @@ local function UpdateTrains()
 			end
 		end
 		
-		for i = 1,20,1 do
+		for i = 1,#global.JETrainsUpdate/5,1 do
 			--if i == settings.global["train-update-count"].value then
 			--	break
 			--end
