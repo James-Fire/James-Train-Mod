@@ -310,7 +310,7 @@ local function UpdateTrains()
 			end
 		end
 		
-		for i = 1,#global.JETrainsUpdate/5,1 do
+		for i = 1,#global.JamesElectricTrains/5,1 do
 			--if i == settings.global["train-update-count"].value then
 			--	break
 			--end
