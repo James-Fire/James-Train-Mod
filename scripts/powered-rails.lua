@@ -16,15 +16,14 @@ local function OnInit()
 	global.JECounter = 0
 end
 
+script.on_init(OnInit)
+
 local function TrainIsBraking(Train)
 	if Train and Train.valid and Train.state == 1 or Train.state == 4 or Train.state == 6 or Train.state == 8 then
 		return true
 	end
 	return false
 end
-
-
-
 
 --Arbiter function for if we should handle a train in the moment, is passed a locomotive
 local function LocomotiveIsElectricNow(Locomotive)
@@ -125,7 +124,7 @@ local function on_new_entity(event)
 	local surface = entity.surface
 	local position = entity.position
 	local force = entity.force
-	if entity.name == "james-powered-rail" or entity.name == "james-powered-rail-curved" then
+	if entity.name:find("james-powered-rail", 1, true) or entity.name:find("-rail-electric", 1, true) then
 		MakeHiddenAccum(surface, position)
 		MakeHiddenPole(entity)
 		SetupCableConnections(entity)
@@ -282,10 +281,18 @@ end
 local function RemakeTrainUpdateList()
 	--PrintGlobalTrainList()
 	--game.print("Make Train Update List")
-	for i, train in pairs(global.JamesElectricTrains) do
-		table.insert(global.JETrainsUpdate, train)
+	if global.JamesElectricTrains then
+		for i, train in pairs(global.JamesElectricTrains) do
+			table.insert(global.JETrainsUpdate, train)
+		end
+	else
+		game.print("No globals, save broken?")
 	end
 end
+
+commands.add_command("RemakeTrainUpdateList", "", RemakeTrainUpdateList())
+commands.add_command("PrintGlobalTrainList", "", PrintGlobalTrainList())
+commands.add_command("PrintUpdateTrainList", "", PrintUpdateTrainList())
 
 local function UpdateTrains()
 	--PrintUpdateTrainList()
@@ -335,7 +342,6 @@ script.on_event(defines.events.on_tick, function(event)
 	UpdateTrains()
 end)
 
-script.on_init(OnInit)
 script.on_event(defines.events.on_train_created, on_new_train)
 script.on_event(defines.events.on_train_changed_state, train_state_handler)
 script.on_event(defines.events.on_entity_destroyed, on_remove_entity)
