@@ -1,5 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.0
+Date: 05. 29. 24
+  Major Features:
+    - Exotic Industries' changes to locomotives are now respected
+---------------------------------------------------------------------------------------------------
+Version: 1.0.1
+Date: 05. 27. 24
+  Bugfixes:
+    - Fixed rails not powering trains properly
+	---------------------------------------------------------------------------------------------------
 Version: 1.0.0
-Date: 09. 17. 21
+Date: 05. 26. 24
   Major Features:
     - Initial release

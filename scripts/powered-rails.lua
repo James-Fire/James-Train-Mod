@@ -290,9 +290,9 @@ local function RemakeTrainUpdateList()
 	end
 end
 
-commands.add_command("RemakeTrainUpdateList", "", RemakeTrainUpdateList())
-commands.add_command("PrintGlobalTrainList", "", PrintGlobalTrainList())
-commands.add_command("PrintUpdateTrainList", "", PrintUpdateTrainList())
+commands.add_command("RemakeTrainUpdateList", "", RemakeTrainUpdateList)
+commands.add_command("PrintGlobalTrainList", "", PrintGlobalTrainList)
+commands.add_command("PrintUpdateTrainList", "", PrintUpdateTrainList)
 
 local function UpdateTrains()
 	--PrintUpdateTrainList()
