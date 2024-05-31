@@ -1,6 +1,11 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.0
 Date: 05. 29. 24
+  Bugfixes:
+    - Added a line of code to fix someone else's fuckup
+	---------------------------------------------------------------------------------------------------
+Version: 1.1.0
+Date: 05. 29. 24
   Major Features:
     - Exotic Industries' changes to locomotives are now respected
     - Added some console commands to aid with debugging and fixing powered trains

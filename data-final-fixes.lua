@@ -20,3 +20,5 @@ for i, rollingstock in pairs(data.raw["item-with-entity-data"]) do
 		rollingstock.subgroup = "wagons"
 	end
 end
+
+data.raw["accumulator"]["james-rail-accumulator"].next_upgrade = nil
