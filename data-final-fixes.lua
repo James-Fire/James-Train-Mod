@@ -21,4 +21,6 @@ for i, rollingstock in pairs(data.raw["item-with-entity-data"]) do
 	end
 end
 
-data.raw["accumulator"]["james-rail-accumulator"].next_upgrade = nil
+if settings.startup["powered-rails"].value then
+	data.raw["accumulator"]["james-rail-accumulator"].next_upgrade = nil
+end
