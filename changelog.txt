@@ -1,8 +1,17 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.0
+Date: 05. 29. 24
+	Major Features:
+	- *Added support for Fluidic Power. If that mod is active, Electric Rail Interconnects require high-voltage power to be fed to them, and provide up to 100MW to the rail grid.
+	Features:
+    - Added a setting to make powered rails provide power immediately adjacent to them.
+	- Powered Rails now have a slight passive energy drain
+	- *Powered Rails now use hidden beacons instead of hidden accumulators, so that the stored power is not shown in the electric network GUI
+---------------------------------------------------------------------------------------------------
 Version: 1.1.2
 Date: 05. 29. 24
   Bugfixes:
-    - The previous line of code is now properly behind the setting it should be 
+    - The previous line of code is now properly behind the setting it should be
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.1
 Date: 05. 29. 24

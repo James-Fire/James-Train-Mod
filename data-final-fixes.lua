@@ -22,5 +22,8 @@ for i, rollingstock in pairs(data.raw["item-with-entity-data"]) do
 end
 
 if settings.startup["powered-rails"].value then
+	if not (mods["FluidicPower"]) and settings.startup["powered-rails-adjacent"].value then
+		data.raw["electric-pole"]["james-track-pole"].supply_area_distance = 2
+	end
 	data.raw["accumulator"]["james-rail-accumulator"].next_upgrade = nil
 end

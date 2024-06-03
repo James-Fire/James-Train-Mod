@@ -9,6 +9,7 @@
   "dependencies": [
 	"base >= 0.18.0",
 	"? exotic-industries",
+	"? FluidicPower",
 	"LSlib"
   ]
 }

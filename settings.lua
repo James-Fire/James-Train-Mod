@@ -41,7 +41,14 @@ data:extend(
     name = "powered-rails",
     setting_type = "startup",
     default_value = false,
-	order = "c-0",
+	order = "c-0-0",
+  },
+  {
+    type = "bool-setting",
+    name = "powered-rails-adjacent",
+    setting_type = "startup",
+    default_value = false,
+	order = "c-0-1",
   },
   {
     type = "bool-setting",

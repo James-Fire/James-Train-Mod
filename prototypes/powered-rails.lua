@@ -237,7 +237,8 @@ local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
       buffer_capacity = "10MJ",
       usage_priority = "primary-input",
       input_flow_limit = "10MW",
-      output_flow_limit = "0MW"
+      output_flow_limit = "0MW",
+	  drain = "1kW"
     }
 	
 --Rails
