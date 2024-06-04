@@ -9,7 +9,7 @@ local NuclearTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	NuclearTrainEntity.max_power = LocomotivePower[1]
 	NuclearTrainEntity.burner.effectivity = 0.9
 	NuclearTrainEntity.weight = 8000
-	NuclearTrainEntity.fuel_category = "nuclear"
+	NuclearTrainEntity.burner.fuel_category = "nuclear"
 	NuclearTrainEntity.color = {r = 3.5, g = 85.5, b = 52.5, a = 255}
 	
 local NuclearTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locomotive"])
