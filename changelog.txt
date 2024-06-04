@@ -1,9 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.4
+Date: 06. 04. 24
+  Compatibility:
+	- Powered Rails can now be upgraded while SE is active.
+---------------------------------------------------------------------------------------------------
 Version: 1.1.3
 Date: 06. 02. 24
-	Features:
+  Features:
     - Added a setting to make powered rails provide power immediately adjacent to them.
-	- Powered Rails now have a slight passive energy drain
+    - Powered Rails now have a slight passive energy drain
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.2
 Date: 05. 29. 24
