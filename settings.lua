@@ -38,6 +38,13 @@ data:extend(
   },]]
   {
     type = "bool-setting",
+    name = "nuclear-trains",
+    setting_type = "startup",
+    default_value = false,
+	order = "b-2",
+  },
+  {
+    type = "bool-setting",
     name = "powered-rails",
     setting_type = "startup",
     default_value = false,
@@ -85,7 +92,7 @@ data:extend(
     default_value = 20,
     minimum_value = 1,
 	maximum_value = 500,
-	order = "c-5",
+	order = "d-0",
   },
   --[[{
     type = "bool-setting",

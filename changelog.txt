@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.0
+Date: 06. 02. 24
+  Major Features:
+    - Added a setting for Nuclear Locomotives, that use nuclear fuel cells.
+    - If both the Nuclear Locomotives and Hybrid Trains settings are active, Nuclear Hybrid trains are made that can pull power from rails or nuclear fuel cells.
+  Features:
+    - The Hybrid Trains setting now generates hybrid electric trains only if the electric trains setting is active.
+  Bugfixes:
+    - Fixed the new T1 trains having washed-out colour.
+---------------------------------------------------------------------------------------------------
 Version: 1.1.4
 Date: 06. 04. 24
   Compatibility:
