@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.1
+Date: 06. 15. 24
+  Bugfixes:
+    - Fixed powered rails not using their icon in the Upgrade Planner
+    - Fixed Electric Rail Interconnect not using their icon in the Upgrade Planner
+    - Fixed a script error when handling trains that don't have an energy source
+---------------------------------------------------------------------------------------------------
 Version: 1.2.0
 Date: 06. 02. 24
   Major Features:

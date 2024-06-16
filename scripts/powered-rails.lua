@@ -27,13 +27,15 @@ end
 
 --Arbiter function for if we should handle a train in the moment, is passed a locomotive
 local function LocomotiveIsElectricNow(Locomotive)
-	local LocoBurner = Locomotive.burner or Locomotive.energy_source
-	if LocoBurner and LocoBurner.currently_burning == nil then --The train is handled if it's burning nothing
-		return true
-	elseif LocoBurner.currently_burning.name == FakeBurnerItem then --The train is handled if it's already burning our dummy item
-		return true
-	else
-		return false
+	if LocomotiveIsElectric(Locomotive) then
+		local LocoBurner = Locomotive.burner or Locomotive.energy_source
+		if LocoBurner and LocoBurner.currently_burning == nil then --The train is handled if it's burning nothing
+			return true
+		elseif LocoBurner.currently_burning.name == FakeBurnerItem then --The train is handled if it's already burning our dummy item
+			return true
+		else
+			return false
+		end
 	end
 end
 local function TrainIsElectricNow(Train)
@@ -141,7 +143,6 @@ local function on_remove_entity(event)
 	if not entity then return end
 	local surface = entity.surface
 	local position = entity.position
-	local force = entity.force
 	if entity.name == "james-powered-rail" or entity.name == "james-powered-rail-curved" then
 		removeHiddenPowerEntities(surface, position)
 	end
@@ -348,6 +349,7 @@ script.on_event(defines.events.on_entity_destroyed, on_remove_entity)
 script.on_event(defines.events.on_entity_died, on_remove_entity)
 script.on_event(defines.events.on_robot_mined_entity, on_remove_entity)
 script.on_event(defines.events.on_player_mined_entity, on_remove_entity)
+script.on_event(defines.events.script_raised_destroy, on_remove_entity)
 script.on_event(defines.events.on_built_entity, on_new_entity)
 script.on_event(defines.events.on_robot_built_entity, on_new_entity)
 script.on_event(defines.events.script_raised_built, on_new_entity)

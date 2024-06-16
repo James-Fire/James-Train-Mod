@@ -2,6 +2,20 @@
 local PowerPoleSignalEntity = table.deepcopy(data.raw["rail-signal"]["rail-signal"])
 	PowerPoleSignalEntity.name = "james-rail-signal"
 	PowerPoleSignalEntity.minable = {mining_time = 0.2, result = "james-rail-signal"}
+    PowerPoleSignalEntity.icons = {
+		{
+			icon = "__base__/graphics/icons/rail.png",
+			icon_size = 64,
+			icon_mipmaps = 4,
+		},
+		{
+			icon = "__base__/graphics/icons/medium-electric-pole.png",
+			icon_size = 64,
+			scale = 1 / 2,
+			shift = {0, 0},
+			icon_mipmaps = 4,
+		},
+	}
 	
 local PowerPoleSignalItem = table.deepcopy(data.raw.item["rail-signal"])
 	PowerPoleSignalItem.name = "james-rail-signal"
@@ -158,6 +172,7 @@ local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
 	Accumulator.collision_box = {{0, 0}, {0, 0}}
 	Accumulator.collision_mask = {"not-colliding-with-itself"}
 	Accumulator.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
+	Accumulator.next_upgrade = nil
 	Accumulator.icon = "__base__/graphics/icons/locomotive.png"
     Accumulator.icon_size = 64
     Accumulator.picture.layers = {
@@ -246,12 +261,38 @@ local StraightPoweredRailEntity = table.deepcopy(data.raw["straight-rail"]["stra
 	StraightPoweredRailEntity.name = "james-powered-rail"
 	StraightPoweredRailEntity.minable = {mining_time = 0.5, result = "james-powered-rail"}
 	StraightPoweredRailEntity.fast_replaceable_group = "space-rail"
+    StraightPoweredRailEntity.icons = {
+		{
+			icon = "__base__/graphics/icons/rail.png",
+			icon_size = 64,
+			icon_mipmaps = 4,
+		},
+		{
+			icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+			icon_size = 32,
+			scale = 1 / 2,
+			shift = {0, 0},
+		},
+	}
 	
 local CurvedPoweredRailEntity = table.deepcopy(data.raw["curved-rail"]["curved-rail"])
 	CurvedPoweredRailEntity.name = "james-powered-rail-curved"
 	CurvedPoweredRailEntity.minable = {mining_time = 0.5, result = "james-powered-rail", count = 4}
 	CurvedPoweredRailEntity.placeable_by = {item = "james-powered-rail", count = 4}
 	CurvedPoweredRailEntity.fast_replaceable_group = "space-rail-curved"
+    CurvedPoweredRailEntity.icons = {
+		{
+			icon = "__base__/graphics/icons/rail.png",
+			icon_size = 64,
+			icon_mipmaps = 4,
+		},
+		{
+			icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+			icon_size = 32,
+			scale = 1 / 2,
+			shift = {0, 0},
+		},
+	}
 	
 local PoweredRailItem = table.deepcopy(data.raw["rail-planner"]["rail"])
 	PoweredRailItem.name = "james-powered-rail"

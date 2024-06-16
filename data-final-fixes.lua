@@ -25,5 +25,7 @@ if settings.startup["powered-rails"].value then
 	if not (mods["FluidicPower"]) and settings.startup["powered-rails-adjacent"].value then
 		data.raw["electric-pole"]["james-track-pole"].supply_area_distance = 2
 	end
-	data.raw["accumulator"]["james-rail-accumulator"].next_upgrade = nil
+	
+	data.raw["curved-rail"]["james-powered-rail-curved"].fast_replaceable_group = data.raw["curved-rail"]["curved-rail"].fast_replaceable_group
+	data.raw["straight-rail"]["james-powered-rail"].fast_replaceable_group = data.raw["straight-rail"]["straight-rail"].fast_replaceable_group
 end

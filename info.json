@@ -10,6 +10,8 @@
 	"base >= 0.18.0",
 	"? exotic-industries",
 	"? FluidicPower",
+	"? space-exploration",
+	"? Bio_Industries",
 	"LSlib"
   ]
 }
