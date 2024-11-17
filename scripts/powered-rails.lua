@@ -113,10 +113,13 @@ end
 local function on_new_train(event)
 	local NewTrain = event.train
 	if not NewTrain then return end
+	--game.print("New Train placed")
 	if TrainHasLocomotiveIsElectric(NewTrain) and CheckTableValue(NewTrain,global.JamesElectricTrains) == false then
+		--game.print("New Train is electric")
 		table.insert(global.JamesElectricTrains, NewTrain)
 	end
 	if TrainHasElectricWagon(NewTrain) and CheckTableValue(NewTrain,global.JamesElectricWagonTrains) == false then
+		--game.print("New Train has electric wagons")
 		table.insert(global.JamesElectricWagonTrains, NewTrain)
 	end
 end
@@ -131,6 +134,7 @@ local function on_new_entity(event)
 		MakeHiddenPole(entity)
 		SetupCableConnections(entity)
 	elseif LocomotiveIsElectric(entity) and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
+		--game.print("New Train is electric")
 		table.insert(global.JamesElectricTrains, entity.train)
 	--[[elseif WagonIsElectric and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
 		table.insert(global.JamesElectricTrains, entity.train)]]
@@ -310,19 +314,20 @@ local function UpdateTrains()
 	end
 	global.JECounter = global.JECounter + 1
 	if global.JECounter >= UpdateTime then
+		--game.print("Counter filled, updating trains")
 		global.JECounter = 0
-		--game.print("tick")
 		for i, train in pairs(global.JamesElectricWagonTrains) do
 			if train and train.valid and train.state == 0 then
 				WagonPower(train)
 			end
 		end
 		
-		for i = 1,#global.JamesElectricTrains/5,1 do
+		for i = 1,#global.JamesElectricTrains,1 do
+			--game.print("Updating train "..tostring(i))
 			--if i == settings.global["train-update-count"].value then
 			--	break
 			--end
-			if global.JETrainsUpdate[1] ~= nil and global.JETrainsUpdate[1].valid then
+			if (global.JETrainsUpdate[1] ~= nil) and global.JETrainsUpdate[1].valid then
 				--game.print("Update train in update list")
 				PowerTrain(table.remove(global.JETrainsUpdate, 1))
 			else
