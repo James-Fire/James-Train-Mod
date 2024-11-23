@@ -82,3 +82,25 @@ function GetConnectedRails(Rail)
 	end
 	return RailTable
 end
+
+function DisconnectAllWires(PoleEntity)
+	if PoleEntity.valid then
+		for i, Wires in pairs(PoleEntity.get_wire_connectors(true)) do
+			Wires.disconnect_all()
+		end
+	end
+end
+
+function ConnectAllWires(PoleEntitySource, PoleEntityTarget)
+	if PoleEntitySource.valid and PoleEntityTarget.valid then
+		--local SourceCopper = PoleEntitySource.get_wire_connector(7,true)
+		--local SourceRed = PoleEntitySource.get_wire_connector(1,true)
+		--local SourceGreen = PoleEntitySource.get_wire_connector(2,true)
+		local TargetCopper = PoleEntityTarget.get_wire_connector(5,true)
+		local TargetRed = PoleEntityTarget.get_wire_connector(1,true)
+		local TargetGreen = PoleEntityTarget.get_wire_connector(2,true)
+		PoleEntitySource.get_wire_connector(5,true).connect_to(TargetCopper)
+		PoleEntitySource.get_wire_connector(1,true).connect_to(TargetRed)
+		PoleEntitySource.get_wire_connector(2,true).connect_to(TargetGreen)
+	end
+end

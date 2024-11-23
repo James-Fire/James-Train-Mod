@@ -26,6 +26,4 @@ if settings.startup["powered-rails"].value then
 		data.raw["electric-pole"]["james-track-pole"].supply_area_distance = 2
 	end
 	
-	data.raw["curved-rail"]["james-powered-rail-curved"].fast_replaceable_group = data.raw["curved-rail"]["curved-rail"].fast_replaceable_group
-	data.raw["straight-rail"]["james-powered-rail"].fast_replaceable_group = data.raw["straight-rail"]["straight-rail"].fast_replaceable_group
 end

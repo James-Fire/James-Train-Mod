@@ -1,13 +1,13 @@
 local LocomotivePower = { "1MW", "2MW", "4MW" }
 
-data.raw["locomotive"]["locomotive"].burner.effectivity = 0.8
+data.raw["locomotive"]["locomotive"].energy_source.effectivity = 0.8
 
 local HybridTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	HybridTrainEntity.name = "james-hybrid-train"
 	HybridTrainEntity.icon = Modname.."/graphics/hybrid-train.png"
     HybridTrainEntity.minable = {mining_time = 0.5, result = "james-hybrid-train"}
 	HybridTrainEntity.max_power = LocomotivePower[1]
-	HybridTrainEntity.burner.effectivity = 0.9
+	HybridTrainEntity.energy_source.effectivity = 0.9
 	HybridTrainEntity.weight = 2500
 	HybridTrainEntity.color = {r = 51, g = 153, b = 255, a = 255}
 	

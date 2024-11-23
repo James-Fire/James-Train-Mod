@@ -1,20 +1,20 @@
 --Initialization Function
 local function OnInit()
-	global.JamesTenderTrains = { }
+	storage.JamesTenderTrains = { }
 end
 
 local function on_new_train(event)
 	local NewTrain = event.train
 	if not NewTrain then return end
-	table.insert(global.JamesTenderTrains, NewTrain)
+	table.insert(storage.JamesTenderTrains, NewTrain)
 end
 
 script.on_event(defines.events.on_tick, function(event)
 	--game.print("pre tick")
-	global.JECounter = global.JECounter + 1
-	if (global.JECounter == 60) then
+	storage.JECounter = storage.JECounter + 1
+	if (storage.JECounter == 60) then
 		UpdateTrains()
-		global.JECounter = 0
+		storage.JECounter = 0
 		--game.print("tick")
 	end
 end)

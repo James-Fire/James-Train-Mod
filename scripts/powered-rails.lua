@@ -9,11 +9,11 @@ local WagonPowerUse = 500000 --How much power each electric wagon uses in Update
 
 --Initialization Function
 local function OnInit()
-	global.JamesElectricTrains = { }
-	global.JamesElectricWagonTrains = { }
-	global.JamesRegenBrakingTrains = { }
-	global.JETrainsUpdate = { }
-	global.JECounter = 0
+	storage.JamesElectricTrains = { }
+	storage.JamesElectricWagonTrains = { }
+	storage.JamesRegenBrakingTrains = { }
+	storage.JETrainsUpdate = { }
+	storage.JECounter = 0
 end
 
 script.on_init(OnInit)
@@ -59,9 +59,7 @@ local function SetupCableConnections(entity)
 		for i, neighbour in pairs(GetConnectedRails(entity)) do
 			local NeighbourPole = GetHiddenPole(neighbour.surface, neighbour.position)
 			if NeighbourPole and NeighbourPole.valid then
-				for j, v in pairs(defines.wire_type) do
-					HostPole.connect_neighbour({wire = v , target_entity = NeighbourPole})
-				end
+				ConnectAllWires(HostPole, NeighbourPole)
 			end
 		end
 	end
@@ -72,12 +70,10 @@ local function MakeSignalPole(entity)
 	if surface and surface.valid then
 		surface.create_entity({name = SignalPoleName, position = entity.position, force = entity.force, raise_built = false})
 		local SignalPole = surface.find_entity(SignalPoleName, entity.position)
-		SignalPole.disconnect_neighbour()
+		DisconnectAllWires(SignalPole)
 		for i, rail in pairs (entity.get_connected_rails()) do
 			local RailHiddenPole = surface.find_entity(HiddenPoleName, rail.position)
-			for j, v in pairs(defines.wire_type) do
-				SignalPole.connect_neighbour({wire = v , target_entity = RailHiddenPole})
-			end
+			ConnectAllWires(SignalPole, RailHiddenPole)
 		end
 		entity.destroy()
 	end
@@ -89,7 +85,7 @@ local function MakeHiddenPole(entity)
 		surface.create_entity({name = HiddenPoleName, position = entity.position, force = entity.force, raise_built = false})
 		local hiddenPole = surface.find_entity(HiddenPoleName, entity.position)
 		if hiddenPole then
-			hiddenPole.disconnect_neighbour()
+			DisconnectAllWires(hiddenPole)
 		end
 	end
 end
@@ -113,11 +109,11 @@ end
 local function on_new_train(event)
 	local NewTrain = event.train
 	if not NewTrain then return end
-	if TrainHasLocomotiveIsElectric(NewTrain) and CheckTableValue(NewTrain,global.JamesElectricTrains) == false then
-		table.insert(global.JamesElectricTrains, NewTrain)
+	if TrainHasLocomotiveIsElectric(NewTrain) and CheckTableValue(NewTrain,storage.JamesElectricTrains) == false then
+		table.insert(storage.JamesElectricTrains, NewTrain)
 	end
-	if TrainHasElectricWagon(NewTrain) and CheckTableValue(NewTrain,global.JamesElectricWagonTrains) == false then
-		table.insert(global.JamesElectricWagonTrains, NewTrain)
+	if TrainHasElectricWagon(NewTrain) and CheckTableValue(NewTrain,storage.JamesElectricWagonTrains) == false then
+		table.insert(storage.JamesElectricWagonTrains, NewTrain)
 	end
 end
 local function on_new_entity(event)
@@ -130,10 +126,10 @@ local function on_new_entity(event)
 		MakeHiddenAccum(surface, position)
 		MakeHiddenPole(entity)
 		SetupCableConnections(entity)
-	elseif LocomotiveIsElectric(entity) and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
-		table.insert(global.JamesElectricTrains, entity.train)
-	--[[elseif WagonIsElectric and entity.train and CheckTableValue(entity.train,global.JamesElectricTrains) == false then
-		table.insert(global.JamesElectricTrains, entity.train)]]
+	elseif LocomotiveIsElectric(entity) and entity.train and CheckTableValue(entity.train,storage.JamesElectricTrains) == false then
+		table.insert(storage.JamesElectricTrains, entity.train)
+	--[[elseif WagonIsElectric and entity.train and CheckTableValue(entity.train,storage.JamesElectricTrains) == false then
+		table.insert(storage.JamesElectricTrains, entity.train)]]
 	elseif entity.name == "james-rail-signal" then
 		MakeSignalPole(entity)
 	end
@@ -157,9 +153,9 @@ local function PowerTrain(Train)
 	
 	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
 		if LocomotiveIsElectricNow(locomotive) then
-			if locomotive.burner.currently_burning then
-				--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name))
-				PowerNeeded = PowerNeeded + locomotive.burner.currently_burning.fuel_value*0.6 - locomotive.burner.remaining_burning_fuel
+			if locomotive.energy_source.currently_burning then
+				--game.print("Loco Currently Burning: "..tostring(locomotive.energy_source.currently_burning.name))
+				PowerNeeded = PowerNeeded + locomotive.energy_source.currently_burning.fuel_value*0.6 - locomotive.energy_source.remaining_burning_fuel
 			else
 				--game.print("Loco is not burning, using default transfer value")
 				PowerNeeded = PowerNeeded + 60000000
@@ -167,7 +163,7 @@ local function PowerTrain(Train)
 			LocomotiveCount = LocomotiveCount + 1
 		else
 			--game.print("Loco is not electric, not handling")
-			--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name))
+			--game.print("Loco Currently Burning: "..tostring(locomotive.energy_source.currently_burning.name))
 		end
 	end
 	if PowerNeeded < 0 then
@@ -198,13 +194,13 @@ local function PowerTrain(Train)
 	end
 	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
 		if LocomotiveIsElectricNow(locomotive) then
-			locomotive.burner.currently_burning = FakeBurnerItem
-			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel + LocoPowerTransfer
+			locomotive.energy_source.currently_burning = FakeBurnerItem
+			locomotive.energy_source.remaining_burning_fuel = locomotive.energy_source.remaining_burning_fuel + LocoPowerTransfer
 		end
 	end
 	
 	if PowerTransfer < 1 then --If the train didn't get a lot of power, make it get updated again soon
-		table.insert(global.JETrainsUpdate, 1, train)
+		table.insert(storage.JETrainsUpdate, 1, train)
 	end
 end
 
@@ -227,18 +223,18 @@ local function train_regenerative_braking(Train)
 		
 		for i, locomotive in pairs(GetTrainLocomotives(Train)) do
 			if LocomotiveIsElectricNow(locomotive) then
-				locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel + RegenTransfer
+				locomotive.energy_source.remaining_burning_fuel = locomotive.energy_source.remaining_burning_fuel + RegenTransfer
 			end
 		end
 	else
-		table.remove(global.JamesRegenBrakingTrains, Train)
+		table.remove(storage.JamesRegenBrakingTrains, Train)
 	end
 end
 
 local function train_state_handler(event)
 	local Train = event.train
 	if Train and Train.valid and TrainIsBraking(Train) and TrainIsElectricNow(Train) then
-		table.insert(global.JamesRegenBrakingTrains, Train)
+		table.insert(storage.JamesRegenBrakingTrains, Train)
 	end
 end
 
@@ -261,44 +257,44 @@ local function WagonPower(Train)
 	local WagonDrain = WagonCount * WagonPowerUse / LocomotiveCount
 	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
 		if locomotive and locomotive.valid and LocomotiveIsElectricNow(locomotive) then
-			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel - WagonDrain
+			locomotive.energy_source.remaining_burning_fuel = locomotive.energy_source.remaining_burning_fuel - WagonDrain
 		end
 	end
 end
 
-local function PrintGlobalTrainList()
+local function PrintstorageTrainList()
 	game.print("Printing out current list of electric trains")
-	for i, entry in pairs(global.JamesElectricTrains) do
+	for i, entry in pairs(storage.JamesElectricTrains) do
 		game.print("Train "..tostring(i)..": "..serpent.block(entry))
 	end
 end
 local function PrintUpdateTrainList()
 	game.print("Printing out queued update list of electric trains")
-	for i, entry in pairs(global.JETrainsUpdate) do
+	for i, entry in pairs(storage.JETrainsUpdate) do
 		game.print("Train "..tostring(i)..": "..serpent.block(entry))
 	end
 end
 
 local function RemakeTrainUpdateList()
-	--PrintGlobalTrainList()
+	--PrintstorageTrainList()
 	--game.print("Make Train Update List")
-	if global.JamesElectricTrains then
-		for i, train in pairs(global.JamesElectricTrains) do
-			table.insert(global.JETrainsUpdate, train)
+	if storage.JamesElectricTrains then
+		for i, train in pairs(storage.JamesElectricTrains) do
+			table.insert(storage.JETrainsUpdate, train)
 		end
 	else
-		game.print("No globals, save broken?")
+		game.print("No storages, save broken?")
 	end
 end
 
 commands.add_command("RemakeTrainUpdateList", "", RemakeTrainUpdateList)
-commands.add_command("PrintGlobalTrainList", "", PrintGlobalTrainList)
+commands.add_command("PrintstorageTrainList", "", PrintstorageTrainList)
 commands.add_command("PrintUpdateTrainList", "", PrintUpdateTrainList)
 
 local function UpdateTrains()
 	--PrintUpdateTrainList()
 	local NilRegenBrakingTrains = { }
-	for i, train in pairs(global.JamesRegenBrakingTrains) do
+	for i, train in pairs(storage.JamesRegenBrakingTrains) do
 		if train and train.valid and TrainIsBraking(train) then
 			train_regenerative_braking(train)
 		else
@@ -306,30 +302,30 @@ local function UpdateTrains()
 		end
 	end
 	for i, entry in pairs(NilRegenBrakingTrains) do
-		table.remove(global.JamesRegenBrakingTrains, entry)
+		table.remove(storage.JamesRegenBrakingTrains, entry)
 	end
-	global.JECounter = global.JECounter + 1
-	if global.JECounter >= UpdateTime then
-		global.JECounter = 0
+	storage.JECounter = storage.JECounter + 1
+	if storage.JECounter >= UpdateTime then
+		storage.JECounter = 0
 		--game.print("tick")
-		for i, train in pairs(global.JamesElectricWagonTrains) do
+		for i, train in pairs(storage.JamesElectricWagonTrains) do
 			if train and train.valid and train.state == 0 then
 				WagonPower(train)
 			end
 		end
 		
-		for i = 1,#global.JamesElectricTrains/5,1 do
-			--if i == settings.global["train-update-count"].value then
+		for i = 1,#storage.JamesElectricTrains/5,1 do
+			--if i == settings.storage["train-update-count"].value then
 			--	break
 			--end
-			if global.JETrainsUpdate[1] ~= nil and global.JETrainsUpdate[1].valid then
+			if storage.JETrainsUpdate[1] ~= nil and storage.JETrainsUpdate[1].valid then
 				--game.print("Update train in update list")
-				PowerTrain(table.remove(global.JETrainsUpdate, 1))
+				PowerTrain(table.remove(storage.JETrainsUpdate, 1))
 			else
-				table.remove(global.JETrainsUpdate, 1)
+				table.remove(storage.JETrainsUpdate, 1)
 				--game.print("First entry isn't valid")
 			end
-			if #global.JETrainsUpdate == 0 then
+			if #storage.JETrainsUpdate == 0 then
 				--game.print("Update list is empty, remaking")
 				RemakeTrainUpdateList()
 			end
@@ -339,13 +335,12 @@ end
 
 script.on_event(defines.events.on_tick, function(event)
 	--game.print("pre tick")
-	--game.print(tostring(global.JECounter))
+	--game.print(tostring(storage.JECounter))
 	UpdateTrains()
 end)
 
 script.on_event(defines.events.on_train_created, on_new_train)
 script.on_event(defines.events.on_train_changed_state, train_state_handler)
-script.on_event(defines.events.on_entity_destroyed, on_remove_entity)
 script.on_event(defines.events.on_entity_died, on_remove_entity)
 script.on_event(defines.events.on_robot_mined_entity, on_remove_entity)
 script.on_event(defines.events.on_player_mined_entity, on_remove_entity)

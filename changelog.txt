@@ -1,6 +1,14 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.2.1
 Date: 06. 15. 24
+  Major Features:
+    - *Added a setting for Armoured Trains (And tiers)
+    - *Added a setting for Armed Wagons (And tiers)
+  Compatibility:
+	- *Added support for Fluidic Power. If that mod is active, Electric Rail Interconnects require high-voltage power to be fed to them, and provide up to 100MW to the rail grid.
+---------------------------------------------------------------------------------------------------
+Version: 1.2.1
+Date: 06. 15. 24
   Bugfixes:
     - Fixed powered rails not using their icon in the Upgrade Planner
     - Fixed Electric Rail Interconnect not using their icon in the Upgrade Planner

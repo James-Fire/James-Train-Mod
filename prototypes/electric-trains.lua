@@ -1,16 +1,16 @@
 local LocomotivePower = { "1MW", "2MW", "4MW" }
 
-data.raw["locomotive"]["locomotive"].burner.effectivity = 0.8
+data.raw["locomotive"]["locomotive"].energy_source.effectivity = 0.8
 
 --Train(s)
 local ElectricTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	ElectricTrainEntity.name = "james-electric-train"
 	ElectricTrainEntity.icon = Modname.."/graphics/electric-train.png"
-	ElectricTrainEntity.burner.fuel_inventory_size = 0
-	ElectricTrainEntity.burner.effectivity = 1
+	ElectricTrainEntity.energy_source.fuel_inventory_size = 0
+	ElectricTrainEntity.energy_source.effectivity = 1
 	ElectricTrainEntity.max_power = LocomotivePower[1]
 	ElectricTrainEntity.braking_force = ElectricTrainEntity.braking_force*2
-	ElectricTrainEntity.burner.smoke = nil
+	ElectricTrainEntity.energy_source.smoke = nil
     ElectricTrainEntity.minable = {mining_time = 0.5, result = "james-electric-train"}
 	ElectricTrainEntity.weight = 1500
 	ElectricTrainEntity.color = {r = 0, g = 0, b = 255, a = 255}
@@ -27,12 +27,12 @@ data:extend({ElectricTrainEntity, ElectricTrainItem,
 		enabled = false,
 		energy_required = 1,
 		ingredients = {
-			{"steel-plate", 30},
-			{"electric-engine-unit", 8},
-			{"copper-cable", 30},
-			{"electronic-circuit", 10},
+			{type = "item", name = "steel-plate", amount = 30},
+			{type = "item", name = "electric-engine-unit", amount = 8},
+			{type = "item", name = "copper-cable", amount = 30},
+			{type = "item", name = "electronic-circuit", amount = 10},
 		},
-		result = "james-electric-train",
+		results = {{type = "item", name = "james-electric-train", amount = 1}}
 	},
 })
 
