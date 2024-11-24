@@ -1,6 +1,6 @@
 {
   "name": "James-Train-Mod",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "title": "James' Train Mod",
   "author": "James Fire",
   "homepage": "",
@@ -12,7 +12,7 @@
 	"? FluidicPower",
 	"? space-exploration",
 	"? Bio_Industries",
-	"LSlib"
+	"LSlib_James_Fork"
   ]
 }
 
