@@ -19,7 +19,7 @@ end
 script.on_init(OnInit)
 
 local function TrainIsBraking(Train)
-	game.print(Train.riding_state.acceleration)
+	--game.print(Train.riding_state.acceleration)
 	if Train and Train.valid and Train.riding_state.acceleration == 2 --[[(Train.state == on_the_path or Train.state == arrive_signal or Train.state == arrive_station or Train.state == manual_control_stop)]] then
 		return true
 	end
@@ -215,7 +215,7 @@ end
 
 local function train_regenerative_braking(Train)
 	if Train and Train.valid and TrainIsBraking(Train) then
-		game.print("Train is braking")
+		--game.print("Train is braking")
 		local LocomotiveCount = 0
 		local WagonCount = 0
 		for i, wagon in pairs(GetTrainWagons(Train)) do
