@@ -234,6 +234,24 @@ if(mods["elevated-rails"]) then
 	table.insert(RailsCount, 3)
 	table.insert(Rails, "elevated-curved-rail-b")
 	table.insert(RailsCount, 3)
+	
+local PoweredRailRamp = table.deepcopy(data.raw["rail-ramp"]["rail-ramp"])
+PoweredRailRamp.name = "james-powered-rail-ramp"
+PoweredRailRamp.minable = {mining_time = 0.2, result = "james-powered-rail-ramp"}
+PoweredRailRamp.icons = {
+	{
+		icon = "__elevated-rails__/graphics/icons/rail-ramp.png",
+		icon_size = 64,
+		icon_mipmaps = 4,
+	},
+	{
+		icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+		icon_size = 32,
+		scale = 1 / 2,
+		shift = {0, 0},
+	},
+}
+data:extend({PoweredRailRamp})
 end
 
 for i, rail in pairs(Rails) do
@@ -257,23 +275,6 @@ for i, rail in pairs(Rails) do
 	}
 	data:extend({RailEntity})
 end
-
-local PoweredRailRamp = table.deepcopy(data.raw["rail-ramp"]["rail-ramp"])
-PoweredRailRamp.name = "james-powered-rail-ramp"
-PoweredRailRamp.minable = {mining_time = 0.2, result = "james-powered-rail-ramp"}
-PoweredRailRamp.icons = {
-	{
-		icon = "__elevated-rails__/graphics/icons/rail-ramp.png",
-		icon_size = 64,
-		icon_mipmaps = 4,
-	},
-	{
-		icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-		icon_size = 32,
-		scale = 1 / 2,
-		shift = {0, 0},
-	},
-}
 
 
 
@@ -306,8 +307,6 @@ if(mods["elevated-rails"]) then
 	table.insert(PoweredRailItem.rails, "james-powered-rail-elevated-half-diagonal-rail")
 	table.insert(PoweredRailItem.rails, "james-powered-rail-elevated-curved-rail-a")
 	table.insert(PoweredRailItem.rails, "james-powered-rail-elevated-curved-rail-b")
-end
-
 local PoweredRailRampItem = table.deepcopy(data.raw["rail-planner"]["rail-ramp"])
 PoweredRailRampItem.name = "james-powered-rail-ramp"
 PoweredRailRampItem.icons = {
@@ -326,11 +325,15 @@ PoweredRailRampItem.icons = {
 PoweredRailRampItem.place_result = "james-powered-rail-ramp"
 PoweredRailRampItem.rails = PoweredRailItem.rails
 
+data:extend({PoweredRailRampItem})
+end
+
+
 --data.raw["straight-rail"]["straight-rail"].fast_replaceable_group = "space-rail"
 --data.raw["curved-rail"]["curved-rail"].fast_replaceable_group = "space-rail-curved"
 --Data extend everything, and make our hidden item
 data:extend({PowerPoleSignalEntity, PowerPoleSignalItem, SignalPowerPole, PowerPole,
-Accumulator, PoweredRailItem, PoweredRailRamp, PoweredRailRampItem,
+Accumulator, PoweredRailItem, 
 	{
 		type = "recipe",
 		name = "james-rail-signal",
