@@ -7,6 +7,14 @@ function CheckTableValue(Value,Table)
 	return false
 end
 
+function areaAroundPosition(position, extraRange)
+	if type(extraRange) ~= "number" then extraRange = 0 end
+	return {
+		{x = math.floor(position.x) - extraRange,     y = math.floor(position.y) - extraRange},
+		{x = math.floor(position.x) + 1 + extraRange, y = math.floor(position.y) + 1 + extraRange}
+	}
+end
+
 function GetTrainLocomotives(Train)
 	local Locomotives = { }
 	for i, locomotive in pairs(Train.locomotives.front_movers) do
@@ -99,8 +107,8 @@ function ConnectAllWires(PoleEntitySource, PoleEntityTarget)
 		local TargetCopper = PoleEntityTarget.get_wire_connector(5,true)
 		local TargetRed = PoleEntityTarget.get_wire_connector(1,true)
 		local TargetGreen = PoleEntityTarget.get_wire_connector(2,true)
-		PoleEntitySource.get_wire_connector(5,true).connect_to(TargetCopper)
-		PoleEntitySource.get_wire_connector(1,true).connect_to(TargetRed)
-		PoleEntitySource.get_wire_connector(2,true).connect_to(TargetGreen)
+		PoleEntitySource.get_wire_connector(5,true).connect_to(TargetCopper,false)
+		PoleEntitySource.get_wire_connector(1,true).connect_to(TargetRed,false)
+		PoleEntitySource.get_wire_connector(2,true).connect_to(TargetGreen,false)
 	end
 end

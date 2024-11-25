@@ -10,12 +10,15 @@ end
 
 --Function to determine train rolling stock weight
 local function TrainStockWeight(Train)
-
+	return Train.weight
 end
 
 --Function to determine train cargo weight
 local function TrainVariableWeight(Train)
-
+	local TrainCargoWeight = 0
+	Train.get_contents()
+	Train.get_fluid_contents()
+	return TrainCargoWeight
 end
 
 --Function to determine train state update, and take appropriate action
@@ -27,22 +30,5 @@ local function UpdateTrainState(event)
 	end
 end
 
-local function on_new_train(event)
-	local NewTrain = event.train
-	if not NewTrain then return end
-	table.insert(storage.JamesWeightyTrains, NewTrain)
-end
-
-script.on_event(defines.events.on_tick, function(event)
-	--game.print("pre tick")
-	storage.JECounter = storage.JECounter + 1
-	if (storage.JECounter == 60) then
-		UpdateTrains()
-		storage.JECounter = 0
-		--game.print("tick")
-	end
-end)
-
 script.on_init(OnInit)
-script.on_event(defines.events.on_train_created, on_new_train)
 script.on_event(defines.events.on_train_changed_state, UpdateTrainState)

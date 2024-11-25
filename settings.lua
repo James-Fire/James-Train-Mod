@@ -29,7 +29,8 @@ data:extend(
 	minimum_value = 1,
 	order = "b-1",
   },
-  --[[{
+  --[[
+  {
     type = "bool-setting",
     name = "variable-weighty-trains",
     setting_type = "startup",

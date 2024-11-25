@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.2
+Date: 11. 24. 24
+  Balance:
+    - Halved how much energy regenerative braking returns
+  Bugfixes:
+    - Fixed wires not going away when you remove rails
+    - Fixed trains not getting power
+    - Fixed Powered Rail Ramps doing social distancing with wiring
+    - Fixed trains crashing the game when trying to use Regenerative Braking
+    - Fixed Regenerative Braking (It no longer applies with the train is just coasting, it must be actively braking)
+---------------------------------------------------------------------------------------------------
 Version: 2.0.1
 Date: 11. 23. 24
   Bugfixes:

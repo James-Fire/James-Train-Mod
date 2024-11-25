@@ -19,7 +19,8 @@ end
 script.on_init(OnInit)
 
 local function TrainIsBraking(Train)
-	if Train and Train.valid and Train.state == 1 or Train.state == 4 or Train.state == 6 or Train.state == 8 then
+	game.print(Train.riding_state.acceleration)
+	if Train and Train.valid and Train.riding_state.acceleration == 2 --[[(Train.state == on_the_path or Train.state == arrive_signal or Train.state == arrive_station or Train.state == manual_control_stop)]] then
 		return true
 	end
 	return false
@@ -31,7 +32,7 @@ local function LocomotiveIsElectricNow(Locomotive)
 		local LocoBurner = Locomotive.burner or Locomotive.energy_source
 		if LocoBurner and LocoBurner.currently_burning == nil then --The train is handled if it's burning nothing
 			return true
-		elseif LocoBurner.currently_burning.name == FakeBurnerItem then --The train is handled if it's already burning our dummy item
+		elseif LocoBurner.currently_burning.name.name == FakeBurnerItem then --The train is handled if it's already burning our dummy item
 			return true
 		else
 			return false
@@ -97,10 +98,14 @@ local function MakeHiddenAccum(surface, position)
 end
 local function removeHiddenPowerEntities(surface, position)
 	if surface and surface.valid then
+		--game.print("Surface Valid for pole removal")
 		for i, accumulator in pairs(surface.find_entities_filtered{name = AccumName, position = position}) do
+			--game.print(serpent.block(accumulator))
 			accumulator.destroy()
 		end
 		for i, pole in pairs(surface.find_entities_filtered{name = HiddenPoleName, position = position}) do
+			--game.print(serpent.block(pole))
+			DisconnectAllWires(pole)
 			pole.destroy()
 		end
 	end
@@ -139,7 +144,7 @@ local function on_remove_entity(event)
 	if not entity then return end
 	local surface = entity.surface
 	local position = entity.position
-	if entity.name == "james-powered-rail" or entity.name == "james-powered-rail-curved" then
+	if entity.name:find("james-powered-rail", 1, true) then
 		removeHiddenPowerEntities(surface, position)
 	end
 end
@@ -151,22 +156,25 @@ local function PowerTrain(Train)
 	local AvailablePower = 0
 	local LocomotiveCount = 0
 	
+	
 	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
+		--game.print("Current Power: "..tostring(locomotive.burner.remaining_burning_fuel))
 		if LocomotiveIsElectricNow(locomotive) then
-			if locomotive.energy_source.currently_burning then
-				--game.print("Loco Currently Burning: "..tostring(locomotive.energy_source.currently_burning.name))
-				PowerNeeded = PowerNeeded + locomotive.energy_source.currently_burning.fuel_value*0.6 - locomotive.energy_source.remaining_burning_fuel
+			if locomotive.burner.currently_burning then
+				--game.print("Loco Currently Burning: "..tostring(locomotive.energy_source.currently_burning.name.name))
+				--game.print("Fuel Value: "..tostring(locomotive.burner.currently_burning.name.fuel_value))
+				PowerNeeded = PowerNeeded + locomotive.burner.currently_burning.name.fuel_value*0.6 - locomotive.burner.remaining_burning_fuel
 			else
 				--game.print("Loco is not burning, using default transfer value")
 				PowerNeeded = PowerNeeded + 60000000
 			end
 			LocomotiveCount = LocomotiveCount + 1
 		else
-			--game.print("Loco is not electric, not handling")
-			--game.print("Loco Currently Burning: "..tostring(locomotive.energy_source.currently_burning.name))
+			--game.print("Loco "..locomotive.name.." is not electric, not handling")
+			--game.print("Loco Currently Burning: "..tostring(locomotive.burner.currently_burning.name.name))
 		end
 	end
-	if PowerNeeded < 0 then
+	if PowerNeeded <= 0 then
 		return
 	end
 	--game.print("Desired Power: "..tostring(PowerNeeded))
@@ -174,6 +182,7 @@ local function PowerTrain(Train)
 		local surface = rail.surface
 		local Accumulator = surface.find_entity(AccumName, rail.position)
 		if Accumulator and Accumulator.valid then
+			--game.print("Accumulator Energy: "..tostring(Accumulator.energy))
 			AvailablePower = AvailablePower + Accumulator.energy
 			table.insert(Accumulators, Accumulator)
 		end
@@ -194,8 +203,8 @@ local function PowerTrain(Train)
 	end
 	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
 		if LocomotiveIsElectricNow(locomotive) then
-			locomotive.energy_source.currently_burning = FakeBurnerItem
-			locomotive.energy_source.remaining_burning_fuel = locomotive.energy_source.remaining_burning_fuel + LocoPowerTransfer
+			locomotive.burner.currently_burning = FakeBurnerItem
+			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel + LocoPowerTransfer
 		end
 	end
 	
@@ -206,6 +215,7 @@ end
 
 local function train_regenerative_braking(Train)
 	if Train and Train.valid and TrainIsBraking(Train) then
+		game.print("Train is braking")
 		local LocomotiveCount = 0
 		local WagonCount = 0
 		for i, wagon in pairs(GetTrainWagons(Train)) do
@@ -213,17 +223,17 @@ local function train_regenerative_braking(Train)
 				WagonCount = WagonCount + 1
 			end
 		end
-		local RegenTransfer = WagonCount * WagonPowerUse * 0.8
+		local RegenTransfer = WagonCount * WagonPowerUse * 0.4
 		for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
 			if LocomotiveIsElectric(Locomotive) then
-				LocomotiveCount = LocomotiveCount + (game.entity_prototypes[Locomotive.name].max_energy_usage * 0.8)
+				LocomotiveCount = LocomotiveCount + (Locomotive.prototype.get_max_energy_usage() * 0.4)
 			end
 		end
 		local RegenTransfer = RegenTransfer + LocomotiveCount
 		
 		for i, locomotive in pairs(GetTrainLocomotives(Train)) do
 			if LocomotiveIsElectricNow(locomotive) then
-				locomotive.energy_source.remaining_burning_fuel = locomotive.energy_source.remaining_burning_fuel + RegenTransfer
+				locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel + RegenTransfer
 			end
 		end
 	else
@@ -257,7 +267,7 @@ local function WagonPower(Train)
 	local WagonDrain = WagonCount * WagonPowerUse / LocomotiveCount
 	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
 		if locomotive and locomotive.valid and LocomotiveIsElectricNow(locomotive) then
-			locomotive.energy_source.remaining_burning_fuel = locomotive.energy_source.remaining_burning_fuel - WagonDrain
+			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel - WagonDrain
 		end
 	end
 end
@@ -314,7 +324,7 @@ local function UpdateTrains()
 			end
 		end
 		
-		for i = 1,#storage.JamesElectricTrains/5,1 do
+		for i = 1,#storage.JamesElectricTrains,1 do
 			--if i == settings.storage["train-update-count"].value then
 			--	break
 			--end
