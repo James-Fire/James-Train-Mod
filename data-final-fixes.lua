@@ -46,10 +46,12 @@ if settings.startup["powered-rails"].value then
 		end
 		PoweredRailEntity.fast_replaceable_group = RailEntity.fast_replaceable_group
 	end
-	local RailEntity = data.raw["rail-ramp"]["rail-ramp"]
-	local PoweredRailEntity = data.raw["rail-ramp"]["james-powered-rail-ramp"]
-	if RailEntity.fast_replaceable_group == nil then
-		RailEntity.fast_replaceable_group = "rail-ramp"
+	if(mods["elevated-rails"]) then
+		local RailEntity = data.raw["rail-ramp"]["rail-ramp"]
+		local PoweredRailEntity = data.raw["rail-ramp"]["james-powered-rail-ramp"]
+		if RailEntity.fast_replaceable_group == nil then
+			RailEntity.fast_replaceable_group = "rail-ramp"
+		end
+		PoweredRailEntity.fast_replaceable_group = RailEntity.fast_replaceable_group
 	end
-	PoweredRailEntity.fast_replaceable_group = RailEntity.fast_replaceable_group
 end
