@@ -25,5 +25,31 @@ if settings.startup["powered-rails"].value then
 	if not (mods["FluidicPower"]) and settings.startup["powered-rails-adjacent"].value then
 		data.raw["electric-pole"]["james-track-pole"].supply_area_distance = 2
 	end
+	local Rails = {
+		"straight-rail",
+		"half-diagonal-rail",
+		"curved-rail-a",
+		"curved-rail-b",
+	}
+	if(mods["elevated-rails"]) then
+		table.insert(Rails, "elevated-straight-rail")
+		table.insert(Rails, "elevated-half-diagonal-rail")
+		table.insert(Rails, "elevated-curved-rail-a")
+		table.insert(Rails, "elevated-curved-rail-b")
+	end
 	
+	for i, rail in pairs(Rails) do
+		local RailEntity = data.raw[rail][rail]
+		local PoweredRailEntity = data.raw[rail]["james-powered-rail-"..rail]
+		if RailEntity.fast_replaceable_group == nil then
+			RailEntity.fast_replaceable_group = rail
+		end
+		PoweredRailEntity.fast_replaceable_group = RailEntity.fast_replaceable_group
+	end
+	local RailEntity = data.raw["rail-ramp"]["rail-ramp"]
+	local PoweredRailEntity = data.raw["rail-ramp"]["james-powered-rail-ramp"]
+	if RailEntity.fast_replaceable_group == nil then
+		RailEntity.fast_replaceable_group = "rail-ramp"
+	end
+	PoweredRailEntity.fast_replaceable_group = RailEntity.fast_replaceable_group
 end
