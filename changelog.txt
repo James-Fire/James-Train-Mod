@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.8
+Date: 11. 28. 24
+  Bugfixes:
+    - Fixed a crash if you placed the Electric Rail Interconnect next to unpowered rails
+    - Fixed rails being able to connects wires to things other than other rails and the Electric Rail Interconnect
+---------------------------------------------------------------------------------------------------
+Version: 2.0.7
+Date: 11. 25. 24
+  Features:
+    - You can now activate Powered Rails in a save that already has the mod.
+---------------------------------------------------------------------------------------------------
 Version: 2.0.6
 Date: 11. 25. 24
   Bugfixes:
@@ -40,6 +51,11 @@ Date: 11. 24. 24
   Major Features:
     - Updated to 2.0, Space Age, and Elevated Rails.
     - Elevated Rails can be powered now
+---------------------------------------------------------------------------------------------------
+Version: 1.2.2
+Date: 06. 16. 24
+  Bugfixes:
+    - Fixed electric trains not getting power
 ---------------------------------------------------------------------------------------------------
 Version: 1.2.1
 Date: 06. 15. 24

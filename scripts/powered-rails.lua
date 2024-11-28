@@ -15,8 +15,30 @@ local function OnInit()
 	storage.JETrainsUpdate = { }
 	storage.JECounter = 0
 end
-
 script.on_init(OnInit)
+
+local function ConfigChanged()
+	if not storage.JamesElectricTrains then
+		storage.JamesElectricTrains = { }
+	end
+	if not storage.JamesElectricWagonTrains then
+		storage.JamesElectricWagonTrains = { }
+	end
+	if not storage.JamesElectricWagonTrains then
+		storage.JamesElectricWagonTrains = { }
+	end
+	if not storage.JamesRegenBrakingTrains then
+		storage.JamesRegenBrakingTrains = { }
+	end
+	if not storage.JETrainsUpdate then
+		storage.JETrainsUpdate = { }
+	end
+	if not storage.JECounter then
+		storage.JECounter = 0
+	end
+end
+
+script.on_configuration_changed(ConfigChanged)
 
 local function TrainIsBraking(Train)
 	--game.print(Train.riding_state.acceleration)
@@ -74,7 +96,9 @@ local function MakeSignalPole(entity)
 		DisconnectAllWires(SignalPole)
 		for i, rail in pairs (entity.get_connected_rails()) do
 			local RailHiddenPole = surface.find_entity(HiddenPoleName, rail.position)
-			ConnectAllWires(SignalPole, RailHiddenPole)
+			if RailHiddenPole then
+				ConnectAllWires(SignalPole, RailHiddenPole)
+			end
 		end
 		entity.destroy()
 	end

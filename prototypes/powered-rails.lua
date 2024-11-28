@@ -136,7 +136,7 @@ local PowerPole = table.deepcopy(SignalPowerPole)
 	PowerPole.draw_circuit_wires=false
 	PowerPole.selectable_in_game=false
     PowerPole.supply_area_distance = 0.5
-    PowerPole.maximum_wire_distance = 9
+    PowerPole.maximum_wire_distance = 0
     PowerPole.pictures.layers = {
         {
 			filename = "__core__/graphics/empty.png",
