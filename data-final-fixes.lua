@@ -14,10 +14,12 @@ if settings.startup["weighty-trains"].value then
 end
 
 for i, rollingstock in pairs(data.raw["item-with-entity-data"]) do
-	if rollingstock.place_result:find("locomotive", 1, true) or rollingstock.place_result:find("train", 1, true) then
-		rollingstock.subgroup = "locomotives"
-	elseif rollingstock.place_result:find("wagon", 1, true) then
-		rollingstock.subgroup = "wagons"
+	if rollingstock.place_result then
+		if rollingstock.place_result:find("locomotive", 1, true) or rollingstock.place_result:find("train", 1, true) then
+			rollingstock.subgroup = "locomotives"
+		elseif rollingstock.place_result:find("wagon", 1, true) then
+			rollingstock.subgroup = "wagons"
+		end
 	end
 end
 
