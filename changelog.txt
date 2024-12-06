@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.9
+Date: 11. 28. 24
+  Bugfixes:
+    - Fixed a failure to load if other mods add item-with-entity-data but don't actually have an entity associated with it
+---------------------------------------------------------------------------------------------------
 Version: 2.0.8
 Date: 11. 28. 24
   Bugfixes:
