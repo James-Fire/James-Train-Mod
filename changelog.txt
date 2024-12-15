@@ -1,4 +1,21 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.12
+Date: 12. 14. 24
+  Bugfixes:
+    - Fixed icon sizing on techs
+    - Made Powered Rails immune to Fulgora Lightning, like vanilla rails, for real this time
+---------------------------------------------------------------------------------------------------
+Version: 2.0.11
+Date: 12. 13. 24
+  Bugfixes:
+    - Made Powered Rails immune to Fulgora Lightning, like vanilla rails.
+---------------------------------------------------------------------------------------------------
+Version: 2.0.10
+Date: 12. 07. 24
+  Features:
+    - Changed the name of the mod for better searchability
+    - Made Electric Trains and Powered Rails settings default on
+---------------------------------------------------------------------------------------------------
 Version: 2.0.9
 Date: 11. 28. 24
   Bugfixes:

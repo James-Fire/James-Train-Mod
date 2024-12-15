@@ -48,7 +48,7 @@ data:extend(
     type = "bool-setting",
     name = "powered-rails",
     setting_type = "startup",
-    default_value = false,
+    default_value = true,
 	order = "c-0-0",
   },
   {
@@ -62,7 +62,7 @@ data:extend(
     type = "bool-setting",
     name = "electric-trains",
     setting_type = "startup",
-    default_value = false,
+    default_value = true,
 	order = "c-1",
   },
   {

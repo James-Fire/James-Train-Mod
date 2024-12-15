@@ -128,7 +128,8 @@ data:extend({
 			},
 			{
 				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-				icon_size = 32,
+				icon_size = 40,
+				scale = 1,
 				shift = {20, -28},
 			},
 			{
@@ -139,7 +140,8 @@ data:extend({
 			},
 			{
 				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-				icon_size = 32,
+				icon_size = 40,
+				scale = 1,
 				shift = {-24, 12},
 			},
 			{
@@ -187,9 +189,9 @@ data:extend({
 			},
 			{
 				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-				icon_size = 32,
-				scale = 1 / 2,
-					shift = {0, 0},
+				icon_size = 40,
+				scale = 1,
+				shift = {0, 0},
 			},
 			{
 				icon = "__James-Train-Mod__/graphics/speed.png",
@@ -235,7 +237,8 @@ if settings.startup["train-car-tiers"].value then
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-					icon_size = 32,
+					icon_size = 40,
+					scale = 1,
 					shift = {20, -28},
 				},
 				{
@@ -246,7 +249,8 @@ if settings.startup["train-car-tiers"].value then
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-					icon_size = 32,
+					icon_size = 40,
+					scale = 1,
 					shift = {-24, 12},
 				},
 				{
@@ -300,7 +304,8 @@ if settings.startup["train-car-tiers"].value then
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-					icon_size = 32,
+					icon_size = 40,
+					scale = 1,
 					shift = {0, 0},
 				},
 				{
@@ -351,7 +356,8 @@ if settings.startup["train-car-tiers"].value then
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-					icon_size = 32,
+					icon_size = 40,
+					scale = 1,
 					shift = {20, -28},
 				},
 				{
@@ -362,7 +368,8 @@ if settings.startup["train-car-tiers"].value then
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-					icon_size = 32,
+					icon_size = 40,
+					scale = 1,
 					shift = {-24, 12},
 				},
 				{
@@ -423,7 +430,8 @@ if settings.startup["train-car-tiers"].value then
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-					icon_size = 32,
+					icon_size = 40,
+					scale = 1,
 					shift = {0, 0},
 				},
 				{

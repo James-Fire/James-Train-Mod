@@ -67,13 +67,15 @@ data:extend({
 			},
 			{
 				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-				icon_size = 32,
-				shift = {-8, 0},
+				icon_size = 40,
+				scale = 1,
+				shift = {-10, 0},
 			},
 			{
 				icon = "__base__/graphics/icons/tooltips/tooltip-category-nuclear.png",
-				icon_size = 32,
-				shift = {8, 0},
+				icon_size = 40,
+				scale = 1,
+				shift = {10, 0},
 			},
 			{
 				icon = "__James-Train-Mod__/graphics/speed.png",
@@ -120,13 +122,15 @@ if settings.startup["train-tiers"].value then
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-					icon_size = 32,
-					shift = {-8, 0},
+					icon_size = 40,
+					scale = 1,
+					shift = {-10, 0},
 				},
 				{
 					icon = "__base__/graphics/icons/tooltips/tooltip-category-nuclear.png",
-					icon_size = 32,
-					shift = {8, 0},
+					icon_size = 40,
+					scale = 1,
+					shift = {10, 0},
 				},
 				{
 					icon = "__James-Train-Mod__/graphics/speed.png",
@@ -177,13 +181,15 @@ if settings.startup["train-tiers"].value then
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-					icon_size = 32,
-					shift = {-8, 0},
+					icon_size = 40,
+					scale = 1,
+					shift = {-10, 0},
 				},
 				{
 					icon = "__base__/graphics/icons/tooltips/tooltip-category-nuclear.png",
-					icon_size = 32,
-					shift = {8, 0},
+					icon_size = 40,
+					scale = 1,
+					shift = {10, 0},
 				},
 				{
 					icon = "__James-Train-Mod__/graphics/speed.png",

@@ -1,10 +1,10 @@
 {
   "name": "James-Train-Mod",
-  "version": "2.0.9",
-  "title": "James' Train Mod",
+  "version": "2.0.12",
+  "title": "James' Electric Trains Plus",
   "author": "James Fire",
   "homepage": "",
-  "description": "Includes unified train changes, including weightier rolling stock, electric trains, powered rails, and electric train cars. Each also has a setting, so you can pick and choose which ones you want.",
+  "description": "Primarily features Electric Trains and Powered Rails, but also includes unified train changes, including weightier rolling stock, nuclear trains, hybrid trains, and electric train cars. Each also has a setting, so you can pick and choose which ones you want.",
   "factorio_version": "2.0",
   "dependencies": [
 	"base >= 0.18.0",

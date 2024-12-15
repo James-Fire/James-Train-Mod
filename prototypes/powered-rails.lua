@@ -127,14 +127,13 @@ local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric
 	
 local PowerPole = table.deepcopy(SignalPowerPole)
 	PowerPole.name = "james-track-pole"
-	PowerPole.selection_box = nil --{{-0.1, -0.1}, {0.1, 0.1}}
+	PowerPole.selection_box = --[[nil]] {{-0.1, -0.1}, {0.1, 0.1}}
 	PowerPole.collision_box = {{0, 0}, {0.5, 0.5}}
 	PowerPole.collision_mask = {layers={}, not_colliding_with_itself=true}
 	PowerPole.icon = "__core__/graphics/empty.png"
     PowerPole.icon_size = 1
     PowerPole.minable= nil
 	PowerPole.draw_circuit_wires=false
-	PowerPole.selectable_in_game=false
     PowerPole.supply_area_distance = 0.5
     PowerPole.maximum_wire_distance = 0
     PowerPole.pictures.layers = {
@@ -211,7 +210,9 @@ local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
       output_flow_limit = "0MW",
 	  drain = "1kW"
     }
-	
+
+LSlib.entity.MakePrototypeLightningImmune("james-track-pole")
+LSlib.entity.MakePrototypeLightningImmune("james-rail-accumulator")
 --Rails
 local Rails = {
 	"straight-rail",
@@ -251,6 +252,7 @@ PoweredRailRamp.icons = {
 		shift = {0, 0},
 	},
 }
+LSlib.entity.MakePrototypeLightningImmune("james-powered-rail-ramp")
 data:extend({PoweredRailRamp})
 end
 
@@ -273,6 +275,7 @@ for i, rail in pairs(Rails) do
 			shift = {0, 0},
 		},
 	}
+	LSlib.entity.MakePrototypeLightningImmune(RailEntity.name)
 	data:extend({RailEntity})
 end
 

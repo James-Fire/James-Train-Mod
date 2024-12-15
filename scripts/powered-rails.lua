@@ -115,9 +115,9 @@ local function MakeHiddenPole(entity)
 	end
 end
 
-local function MakeHiddenAccum(surface, position)
+local function MakeHiddenAccum(surface, position, force)
 	if surface and surface.valid then
-		surface.create_entity({name = AccumName, position = position, raise_built = false})
+		surface.create_entity({name = AccumName, position = position, force = force, raise_built = false})
 	end
 end
 local function removeHiddenPowerEntities(surface, position)
@@ -152,7 +152,7 @@ local function on_new_entity(event)
 	local position = entity.position
 	local force = entity.force
 	if entity.name:find("james-powered-rail", 1, true) or entity.name:find("-rail-electric", 1, true) then
-		MakeHiddenAccum(surface, position)
+		MakeHiddenAccum(surface, position, entity.force)
 		MakeHiddenPole(entity)
 		SetupCableConnections(entity)
 	elseif LocomotiveIsElectric(entity) and entity.train and CheckTableValue(entity.train,storage.JamesElectricTrains) == false then
@@ -296,7 +296,7 @@ local function WagonPower(Train)
 	end
 end
 
-local function PrintstorageTrainList()
+local function PrintStorageTrainList()
 	game.print("Printing out current list of electric trains")
 	for i, entry in pairs(storage.JamesElectricTrains) do
 		game.print("Train "..tostring(i)..": "..serpent.block(entry))
@@ -322,7 +322,7 @@ local function RemakeTrainUpdateList()
 end
 
 commands.add_command("RemakeTrainUpdateList", "", RemakeTrainUpdateList)
-commands.add_command("PrintstorageTrainList", "", PrintstorageTrainList)
+commands.add_command("PrintstorageTrainList", "", PrintStorageTrainList)
 commands.add_command("PrintUpdateTrainList", "", PrintUpdateTrainList)
 
 local function UpdateTrains()

@@ -82,7 +82,8 @@ data:extend({
 			},
 			{
 				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-				icon_size = 32,
+				icon_size = 40,
+				scale = 1,
 				shift = {0, 0},
 			},
 			{
@@ -133,7 +134,8 @@ if settings.startup["train-tiers"].value then
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-					icon_size = 32,
+					icon_size = 40,
+					scale = 1,
 					shift = {0, 0},
 				},
 				{
@@ -184,7 +186,8 @@ if settings.startup["train-tiers"].value then
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
-					icon_size = 32,
+					icon_size = 40,
+					scale = 1,
 					shift = {0, 0},
 				},
 				{
