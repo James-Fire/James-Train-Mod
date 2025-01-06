@@ -1,8 +1,5 @@
 local LocomotivePower = { "1MW", "2MW" }
 
-data.raw.locomotive["locomotive"].max_power = "500kW"
-data.raw.locomotive["locomotive"].max_speed = 0.6
-
 for i, v in pairs({2,3}) do
 	local locomotive_entity = table.deepcopy(data.raw.locomotive["locomotive"])
 	locomotive_entity.name = "locomotive-"..tostring(v)
