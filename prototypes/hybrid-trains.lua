@@ -1,4 +1,4 @@
-local LocomotivePower = { "1MW", "2MW", "4MW" }
+local LocomotivePower = { "0.5MW", "1MW", "2MW" }
 
 data.raw["locomotive"]["locomotive"].energy_source.effectivity = 0.8
 
@@ -6,6 +6,7 @@ local HybridTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	HybridTrainEntity.name = "james-hybrid-train"
 	HybridTrainEntity.icon = Modname.."/graphics/hybrid-train.png"
     HybridTrainEntity.minable = {mining_time = 0.5, result = "james-hybrid-train"}
+	HybridTrainEntity.energy_source.fuel_categories = {"chemical", "electric-train"}
 	HybridTrainEntity.max_power = LocomotivePower[1]
 	HybridTrainEntity.energy_source.effectivity = 0.9
 	HybridTrainEntity.weight = 2500
@@ -13,7 +14,26 @@ local HybridTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	
 local HybridTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locomotive"])
 	HybridTrainItem.name = "james-hybrid-train"
-	HybridTrainItem.icon = Modname.."/graphics/hybrid-train.png"
+	HybridTrainItem.icons = {
+		{
+			icon = Modname.."/graphics/hybrid-train.png",
+			scale = 2
+		},
+		{
+			icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+			icon_size = 32,
+			scale = 2,
+			shift = {-15, 0},
+			icon_mipmaps = 2,
+		},
+		{
+			icon = "__base__/graphics/icons/tooltips/tooltip-category-chemical.png",
+			icon_size = 32,
+			scale = 2,
+			shift = {15, 0},
+			icon_mipmaps = 2,
+		},
+	}
 	HybridTrainItem.place_result = "james-hybrid-train"
 	
 LSlib.recipe.duplicate("locomotive", "james-hybrid-train")

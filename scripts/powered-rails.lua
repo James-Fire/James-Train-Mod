@@ -49,7 +49,7 @@ local function TrainIsBraking(Train)
 end
 
 --Arbiter function for if we should handle a train in the moment, is passed a locomotive
-local function LocomotiveIsElectricNow(Locomotive)
+--[[local function LocomotiveIsElectricNow(Locomotive)
 	if LocomotiveIsElectric(Locomotive) then
 		local LocoBurner = Locomotive.burner or Locomotive.energy_source
 		if LocoBurner and LocoBurner.currently_burning == nil then --The train is handled if it's burning nothing
@@ -60,10 +60,10 @@ local function LocomotiveIsElectricNow(Locomotive)
 			return false
 		end
 	end
-end
+end]]
 local function TrainIsElectricNow(Train)
 	for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
-		if LocomotiveIsElectricNow(Locomotive) then
+		if LocomotiveIsElectric(Locomotive) then
 			return true
 		end
 	end
@@ -183,7 +183,7 @@ local function PowerTrain(Train)
 	
 	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
 		--game.print("Current Power: "..tostring(locomotive.burner.remaining_burning_fuel))
-		if LocomotiveIsElectricNow(locomotive) then
+		if LocomotiveIsElectric(locomotive) then
 			if locomotive.burner.currently_burning then
 				--game.print("Loco Currently Burning: "..tostring(locomotive.energy_source.currently_burning.name.name))
 				--game.print("Fuel Value: "..tostring(locomotive.burner.currently_burning.name.fuel_value))
@@ -226,7 +226,7 @@ local function PowerTrain(Train)
 		Accumulator.energy = Accumulator.energy - AccumulatorDraw
 	end
 	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
-		if LocomotiveIsElectricNow(locomotive) then
+		if LocomotiveIsElectric(locomotive) then
 			locomotive.burner.currently_burning = FakeBurnerItem
 			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel + LocoPowerTransfer
 		end
@@ -256,7 +256,7 @@ local function train_regenerative_braking(Train)
 		local RegenTransfer = RegenTransfer + LocomotiveCount
 		
 		for i, locomotive in pairs(GetTrainLocomotives(Train)) do
-			if LocomotiveIsElectricNow(locomotive) then
+			if LocomotiveIsElectric(locomotive) then
 				locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel + RegenTransfer
 			end
 		end
@@ -290,7 +290,7 @@ local function WagonPower(Train)
 	end
 	local WagonDrain = WagonCount * WagonPowerUse / LocomotiveCount
 	for i, locomotive in pairs(GetTrainLocomotives(Train)) do
-		if locomotive and locomotive.valid and LocomotiveIsElectricNow(locomotive) then
+		if locomotive and locomotive.valid and LocomotiveIsElectric(locomotive) then
 			locomotive.burner.remaining_burning_fuel = locomotive.burner.remaining_burning_fuel - WagonDrain
 		end
 	end

@@ -1,4 +1,19 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.13
+Date: 12. 15. 24
+  Features:
+    - Added icons to train items to show what they use, rather than just relying on colour.
+    - Added icons to electric wagon items to show they use power
+    - There is now a setting for whether powered rails show copper wire. This setting is extendable for future use.
+    - Added Russian translation
+  Changes:
+    - Hybrid Trains now use fuel when there is no electricity available, rather than always using fuel first.
+    - Adjusted locomotive stats and Electricity "fuel" bonuses so that Hybrid Trains using non-electric power sources aren't able to have a higher top speed or acceleration
+    - Made my hidden fuel item into a thing about how the train can take power from tracks
+  Bugfixes:
+    - Pure electric trains no longer say they accept chemical fuel.
+    - Enabling Electric Train Cars without Tiered Wagons is now allowed.
+---------------------------------------------------------------------------------------------------
 Version: 2.0.12
 Date: 12. 14. 24
   Bugfixes:
@@ -116,7 +131,7 @@ Version: 1.1.1
 Date: 05. 29. 24
   Bugfixes:
     - Added a line of code to fix someone else's fuckup
-	---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 Version: 1.1.0
 Date: 05. 29. 24
   Major Features:

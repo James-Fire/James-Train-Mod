@@ -1,4 +1,4 @@
-local LocomotivePower = { "1MW", "2MW", "4MW" }
+local LocomotivePower = { "0.5MW", "1MW", "2MW" }
 
 data.raw["locomotive"]["locomotive"].energy_source.effectivity = 0.8
 
@@ -6,6 +6,7 @@ data.raw["locomotive"]["locomotive"].energy_source.effectivity = 0.8
 local ElectricTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	ElectricTrainEntity.name = "james-electric-train"
 	ElectricTrainEntity.icon = Modname.."/graphics/electric-train.png"
+	ElectricTrainEntity.energy_source.fuel_categories = {"electric-train"}
 	ElectricTrainEntity.energy_source.fuel_inventory_size = 0
 	ElectricTrainEntity.energy_source.effectivity = 1
 	ElectricTrainEntity.max_power = LocomotivePower[1]
@@ -17,7 +18,18 @@ local ElectricTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 
 local ElectricTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locomotive"])
 	ElectricTrainItem.name = "james-electric-train"
-	ElectricTrainItem.icon = Modname.."/graphics/electric-train.png"
+	ElectricTrainItem.icons = {
+	{
+		icon = Modname.."/graphics/electric-train.png",
+		scale = 2
+	},
+	{
+		icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+		icon_size = 32,
+		scale = 2,
+		icon_mipmaps = 2,
+	},
+}
 	ElectricTrainItem.place_result = "james-electric-train"
 
 data:extend({ElectricTrainEntity, ElectricTrainItem,

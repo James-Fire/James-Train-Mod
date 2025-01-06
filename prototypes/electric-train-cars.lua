@@ -17,6 +17,18 @@ if settings.startup["train-car-tiers"].value then
 			
 			local wagon_item = table.deepcopy(data.raw["item-with-entity-data"][wagon])
 			wagon_item.name = wagon.."-electric-"..tostring(v)
+			wagon_item.icons = {
+				{
+					icon = "__base__/graphics/icons/"..wagon..".png",
+					scale = 2
+				},
+				{
+					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+					icon_size = 32,
+					scale = 2,
+					icon_mipmaps = 2,
+				},
+			}
 			wagon_item.place_result = wagon.."-electric-"..tostring(v)
 
 			LSlib.recipe.duplicate(wagon, wagon.."-electric-"..tostring(v))
@@ -35,34 +47,70 @@ if settings.startup["train-car-tiers"].value then
 else
 --Wagons(s)
 local ElectricCargoWagonEntity = table.deepcopy(data.raw["cargo-wagon"]["cargo-wagon"])
-	ElectricCargoWagonEntity.name = "cargo-wagon-electric"
-    ElectricCargoWagonEntity.minable = {mining_time = 0.5, result = "cargo-wagon-electric"}
+	ElectricCargoWagonEntity.name = "cargo-wagon-electric-1"
+    ElectricCargoWagonEntity.minable = {mining_time = 0.5, result = "cargo-wagon-electric-1"}
     ElectricCargoWagonEntity.weight = 0.01
     ElectricCargoWagonEntity.braking_force = 0.001
 	
 local ElectricCargoWagonItem = table.deepcopy(data.raw["item-with-entity-data"]["cargo-wagon"])
-	ElectricCargoWagonItem.name = "cargo-wagon-electric"
-	ElectricCargoWagonItem.place_result = "cargo-wagon-electric"
+	ElectricCargoWagonItem.name = "cargo-wagon-electric-1"
+	ElectricCargoWagonItem.icons = {
+		{
+			icon = "__base__/graphics/icons/cargo-wagon.png",
+			scale = 2
+		},
+		{
+			icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+			icon_size = 32,
+			scale = 2,
+			icon_mipmaps = 2,
+		},
+	}
+	ElectricCargoWagonItem.place_result = "cargo-wagon-electric-1"
 	
 local ElectricFluidWagonEntity = table.deepcopy(data.raw["fluid-wagon"]["fluid-wagon"])
-	ElectricFluidWagonEntity.name = "fluid-wagon-electric"
-    ElectricFluidWagonEntity.minable = {mining_time = 0.5, result = "fluid-wagon-electric"}
+	ElectricFluidWagonEntity.name = "fluid-wagon-electric-1"
+    ElectricFluidWagonEntity.minable = {mining_time = 0.5, result = "fluid-wagon-electric-1"}
     ElectricFluidWagonEntity.weight = 0.01
     ElectricFluidWagonEntity.braking_force = 0.001
 	
 local ElectricFluidWagonItem = table.deepcopy(data.raw["item-with-entity-data"]["fluid-wagon"])
-	ElectricFluidWagonItem.name = "fluid-wagon-electric"
-	ElectricFluidWagonItem.place_result = "fluid-wagon-electric"
+	ElectricFluidWagonItem.name = "fluid-wagon-electric-1"
+	ElectricFluidWagonItem.icons = {
+		{
+			icon = "__base__/graphics/icons/fluid-wagon.png",
+			scale = 2
+		},
+		{
+			icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+			icon_size = 32,
+			scale = 2,
+			icon_mipmaps = 2,
+		},
+	}
+	ElectricFluidWagonItem.place_result = "fluid-wagon-electric-1"
 	
 local ElectricArtilleryWagonEntity = table.deepcopy(data.raw["artillery-wagon"]["artillery-wagon"])
-	ElectricArtilleryWagonEntity.name = "artillery-wagon-electric"
-    ElectricArtilleryWagonEntity.minable = {mining_time = 0.5, result = "artillery-wagon-electric"}
+	ElectricArtilleryWagonEntity.name = "artillery-wagon-electric-1"
+    ElectricArtilleryWagonEntity.minable = {mining_time = 0.5, result = "artillery-wagon-electric-1"}
     ElectricArtilleryWagonEntity.weight = 0.01
     ElectricArtilleryWagonEntity.braking_force = 0.001
 	
 local ElectricArtilleryWagonItem = table.deepcopy(data.raw["item-with-entity-data"]["artillery-wagon"])
-	ElectricArtilleryWagonItem.name = "artillery-wagon-electric"
-	ElectricArtilleryWagonItem.place_result = "artillery-wagon-electric"
+	ElectricArtilleryWagonItem.name = "artillery-wagon-electric-1"
+	ElectricArtilleryWagonItem.icons = {
+		{
+			icon = "__base__/graphics/icons/artillery-wagon.png",
+			scale = 2
+		},
+		{
+			icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+			icon_size = 32,
+			scale = 2,
+			icon_mipmaps = 2,
+		},
+	}
+	ElectricArtilleryWagonItem.place_result = "artillery-wagon-electric-1"
 	
 data:extend({ElectricCargoWagonEntity, ElectricCargoWagonItem,
 ElectricFluidWagonEntity, ElectricFluidWagonItem,
@@ -73,12 +121,12 @@ ElectricArtilleryWagonEntity, ElectricArtilleryWagonItem,
 		enabled = false,
 		energy_required = 1,
 		ingredients = {
-			{"cargo-wagon", 1},
-			{"electric-engine-unit", 8},
-			{"copper-cable", 30},
-			{"electronic-circuit", 10},
+			{type = "item", name = "cargo-wagon", amount = 1},
+			{type = "item", name = "electric-engine-unit", amount = 8},
+			{type = "item", name = "copper-cable", amount = 30},
+			{type = "item", name = "electronic-circuit", amount = 10},
 		},
-		results = {{"cargo-wagon-electric-1",1}},
+		results = {{type = "item", name = "cargo-wagon-electric-1", amount = 1}},
 	},
 	{
 		type = "recipe",
@@ -86,12 +134,12 @@ ElectricArtilleryWagonEntity, ElectricArtilleryWagonItem,
 		enabled = false,
 		energy_required = 1,
 		ingredients = {
-			{"fluid-wagon", 1},
-			{"electric-engine-unit", 8},
-			{"copper-cable", 30},
-			{"electronic-circuit", 10},
+			{type = "item", name = "fluid-wagon", amount = 1},
+			{type = "item", name = "electric-engine-unit", amount = 8},
+			{type = "item", name = "copper-cable", amount = 30},
+			{type = "item", name = "electronic-circuit", amount = 10},
 		},
-		results = {{"fluid-wagon-electric-1",1}},
+		results = {{type = "item", name = "fluid-wagon-electric-1", amount = 1}},
 	},
 	{
 		type = "recipe",
@@ -99,12 +147,12 @@ ElectricArtilleryWagonEntity, ElectricArtilleryWagonItem,
 		enabled = false,
 		energy_required = 1,
 		ingredients = {
-			{"artillery-wagon", 1},
-			{"electric-engine-unit", 8},
-			{"copper-cable", 30},
-			{"electronic-circuit", 10},
+			{type = "item", name = "artillery-wagon", amount = 1},
+			{type = "item", name = "electric-engine-unit", amount = 8},
+			{type = "item", name = "copper-cable", amount = 30},
+			{type = "item", name = "electronic-circuit", amount = 10},
 		},
-		results = {{"artillery-wagon-electric-1",1}},
+		results = {{type = "item", name = "artillery-wagon-electric-1", amount = 1}},
 	},
 })
 	

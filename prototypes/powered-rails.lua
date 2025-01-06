@@ -127,12 +127,13 @@ local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric
 	
 local PowerPole = table.deepcopy(SignalPowerPole)
 	PowerPole.name = "james-track-pole"
-	PowerPole.selection_box = --[[nil]] {{-0.1, -0.1}, {0.1, 0.1}}
+	PowerPole.selection_box = nil --{{-0.1, -0.1}, {0.1, 0.1}}
 	PowerPole.collision_box = {{0, 0}, {0.5, 0.5}}
-	PowerPole.collision_mask = {layers={}, not_colliding_with_itself=true}
+	PowerPole.collision_mask = nil --{layers={}, not_colliding_with_itself=true}
 	PowerPole.icon = "__core__/graphics/empty.png"
     PowerPole.icon_size = 1
     PowerPole.minable= nil
+	PowerPole.draw_copper_wires=false
 	PowerPole.draw_circuit_wires=false
     PowerPole.supply_area_distance = 0.5
     PowerPole.maximum_wire_distance = 0
@@ -190,11 +191,14 @@ local PowerPole = table.deepcopy(SignalPowerPole)
 	}
     PowerPole.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
 	
+if settings.startup["powered-rails-diff"].value:find("copper-wire", 1, true) then
+	PowerPole.draw_copper_wires=true
+end
 local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
 	Accumulator.name = "james-rail-accumulator"
 	Accumulator.selection_box = nil --{{-0.1, -0.1}, {0.1, 0.1}}
 	Accumulator.collision_box = {{0, 0}, {0.5, 0.5}}
-	Accumulator.collision_mask = {layers={}, not_colliding_with_itself=true}
+	Accumulator.collision_mask = nil --{layers={}, not_colliding_with_itself=true}
 	Accumulator.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
 	Accumulator.next_upgrade = nil
 	Accumulator.icon = "__base__/graphics/icons/locomotive.png"
@@ -252,8 +256,21 @@ PoweredRailRamp.icons = {
 		shift = {0, 0},
 	},
 }
-LSlib.entity.MakePrototypeLightningImmune("james-powered-rail-ramp")
 data:extend({PoweredRailRamp})
+--[[if settings.startup["powered-rails-diff"].value:find("electric-icon", 1, true) then
+	table.insert(data.raw["rail-ramp"]["james-powered-rail-ramp"].pictures,
+	{
+		filename = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+		priority = "high",
+		width = 32,
+		height = 32,
+		repeat_count = 1,
+		--shift = util.by_pixel(0, -11),
+		--tint = tint,
+		--scale = 0.5
+	})
+end]]
+LSlib.entity.MakePrototypeLightningImmune("james-powered-rail-ramp")
 end
 
 for i, rail in pairs(Rails) do
@@ -399,11 +416,13 @@ Accumulator, PoweredRailItem,
 	{
     type = "item",
     name = "electric-burner-item",
-    icon = "__core__/graphics/empty.png",
-    icon_size = 1,
+    icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+    icon_size = 32,
     subgroup = "raw-resource",
 	fuel_value = "100MJ",
-	fuel_category = "chemical",
+    fuel_acceleration_multiplier = 2,
+    fuel_top_speed_multiplier = 2,
+	fuel_category = "electric-train",
     order = "a-a",
     stack_size = 50,
   },

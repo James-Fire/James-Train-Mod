@@ -1,3 +1,4 @@
+
 if settings.startup["weighty-trains"].value then
 	for i, rollingstock in pairs(data.raw.locomotive) do
 		rollingstock.weight = rollingstock.weight*settings.startup["weighty-trains-factor"].value
@@ -13,7 +14,8 @@ if settings.startup["weighty-trains"].value then
 	end
 end
 
-for i, rollingstock in pairs(data.raw["item-with-entity-data"]) do
+--Idk why this is here, so we're just gonna comment it out.
+--[[for i, rollingstock in pairs(data.raw["item-with-entity-data"]) do
 	if rollingstock.place_result then
 		if rollingstock.place_result:find("locomotive", 1, true) or rollingstock.place_result:find("train", 1, true) then
 			rollingstock.subgroup = "locomotives"
@@ -21,7 +23,7 @@ for i, rollingstock in pairs(data.raw["item-with-entity-data"]) do
 			rollingstock.subgroup = "wagons"
 		end
 	end
-end
+end]]
 
 if settings.startup["powered-rails"].value then
 	if not (mods["FluidicPower"]) and settings.startup["powered-rails-adjacent"].value then

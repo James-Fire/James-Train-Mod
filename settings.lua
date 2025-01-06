@@ -59,6 +59,15 @@ data:extend(
 	order = "c-0-1",
   },
   {
+	type = "string-setting",
+	name = "powered-rails-diff",
+	setting_type = "startup",
+	default_value = "electric-icon",
+	allow_blank = true,
+	auto_trim = true,
+	order = "c-0-2",
+  },
+  {
     type = "bool-setting",
     name = "electric-trains",
     setting_type = "startup",

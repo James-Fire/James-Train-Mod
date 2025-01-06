@@ -1,6 +1,8 @@
-local LocomotivePower = { "5MW", "10MW", "20MW" }
+local LocomotivePower = { "2.5MW", "5MW", "10MW" }
 
 data.raw["locomotive"]["locomotive"].energy_source.effectivity = 0.8
+data.raw.item["uranium-fuel-cell"].fuel_acceleration_multiplier = 1.9
+data.raw.item["uranium-fuel-cell"].fuel_top_speed_multiplier = 1.9
 
 local NuclearTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	NuclearTrainEntity.name = "james-nuclear-train"
@@ -14,7 +16,18 @@ local NuclearTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	
 local NuclearTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locomotive"])
 	NuclearTrainItem.name = "james-nuclear-train"
-	NuclearTrainItem.icon = Modname.."/graphics/nuclear-train.png"
+	NuclearTrainItem.icons = {
+		{
+			icon = Modname.."/graphics/nuclear-train.png",
+			scale = 2
+		},
+		{
+			icon = "__base__/graphics/icons/tooltips/tooltip-category-nuclear.png",
+			icon_size = 32,
+			scale = 2,
+			icon_mipmaps = 2,
+		}
+	}
 	NuclearTrainItem.place_result = "james-nuclear-train"
 	
 LSlib.recipe.duplicate("locomotive", "james-nuclear-train")
