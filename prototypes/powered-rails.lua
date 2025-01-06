@@ -128,8 +128,8 @@ local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric
 local PowerPole = table.deepcopy(SignalPowerPole)
 	PowerPole.name = "james-track-pole"
 	PowerPole.selection_box = nil --{{-0.1, -0.1}, {0.1, 0.1}}
-	PowerPole.collision_box = {{0, 0}, {0.5, 0.5}}
-	PowerPole.collision_mask = nil --{layers={}, not_colliding_with_itself=true}
+	PowerPole.collision_box = nil --{{0, 0}, {0.5, 0.5}}
+	PowerPole.collision_mask = {layers={}, not_colliding_with_itself=true}
 	PowerPole.icon = "__core__/graphics/empty.png"
     PowerPole.icon_size = 1
     PowerPole.minable= nil
@@ -197,8 +197,8 @@ end
 local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
 	Accumulator.name = "james-rail-accumulator"
 	Accumulator.selection_box = nil --{{-0.1, -0.1}, {0.1, 0.1}}
-	Accumulator.collision_box = {{0, 0}, {0.5, 0.5}}
-	Accumulator.collision_mask = nil --{layers={}, not_colliding_with_itself=true}
+	Accumulator.collision_box = nil --{{0, 0}, {0.5, 0.5}}
+	Accumulator.collision_mask = --[[nil]] {layers={}, not_colliding_with_itself=true}
 	Accumulator.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
 	Accumulator.next_upgrade = nil
 	Accumulator.icon = "__base__/graphics/icons/locomotive.png"

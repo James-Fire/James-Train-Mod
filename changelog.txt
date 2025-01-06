@@ -1,6 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.14
+Date: 1. 06. 25
+  Bugfixes:
+    - Fixed being unable to make intersections
+---------------------------------------------------------------------------------------------------
 Version: 2.0.13
-Date: 12. 15. 24
+Date: 1. 05. 25
   Features:
     - Added icons to train items to show what they use, rather than just relying on colour.
     - Added icons to electric wagon items to show they use power
