@@ -17,20 +17,20 @@ local HybridTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locomo
 	HybridTrainItem.icons = {
 		{
 			icon = Modname.."/graphics/hybrid-train.png",
-			scale = 2
+			scale = 1
 		},
 		{
 			icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 			icon_size = 32,
-			scale = 2,
-			shift = {-15, 0},
+			scale = 1,
+			shift = {-24, -24},
 			icon_mipmaps = 2,
 		},
 		{
 			icon = "__base__/graphics/icons/tooltips/tooltip-category-chemical.png",
 			icon_size = 32,
-			scale = 2,
-			shift = {15, 0},
+			scale = 1,
+			shift = {16, -24},
 			icon_mipmaps = 2,
 		},
 	}

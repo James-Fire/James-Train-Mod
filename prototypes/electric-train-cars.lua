@@ -20,12 +20,13 @@ if settings.startup["train-car-tiers"].value then
 			wagon_item.icons = {
 				{
 					icon = "__base__/graphics/icons/"..wagon..".png",
-					scale = 2
+					scale = 1
 				},
 				{
 					icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 					icon_size = 32,
-					scale = 2,
+					scale = 1,
+					shift = {-24, -24},
 					icon_mipmaps = 2,
 				},
 			}
@@ -62,7 +63,8 @@ local ElectricCargoWagonItem = table.deepcopy(data.raw["item-with-entity-data"][
 		{
 			icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 			icon_size = 32,
-			scale = 2,
+			scale = 1,
+			shift = {-24, -24},
 			icon_mipmaps = 2,
 		},
 	}
@@ -84,7 +86,8 @@ local ElectricFluidWagonItem = table.deepcopy(data.raw["item-with-entity-data"][
 		{
 			icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 			icon_size = 32,
-			scale = 2,
+			scale = 1,
+			shift = {-24, -24},
 			icon_mipmaps = 2,
 		},
 	}
@@ -106,7 +109,8 @@ local ElectricArtilleryWagonItem = table.deepcopy(data.raw["item-with-entity-dat
 		{
 			icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 			icon_size = 32,
-			scale = 2,
+			scale = 1,
+			shift = {-24, -24},
 			icon_mipmaps = 2,
 		},
 	}

@@ -1,4 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.16
+Date: 1. 07. 25
+  Changes:
+    - Hid my hidden power pole from factoriopedia
+    - Sorted my mod settings a bit better
+    - Resized and relocated fuel icons on trains and wagons
+    - Made it more obvious in the icon that one of the Electric Ramp recipes upgrades existing ramps.
+    - Updated the Electric Train Cars setting to also include that they work with hybrid trains.
+    - Updated the Powered Rails setting to also include that they carry circuit signals
+    - Moved my content generation from data-updates to data so my stuff can be recycled. (Idk why it was there to begin with, or why it took this long to notice)
+    - Added optional dependencies on Elevated Rails and Space Age
+  Bugfixes:
+    - Fixed Chemical-Electric hybrid trains being locked behind the electric and hybrid trains settings, instead of just hybrid.
+---------------------------------------------------------------------------------------------------
 Version: 2.0.15
 Date: 1. 06. 25
   Bugfixes:

@@ -1,6 +1,6 @@
 {
   "name": "James-Train-Mod",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "title": "James' Electric Trains Plus",
   "author": "James Fire",
   "homepage": "",
@@ -8,6 +8,8 @@
   "factorio_version": "2.0",
   "dependencies": [
 	"base >= 0.18.0",
+	"? space-age",
+	"? elevated-rails",
 	"? exotic-industries",
 	"? FluidicPower",
 	"? space-exploration",

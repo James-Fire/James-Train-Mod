@@ -127,6 +127,7 @@ local SignalPowerPole = table.deepcopy(data.raw["electric-pole"]["small-electric
 	
 local PowerPole = table.deepcopy(SignalPowerPole)
 	PowerPole.name = "james-track-pole"
+	PowerPole.hidden_in_factoriopedia = true
 	PowerPole.selection_box = nil --{{-0.1, -0.1}, {0.1, 0.1}}
 	PowerPole.collision_box = nil --{{0, 0}, {0.5, 0.5}}
 	PowerPole.collision_mask = {layers={}, not_colliding_with_itself=true}
@@ -446,6 +447,25 @@ data:extend({
 		type = "recipe",
 		name = "james-powered-rail-ramp-upgrade",
 		enabled = false,
+		icons = {
+			{
+				icon = "__elevated-rails__/graphics/icons/rail-ramp.png",
+				icon_size = 64,
+				icon_mipmaps = 4,
+			},
+			{
+				icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
+				icon_size = 32,
+				scale = 1 / 2,
+				shift = {0, 0},
+			},
+			{
+				icon = Modname.."/graphics/icon_recycling.png",
+				scale = 0.25,
+				icon_size = 64,
+				shift = {0, 0},
+			},
+		},
 		energy_required = 1,
 		ingredients = {
 			{type = "item", name = "rail-ramp", amount = 1},
