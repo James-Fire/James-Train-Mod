@@ -5,7 +5,7 @@ if settings.startup["train-car-tiers"].value then
 		for j, v in pairs({1,2,3}) do
 			local wagon_entity = table.deepcopy(data.raw[wagon][wagon])
 			wagon_entity.name = wagon.."-electric-"..tostring(v)
-			wagon_entity.max_speed = data.raw[wagon][wagon].max_speed*v
+			wagon_entity.max_speed = data.raw[wagon][wagon].max_speed*(v-0.5*j)
 			wagon_entity.weight = 0.01
 			wagon_entity.braking_force = 0.001
 			if data.raw[wagon][wagon].inventory_size then

@@ -4,7 +4,7 @@ for i, v in pairs({2,3}) do
 	local locomotive_entity = table.deepcopy(data.raw.locomotive["locomotive"])
 	locomotive_entity.name = "locomotive-"..tostring(v)
 	locomotive_entity.weight = data.raw.locomotive["locomotive"].weight + data.raw.locomotive["locomotive"].weight*v/2
-    locomotive_entity.max_speed = data.raw.locomotive["locomotive"].max_speed*v
+    locomotive_entity.max_speed = data.raw.locomotive["locomotive"].max_speed*(v-0.5*i)
     locomotive_entity.braking_force = data.raw.locomotive["locomotive"].braking_force*v
 	locomotive_entity.max_power = LocomotivePower[i]
     locomotive_entity.minable = {mining_time = 0.5, result = "locomotive-"..tostring(v)}

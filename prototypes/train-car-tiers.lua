@@ -11,7 +11,7 @@ for i, wagon in pairs(Wagons) do
 		local wagon_entity = table.deepcopy(data.raw[wagon][wagon])
 		wagon_entity.name = wagon.."-"..tostring(v)
 		wagon_entity.weight = data.raw[wagon][wagon].weight + data.raw[wagon][wagon].weight*v/2
-		wagon_entity.max_speed = data.raw[wagon][wagon].max_speed*v
+		wagon_entity.max_speed = data.raw[wagon][wagon].max_speed*(v-0.5*i)
 		wagon_entity.braking_force = data.raw[wagon][wagon].braking_force*v
 		if data.raw[wagon][wagon].inventory_size then
 			wagon_entity.inventory_size = data.raw[wagon][wagon].inventory_size*v

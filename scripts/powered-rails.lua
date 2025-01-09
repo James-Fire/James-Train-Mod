@@ -5,7 +5,7 @@ local AccumName = "james-rail-accumulator"
 local HiddenPoleName = "james-track-pole"
 local SignalPoleName = "james-rail-pole"
 local UpdateTime = 60 --Ticks, 60/s
-local WagonPowerUse = 500000 --How much power each electric wagon uses in UpdateTime. J
+local WagonPowerUse = 400000 --How much power each electric wagon uses in UpdateTime. J
 
 --Initialization Function
 local function OnInit()
@@ -61,14 +61,6 @@ end
 		end
 	end
 end]]
-local function TrainIsElectricNow(Train)
-	for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
-		if LocomotiveIsElectric(Locomotive) then
-			return true
-		end
-	end
-	return false
-end
 
 
 local function GetHiddenPole(surface, position)
@@ -138,27 +130,69 @@ end
 local function on_new_train(event)
 	local NewTrain = event.train
 	if not NewTrain then return end
-	if TrainHasLocomotiveIsElectric(NewTrain) and CheckTableValue(NewTrain,storage.JamesElectricTrains) == false then
+	if TrainIsElectric(NewTrain) and CheckTableValue(NewTrain,storage.JamesElectricTrains) == false then
 		table.insert(storage.JamesElectricTrains, NewTrain)
 	end
 	if TrainHasElectricWagon(NewTrain) and CheckTableValue(NewTrain,storage.JamesElectricWagonTrains) == false then
 		table.insert(storage.JamesElectricWagonTrains, NewTrain)
 	end
 end
+local function RemoveEntityError(entity, player)
+	local entity_surface = entity.surface
+	local entity_force = entity.force
+	local entity_position = entity.position
+	local wagon = entity.prototype.items_to_place_this[1].name
+	--game.print(wagon)
+	
+	entity_position.y = entity_position.y - 2 --+ math.random()
+	-- entity_position.x = entity_position.x - 1 + math.random()
+	entity.destroy()
+	if player then
+		local playerinv = game.connected_players[player].get_main_inventory()
+		playerinv.insert({name=wagon, count=1})
+	else
+		entity_surface.spill_item_stack{position = entity_position, stack = {name=wagon, count=1}, force = entity_force}
+	end
+	for _,player in pairs(game.connected_players) do
+		local pid = player.index
+		local player_force = player.force.name
+
+		local render_data = {
+			target = {offset = {x=0,y=-2}},
+			scale = 1,
+			time_to_live = 120,
+			players = {player},
+			alignment = "center",
+		}
+		render_data.text = "You can't use Electric Wagons on non-electric trains"
+		render_data.surface = entity_surface
+		--render_data.target.entity = entity
+		render_data.target = entity_position
+		render_data.color = {r=200,g=0,b=0}
+
+		rendering.draw_text(render_data)
+	end
+end
+
 local function on_new_entity(event)
 	local entity = event.created_entity or event.entity --Handle multiple event types
 	if not entity then return end
 	local surface = entity.surface
 	local position = entity.position
 	local force = entity.force
-	if entity.name:find("james-powered-rail", 1, true) or entity.name:find("-rail-electric", 1, true) then
+	local player = event.player_index
+	--game.print(entity.name)
+	--game.print(tostring(WagonIsElectric(entity)))
+	--game.print(tostring(TrainIsNotElectric(entity.train)))
+	if WagonIsElectric(entity) and TrainIsNotElectric(entity.train) then
+		--game.print("Wagon is Electric, train not")
+		RemoveEntityError(entity, player)
+	elseif entity.name:find("james-powered-rail", 1, true) or entity.name:find("-rail-electric", 1, true) then
 		MakeHiddenAccum(surface, position, entity.force)
 		MakeHiddenPole(entity)
 		SetupCableConnections(entity)
 	elseif LocomotiveIsElectric(entity) and entity.train and CheckTableValue(entity.train,storage.JamesElectricTrains) == false then
 		table.insert(storage.JamesElectricTrains, entity.train)
-	--[[elseif WagonIsElectric and entity.train and CheckTableValue(entity.train,storage.JamesElectricTrains) == false then
-		table.insert(storage.JamesElectricTrains, entity.train)]]
 	elseif entity.name == "james-rail-signal" then
 		MakeSignalPole(entity)
 	end
@@ -267,7 +301,7 @@ end
 
 local function train_state_handler(event)
 	local Train = event.train
-	if Train and Train.valid and TrainIsBraking(Train) and TrainIsElectricNow(Train) then
+	if Train and Train.valid and TrainIsBraking(Train) and TrainIsElectric(Train) then
 		table.insert(storage.JamesRegenBrakingTrains, Train)
 	end
 end
@@ -277,15 +311,20 @@ local function WagonPower(Train)
 	local WagonCount = 0
 	for i, wagon in pairs(GetTrainWagons(Train)) do
 		if wagon and wagon.valid and WagonIsElectric(wagon) then
+			local ThisWagon = 0
 			if wagon.name:find("-1", 1, true) then
-				WagonCount = WagonCount + 1
+				ThisWagon = ThisWagon + 1
 			end
 			if wagon.name:find("-2", 1, true) then
-				WagonCount = WagonCount + 2
+				ThisWagon = ThisWagon + 2
 			end
 			if wagon.name:find("-3", 1, true) then
-				WagonCount = WagonCount + 3
+				ThisWagon = ThisWagon + 3
 			end
+			if wagon.name:find("artillery", 1, true) then
+				ThisWagon = ThisWagon * 4
+			end
+			WagonCount = WagonCount + ThisWagon
 		end
 	end
 	local WagonDrain = WagonCount * WagonPowerUse / LocomotiveCount

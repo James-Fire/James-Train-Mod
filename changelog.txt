@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.17
+Date: 1. 09. 25
+  Changes:
+    - Actually included code to enforce only using electric wagons with electric or hybrid trains
+    - Undid the previous fix of reducing the top speed of all trains
+    - Higher train tiers now increase their speed by 50% of base, instead of 100%
+    - Electric artillery wagons use 4x more power than cargo or fluid wagons.
+    - Lowered the base energy electric wagons use by 20% (This also reduces how much you get from regenerative braking from electric wagons by 20%)
+---------------------------------------------------------------------------------------------------
 Version: 2.0.16
 Date: 1. 07. 25
   Changes:

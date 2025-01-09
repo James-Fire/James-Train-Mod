@@ -4,7 +4,7 @@ require("prototypes/item-groups")
 Modname = "__James-Train-Mod__"
 
 data.raw.locomotive["locomotive"].max_power = "500kW"
-data.raw.locomotive["locomotive"].max_speed = 0.3
+data.raw.locomotive["locomotive"].max_speed = 0.6
 data.raw["item-with-entity-data"]["locomotive"].icons = {
 	{
 		icon = "__base__/graphics/icons/locomotive.png",

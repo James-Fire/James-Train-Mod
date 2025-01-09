@@ -51,7 +51,7 @@ if settings.startup["train-tiers"].value then
 		locomotive_entity.name = "james-nuclear-hybrid-train-"..tostring(v)
 		locomotive_entity.icon = Modname.."/graphics/nuclear-hybrid-train.png"
 		locomotive_entity.weight = data.raw.locomotive["james-nuclear-hybrid-train"].weight + data.raw.locomotive["james-nuclear-hybrid-train"].weight*v/2
-		locomotive_entity.max_speed = data.raw.locomotive["james-nuclear-hybrid-train"].max_speed*v
+		locomotive_entity.max_speed = data.raw.locomotive["james-nuclear-hybrid-train"].max_speed*(v-0.5*i)
 		locomotive_entity.braking_force = data.raw.locomotive["james-nuclear-hybrid-train"].braking_force*v
 		locomotive_entity.max_power = LocomotivePower[v]
 		locomotive_entity.minable = {mining_time = 0.5, result = "james-nuclear-hybrid-train-"..tostring(v)}

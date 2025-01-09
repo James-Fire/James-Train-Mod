@@ -49,19 +49,33 @@ function LocomotiveIsElectric(Locomotive)
 end
 
 function WagonIsElectric(Wagon)
+	--game.print("checking wagon")
 	if Wagon.name:find("wagon-electric", 1, true) then
+		--game.print("wagon is electric")
 		return true
 	end
 	return false
 end
 
-function TrainHasLocomotiveIsElectric(Train)
+function TrainIsElectric(Train)
 	for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
 		if LocomotiveIsElectric(Locomotive) then
 			return true
 		end
 	end
 	return false
+end
+
+function TrainIsNotElectric(Train)
+	--game.print("train is train")
+	for i, Locomotive in pairs(GetTrainLocomotives(Train)) do
+		if LocomotiveIsElectric(Locomotive) then
+			--game.print("train is electric")
+			return false
+		end
+	end
+	--game.print("train is not electric")
+	return true
 end
 
 function TrainHasElectricWagon(Train)
