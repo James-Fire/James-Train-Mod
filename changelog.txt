@@ -1,4 +1,32 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.19
+Date: 3. 17. 25
+  Features:
+    - *Added a setting to have inbuilt lighting on powered rails
+    - *Added a parameter to the Powered Rails Indicator setting that makes powered rails show an Electricity icon on themselves.
+  Changes:
+  Bugfixes:
+---------------------------------------------------------------------------------------------------
+Version: 2.0.19
+Date: 3. 17. 25
+  Changes:
+    - Increased Nuclear Loco braking power to compensate for increased weight.
+    - Slightly reduced nuclear fuel cell speed and acceleration bonus
+    - Increased max speed on wagons so they don't limit electric trains anymore
+  Bugfixes:
+    - Fixed a missing loc string
+---------------------------------------------------------------------------------------------------
+Version: 2.0.18
+Date: 1. 24. 25
+  Changes:
+    - Reduced my hidden accumulator power input by 80%.
+    - Reduced my hidden accumulator power storage by 80%.
+    - Made the weight of my Electricity item 0.
+    - Doubled fluid wagon capacity
+  Bugfixes:
+    - Fixed my icons being huge on storage containers
+    - Fixed deoncstruction planners that are filtered to powered rails no working on the new 2.0 placements.
+---------------------------------------------------------------------------------------------------
 Version: 2.0.17
 Date: 1. 09. 25
   Changes:

@@ -197,7 +197,7 @@ if settings.startup["powered-rails-diff"].value:find("copper-wire", 1, true) the
 end
 local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
 	Accumulator.name = "james-rail-accumulator"
-	Accumulator.selection_box = nil --{{-0.1, -0.1}, {0.1, 0.1}}
+	Accumulator.selection_box = {{-0.1, -0.1}, {0.1, 0.1}}
 	Accumulator.collision_box = nil --{{0, 0}, {0.5, 0.5}}
 	Accumulator.collision_mask = --[[nil]] {layers={}, not_colliding_with_itself=true}
 	Accumulator.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
@@ -209,9 +209,9 @@ local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
     Accumulator.chargable_graphics.discharge_animation = blank_picture()
 	Accumulator.energy_source = {
       type = "electric",
-      buffer_capacity = "10MJ",
+      buffer_capacity = "2MJ",
       usage_priority = "primary-input",
-      input_flow_limit = "10MW",
+      input_flow_limit = "2MW",
       output_flow_limit = "0MW",
 	  drain = "1kW"
     }
@@ -277,6 +277,9 @@ end
 for i, rail in pairs(Rails) do
 	local RailEntity = table.deepcopy(data.raw[rail][rail])
 	RailEntity.name = "james-powered-rail-"..rail
+	if rail == "straight-rail" then else
+		RailEntity.deconstruction_alternative = "james-powered-rail-straight-rail"
+	end
 	RailEntity.minable = {mining_time = 0.2, result = "james-powered-rail", count = RailsCount[i]}
 	RailEntity.placeable_by = {item = "james-powered-rail", count = RailsCount[i]}
 	RailEntity.localised_name = {"item-name.james-powered-rail"}
@@ -426,6 +429,7 @@ Accumulator, PoweredRailItem,
 	fuel_category = "electric-train",
     order = "a-a",
     stack_size = 50,
+    weight = 0 * kg
   },
 })
 if(mods["elevated-rails"]) then

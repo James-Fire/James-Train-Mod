@@ -18,20 +18,20 @@ local NuclearTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locom
 	NuclearTrainItem.icons = {
 		{
 			icon = Modname.."/graphics/nuclear-hybrid-train.png",
-			scale = 1
+			scale = 0.5
 		},
 		{
 			icon = "__core__/graphics/icons/tooltips/tooltip-category-electricity.png",
 			icon_size = 32,
-			scale = 1,
-			shift = {-24, -24},
+			scale = 0.5,
+			shift = {-12, -12},
 			icon_mipmaps = 2,
 		},
 		{
 			icon = "__base__/graphics/icons/tooltips/tooltip-category-nuclear.png",
 			icon_size = 40,
-			scale = 0.8,
-			shift = {16, -24},
+			scale = 0.4,
+			shift = {8, -12},
 			icon_mipmaps = 2,
 		}
 	}

@@ -1,10 +1,10 @@
 local Wagons = { "cargo-wagon", "fluid-wagon", "artillery-wagon" }
 
-data.raw["cargo-wagon"]["cargo-wagon"].max_speed = 0.65
-data.raw["cargo-wagon"]["cargo-wagon"].inventory_size = 30
-data.raw["fluid-wagon"]["fluid-wagon"].max_speed = 0.65
-data.raw["fluid-wagon"]["fluid-wagon"].capacity = 20000
-data.raw["artillery-wagon"]["artillery-wagon"].max_speed = 0.65
+data.raw["cargo-wagon"]["cargo-wagon"].max_speed = 1.3
+data.raw["cargo-wagon"]["cargo-wagon"].inventory_size = data.raw["cargo-wagon"]["cargo-wagon"].inventory_size*0.75
+data.raw["fluid-wagon"]["fluid-wagon"].max_speed = 1.3
+data.raw["fluid-wagon"]["fluid-wagon"].capacity = data.raw["fluid-wagon"]["fluid-wagon"].capacity*0.8
+data.raw["artillery-wagon"]["artillery-wagon"].max_speed = 1.3
 
 for i, wagon in pairs(Wagons) do
 	for j, v in pairs({2,3}) do

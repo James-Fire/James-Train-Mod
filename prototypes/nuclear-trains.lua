@@ -1,8 +1,8 @@
 local LocomotivePower = { "2.5MW", "5MW", "10MW" }
 
 data.raw["locomotive"]["locomotive"].energy_source.effectivity = 0.8
-data.raw.item["uranium-fuel-cell"].fuel_acceleration_multiplier = 1.9
-data.raw.item["uranium-fuel-cell"].fuel_top_speed_multiplier = 1.9
+data.raw.item["uranium-fuel-cell"].fuel_acceleration_multiplier = 1.8
+data.raw.item["uranium-fuel-cell"].fuel_top_speed_multiplier = 1.8
 
 local NuclearTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	NuclearTrainEntity.name = "james-nuclear-train"
@@ -11,6 +11,7 @@ local NuclearTrainEntity = table.deepcopy(data.raw["locomotive"]["locomotive"])
 	NuclearTrainEntity.max_power = LocomotivePower[1]
 	NuclearTrainEntity.energy_source.effectivity = 0.9
 	NuclearTrainEntity.weight = 6000
+	NuclearTrainEntity.braking_force = data.raw.locomotive["locomotive"].braking_force*2.5
 	NuclearTrainEntity.energy_source.fuel_categories = {"nuclear"}
 	NuclearTrainEntity.color = {r = 5.5, g = 100, b = 22.7, a = 155}
 	
@@ -19,13 +20,13 @@ local NuclearTrainItem = table.deepcopy(data.raw["item-with-entity-data"]["locom
 	NuclearTrainItem.icons = {
 		{
 			icon = Modname.."/graphics/nuclear-train.png",
-			scale = 1
+			scale = 0.5
 		},
 		{
 			icon = "__base__/graphics/icons/tooltips/tooltip-category-nuclear.png",
 			icon_size = 40,
-			scale = 0.8,
-			shift = {16, -24},
+			scale = 0.4,
+			shift = {8, -12},
 			icon_mipmaps = 2,
 		}
 	}
