@@ -1,11 +1,13 @@
 ---------------------------------------------------------------------------------------------------
-Version: 2.0.19
-Date: 3. 17. 25
-  Features:
-    - *Added a setting to have inbuilt lighting on powered rails
-    - *Added a parameter to the Powered Rails Indicator setting that makes powered rails show an Electricity icon on themselves.
-  Changes:
+Version: 2.0.21
+Date: 12. 29. 25
   Bugfixes:
+    - Fixed my higher-tier locomotives being unable to use krastorio fuel
+---------------------------------------------------------------------------------------------------
+Version: 2.0.20
+Date: 11. 15. 25
+  Bugfixes:
+    - Fixed rail accumulators being visible and minable
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.19
 Date: 3. 17. 25
@@ -13,6 +15,7 @@ Date: 3. 17. 25
     - Increased Nuclear Loco braking power to compensate for increased weight.
     - Slightly reduced nuclear fuel cell speed and acceleration bonus
     - Increased max speed on wagons so they don't limit electric trains anymore
+    - Nerfing vanilla trains as T1 now only happens if you use the Train Tiers setting
   Bugfixes:
     - Fixed a missing loc string
 ---------------------------------------------------------------------------------------------------

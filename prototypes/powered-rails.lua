@@ -197,10 +197,11 @@ if settings.startup["powered-rails-diff"].value:find("copper-wire", 1, true) the
 end
 local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
 	Accumulator.name = "james-rail-accumulator"
-	Accumulator.selection_box = {{-0.1, -0.1}, {0.1, 0.1}}
+	Accumulator.selection_box = nil --{{-0.1, -0.1}, {0.1, 0.1}}
 	Accumulator.collision_box = nil --{{0, 0}, {0.5, 0.5}}
 	Accumulator.collision_mask = --[[nil]] {layers={}, not_colliding_with_itself=true}
 	Accumulator.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
+	Accumulator.minable = nil
 	Accumulator.next_upgrade = nil
 	Accumulator.icon = "__base__/graphics/icons/locomotive.png"
     Accumulator.icon_size = 64
