@@ -24,3 +24,6 @@ end
 if settings.startup["powered-rails"].value then
 	require("prototypes/powered-rails")
 end
+if mods["space-exploration"] then
+	require("prototypes/space-exploration")
+end
