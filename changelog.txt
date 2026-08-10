@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.23
+Date: 08. 10. 26
+  Bugfixes:
+    - If SE is active, removing high-tech packs from electric rails because changes SE makes with regard for others puts it extremely late
+---------------------------------------------------------------------------------------------------
 Version: 2.0.22
 Date: 05. 06. 26
   Changes:
