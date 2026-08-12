@@ -252,7 +252,7 @@ data:extend({
 				shift = {48, 48},
 			},
 		},
-		prerequisites = { "railway", "electric-wagons" },
+		prerequisites = { "electric-wagons", "artillery" },
 		effects = {
 			{
 				type = "unlock-recipe",
@@ -265,6 +265,7 @@ data:extend({
 				{"automation-science-pack", 1},
 				{"logistic-science-pack", 1},
 				{"chemical-science-pack", 1},
+				{"military-science-pack", 1},
 			},
 			time = 30,
 		},
