@@ -191,6 +191,8 @@ local PowerPole = table.deepcopy(SignalPowerPole)
       },
 	}
     PowerPole.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
+	PowerPole.corpse = nil --The pole is invisible, its remnants shouldn't be left on the rail
+	PowerPole.dying_explosion = nil
 	
 if settings.startup["powered-rails-diff"].value:find("copper-wire", 1, true) then
 	PowerPole.draw_copper_wires=true
@@ -203,6 +205,8 @@ local Accumulator = table.deepcopy(data.raw["accumulator"]["accumulator"])
 	Accumulator.flags = {"not-on-map","placeable-off-grid","not-blueprintable","not-deconstructable"}
 	Accumulator.minable = nil
 	Accumulator.next_upgrade = nil
+	Accumulator.corpse = nil --The accumulator is invisible, its remnants shouldn't be left on the rail
+	Accumulator.dying_explosion = nil
 	Accumulator.icon = "__base__/graphics/icons/locomotive.png"
     Accumulator.icon_size = 64
     Accumulator.chargable_graphics.picture = blank_picture()
