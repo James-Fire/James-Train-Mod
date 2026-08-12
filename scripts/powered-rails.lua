@@ -67,11 +67,14 @@ local function GetHiddenPole(surface, position)
 	return surface.find_entity(HiddenPoleName, position)
 end
 
+local EnsurePowerEntities --Forward declaration, defined below the makers
+
 --Takes a rail, makes and connects sub-poles
 local function SetupCableConnections(entity)
 	local HostPole = GetHiddenPole(entity.surface, entity.position)
 	if HostPole and HostPole.valid then
 		for i, neighbour in pairs(GetConnectedRails(entity)) do
+			EnsurePowerEntities(neighbour) --The neighbour may not have been handled yet, don't wait for its own event
 			local NeighbourPole = GetHiddenPole(neighbour.surface, neighbour.position)
 			if NeighbourPole and NeighbourPole.valid then
 				ConnectAllWires(HostPole, NeighbourPole)
@@ -112,6 +115,18 @@ local function MakeHiddenAccum(surface, position, force)
 		surface.create_entity({name = AccumName, position = position, force = force, raise_built = false})
 	end
 end
+local function RailIsPowered(entity)
+	return entity.name:find("james-powered-rail", 1, true) or entity.name:find("-rail-electric", 1, true)
+end
+
+--Makes the hidden entities for a rail if they aren't there yet
+EnsurePowerEntities = function(rail)
+	if rail and rail.valid and RailIsPowered(rail) and not GetHiddenPole(rail.surface, rail.position) then
+		MakeHiddenAccum(rail.surface, rail.position, rail.force)
+		MakeHiddenPole(rail)
+	end
+end
+
 local function removeHiddenPowerEntities(surface, position)
 	if surface and surface.valid then
 		--game.print("Surface Valid for pole removal")
@@ -187,9 +202,8 @@ local function on_new_entity(event)
 	if WagonIsElectric(entity) and TrainIsNotElectric(entity.train) then
 		--game.print("Wagon is Electric, train not")
 		RemoveEntityError(entity, player)
-	elseif entity.name:find("james-powered-rail", 1, true) or entity.name:find("-rail-electric", 1, true) then
-		MakeHiddenAccum(surface, position, entity.force)
-		MakeHiddenPole(entity)
+	elseif RailIsPowered(entity) then
+		EnsurePowerEntities(entity)
 		SetupCableConnections(entity)
 	elseif LocomotiveIsElectric(entity) and entity.train and CheckTableValue(entity.train,storage.JamesElectricTrains) == false then
 		table.insert(storage.JamesElectricTrains, entity.train)
@@ -202,7 +216,7 @@ local function on_remove_entity(event)
 	if not entity then return end
 	local surface = entity.surface
 	local position = entity.position
-	if entity.name:find("james-powered-rail", 1, true) then
+	if RailIsPowered(entity) then
 		removeHiddenPowerEntities(surface, position)
 	end
 end
@@ -360,6 +374,22 @@ local function RemakeTrainUpdateList()
 	end
 end
 
+--Rebuilds the hidden entities and wires of every powered rail, for saves made before the wiring fix
+local function RepairRailPower()
+	local RailCount = 0
+	for i, surface in pairs(game.surfaces) do
+		for j, rail in pairs(surface.find_entities_filtered{type = {"straight-rail", "curved-rail-a", "curved-rail-b", "half-diagonal-rail"}}) do
+			if RailIsPowered(rail) then
+				EnsurePowerEntities(rail)
+				SetupCableConnections(rail)
+				RailCount = RailCount + 1
+			end
+		end
+	end
+	game.print("Repaired "..tostring(RailCount).." powered rails")
+end
+
+commands.add_command("RepairRailPower", "", RepairRailPower)
 commands.add_command("RemakeTrainUpdateList", "", RemakeTrainUpdateList)
 commands.add_command("PrintstorageTrainList", "", PrintStorageTrainList)
 commands.add_command("PrintUpdateTrainList", "", PrintUpdateTrainList)
