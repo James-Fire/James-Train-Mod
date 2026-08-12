@@ -1,8 +1,21 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.25
+Date: 08. 12. 26
+  Changes:
+    - Electric Artillery Wagon tech now has the normal artillery wagon tech as a prereq, and no longer has railway as a prereq, as that is covered by electric wagons (By Eldrin Elantey)
+  Bugfixes:
+    - Fixed powered rails sometimes failing to connect to their neighbours (By Eldrin Elantey)
+    - Fixed missing cleanup for hidden powered rail entities (By Eldrin Elantey)
+---------------------------------------------------------------------------------------------------
+Version: 2.0.24
+Date: 08. 11. 26
+  Changes:
+    - Updated russian locale (By Eldrin Elantey)
+---------------------------------------------------------------------------------------------------
 Version: 2.0.23
 Date: 08. 10. 26
   Bugfixes:
-    - If SE is active, removing high-tech packs from electric rails because changes SE makes with regard for others puts it extremely late
+    - If SE is active, removing high-tech packs from electric rails because changes SE makes with regard for others puts it extremely late (By Eldrin Elantey)
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.22
 Date: 05. 06. 26
