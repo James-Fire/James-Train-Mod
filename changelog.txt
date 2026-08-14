@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.26
+Date: 08. 14. 26
+  Changes:
+    - Made the hidden rail entities invulnerable (By Eldrin Elantey)
+    - Powered rail script now always loads to get around a factorio bug with loading mods from servers (By Eldrin Elantey)
+---------------------------------------------------------------------------------------------------
 Version: 2.0.25
 Date: 08. 12. 26
   Changes:
