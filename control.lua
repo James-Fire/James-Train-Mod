@@ -4,6 +4,6 @@ end
 if settings.startup["tender-trains"].value then
 	require("scripts/tender-trains")
 end]]
-if settings.startup["powered-rails"].value then
-	require("scripts/powered-rails")
-end
+--Always required, the setting is checked inside. A conditional require makes the loaded
+--script set differ between clients and breaks multiplayer with a mod mismatch error
+require("scripts/powered-rails")
