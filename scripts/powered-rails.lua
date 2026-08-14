@@ -105,6 +105,7 @@ local function MakeHiddenPole(entity)
 	if surface and surface.valid then
 		local hiddenPole = surface.create_entity({name = HiddenPoleName, position = entity.position, force = entity.force, raise_built = false})
 		if hiddenPole then
+			hiddenPole.destructible = false --Only the rail it belongs to decides when it goes away
 			DisconnectAllWires(hiddenPole)
 		end
 		return hiddenPole
@@ -113,7 +114,10 @@ end
 
 local function MakeHiddenAccum(surface, position, force)
 	if surface and surface.valid then
-		surface.create_entity({name = AccumName, position = position, force = force, raise_built = false})
+		local accumulator = surface.create_entity({name = AccumName, position = position, force = force, raise_built = false})
+		if accumulator then
+			accumulator.destructible = false --Only the rail it belongs to decides when it goes away
+		end
 	end
 end
 local function RailIsPowered(entity)
@@ -130,7 +134,7 @@ end
 
 local RailTypes = {"straight-rail", "curved-rail-a", "curved-rail-b", "half-diagonal-rail"}
 
---The hidden entities have health of their own, so they can die while their rail survives
+--New hidden entities are indestructible, but ones from older saves can still die while their rail survives
 local function RestoreHiddenPowerEntity(surface, position, name)
 	for i, rail in pairs(surface.find_entities_filtered{position = position, type = RailTypes}) do
 		if RailIsPowered(rail) and rail.position.x == position.x and rail.position.y == position.y then
@@ -400,6 +404,9 @@ local function RepairRailPower()
 			if RailIsPowered(rail) then
 				EnsurePowerEntities(rail)
 				SetupCableConnections(rail)
+				for k, hidden in pairs(surface.find_entities_filtered{name = {AccumName, HiddenPoleName}, position = rail.position}) do
+					hidden.destructible = false --Entities made before this was set are still destructible
+				end
 				RailCount = RailCount + 1
 			end
 		end
