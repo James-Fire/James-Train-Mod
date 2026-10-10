@@ -431,7 +431,7 @@ Accumulator, PoweredRailItem,
 	fuel_value = "100MJ",
     fuel_acceleration_multiplier = 2,
     fuel_top_speed_multiplier = 2,
-	fuel_category = "electric-train",
+	fuel_categories = { "electric-train" },
     order = "a-a",
     stack_size = 50,
     weight = 0 * kg
